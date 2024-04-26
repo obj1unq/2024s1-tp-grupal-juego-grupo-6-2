@@ -1,6 +1,7 @@
 import wollok.game.*
 import niveles.*
 import colores.*
+import posiciones.*
 
 
 object jugador {

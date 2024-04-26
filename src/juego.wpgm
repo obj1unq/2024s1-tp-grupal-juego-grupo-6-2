@@ -1,13 +1,8 @@
 import wollok.game.*
 import jugador.*
+import niveles.*
+import colores.*
 
 program juego {
-	game.title("Juego Base")
-	game.cellSize(40)
-	game.width(20)
-	game.height(10)
-	game.addVisualCharacter(jugador)
-	keyboard.right().onPressDo{jugador.moverDerecha()}
-	keyboard.left().onPressDo{jugador.moverIzquierda()}
-	game.start()
+	nivel1.init()
 }
