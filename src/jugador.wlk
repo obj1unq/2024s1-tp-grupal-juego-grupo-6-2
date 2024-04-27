@@ -45,13 +45,13 @@ object jugador {
 	}
 	
 	method atraparColor(color){
-		coloresAtrapados.add(color)
-		color.desaparecer()
-	}
-	
-	method chocarConColorEquivocado(color){
-		coloresAtrapados.remove(coloresAtrapados.last())
-		color.desaparecer()
+		if(nivel1.coloresAAtrapar().contains(color)) {
+			coloresAtrapados.add(color)
+		}
+		else {
+			coloresAtrapados.remove(coloresAtrapados.last())
+		}
+		
 	}
 	
 }
