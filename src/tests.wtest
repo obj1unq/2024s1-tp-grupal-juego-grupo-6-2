@@ -26,3 +26,6 @@ test "test atrapar color incorrecto" {
 	assert.equals(0,jugador.coloresAtrapados().size())
 
 }
+
+
+//prueba comit de un branch
