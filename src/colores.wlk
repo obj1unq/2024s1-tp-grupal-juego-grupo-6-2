@@ -14,24 +14,11 @@ class Color {
 		return nombre + ".png"
 	}
 	
-	method colisionarCon(objeto){
-		if (objeto=="jugador" && nivel1.coloresAAtrapar().contains(self)){
-			jugador.atraparColor(self)
-			creadorDeColores.coloresCreados().remove(self)
-			self.desaparecer()
-				
-		}
-		else if (objeto=="jugador" &&  nivel1.coloresAAtrapar().contains(self).negate()){
-			jugador.chocarConColorEquivocado(self)
-			creadorDeColores.coloresCreados().remove(self)
-			self.desaparecer()
-		}
-		else {
-			creadorDeColores.coloresCreados().remove(self)
-			self.desaparecer()
-		}
-		
-	}	
+	method colisionarCon(personaje) {
+		personaje.atraparColor(self)
+		creadorDeColores.coloresCreados().remove(self)
+		self.desaparecer()
+	}
 	
 	method desaparecer(){
 		game.removeVisual(self)
