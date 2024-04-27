@@ -95,7 +95,7 @@ object perdedor {
 
 	method activar() {
 		game.say(jugador, "Perdí!")
-		game.schedule(5000, { game.stop()})
+		game.schedule(0500, { game.stop()})
 	}
 
 }

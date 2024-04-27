@@ -28,4 +28,12 @@ test "test atrapar color incorrecto" {
 }
 
 
+test "probar estado (derecha-izq)"{
+	jugador.moverIzquierda()
+	assert.equals(jugandoIzquierda,jugador.estadoDeJugador())
+	jugador.moverDerecha()
+	assert.equals(jugandoDerecha,jugador.estadoDeJugador())
+	
+}
+
 //prueba comit de un branch

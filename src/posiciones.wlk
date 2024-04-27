@@ -16,7 +16,7 @@ object tablero {
 		return self.pertenece(aDondeVoy)
 				&& not self.hayObstaculo(aDondeVoy) 
 	}
-	
+		
 	method hayObstaculo(position) {
 		const visuales = game.getObjectsIn(position)
 		return visuales.any({visual => not visual.esAtravesable()})
