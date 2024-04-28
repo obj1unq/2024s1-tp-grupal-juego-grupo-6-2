@@ -3,37 +3,34 @@ import niveles.*
 import colores.*
 import wollok.game.*
 
+describe "Tests del juego" {
 
 
+	test "test atrapar color correcto" {
+		var negro = new Color()
+		negro.nombre("negro")
+		jugador.atraparColor(negro)
+		assert.equals(1, jugador.coloresAtrapados().size())
+	}
 
-test "test atrapar color correcto" {
-	jugador.atraparColor("negro")
-	assert.equals(1,jugador.coloresAtrapados().size())
+	test "test atrapar color incorrecto" {
+		var rosa = new Color()
+		rosa.nombre("rosa")
+		assert.throwsException({ jugador.atraparColor(rosa)})
+	}
+
+	test "probar estado (derecha-izq)" {
+		jugador.moverIzquierda()
+		assert.equals(jugandoIzquierda, jugador.estadoDeJugador())
+		jugador.moverDerecha()
+		assert.equals(jugandoDerecha, jugador.estadoDeJugador())
+	}
 
 }
 
 //como testear el perder o ganar
-
 //test "testear perder"{
 //	jugador.coloresAtrapados([])
 //	jugador.atraparColor("rosa")
 //	assert.equals(perdedor,jugador.estadoDeJugador())
-//}
-
-test "test atrapar color incorrecto" {
-	jugador.atraparColor("negro")
-	jugador.atraparColor("rosa")
-	assert.equals(0,jugador.coloresAtrapados().size())
-
-}
-
-
-test "probar estado (derecha-izq)"{
-	jugador.moverIzquierda()
-	assert.equals(jugandoIzquierda,jugador.estadoDeJugador())
-	jugador.moverDerecha()
-	assert.equals(jugandoDerecha,jugador.estadoDeJugador())
-	
-}
-
-//prueba comit de un branch
+//}  

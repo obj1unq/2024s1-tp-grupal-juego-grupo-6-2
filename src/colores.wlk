@@ -27,7 +27,7 @@ class Color {
 	method caer(){
 		if (self.puedeMover(abajo)) {
 			position = abajo.siguiente(self.position())
-		}
+		}0
 	}
 	
 	method puedeMover(direccion){
