@@ -40,12 +40,16 @@ object jugador {
 	}
 
 	method atraparColor(color) {
-		if (nivel1.coloresAAtrapar().contains(color)) {
-			coloresAtrapados.add(color)
-			self.chequearResultado()
-		} else {
+		self.validarColor(color)
+		coloresAtrapados.add(color)
+		self.chequearResultado()
+	}
+
+	method validarColor(color) {
+		if (not nivel1.coloresAAtrapar().contains(color.nombre())) {
 			self.chequearResultado()
 			coloresAtrapados.remove(coloresAtrapados.last()) // VALIDAR LAST, LISTA VACIA
+			self.error("No puedo atrapar este color..")
 		}
 	}
 
