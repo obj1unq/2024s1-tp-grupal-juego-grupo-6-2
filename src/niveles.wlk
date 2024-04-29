@@ -6,7 +6,8 @@ import posiciones.*
 object nivel1 {
 
 	const property coloresAAtrapar = #{ "negro", "rojo", "azul" }
-	const gravedad = 3000
+	const gravedadJugador = 500
+	const gravedadColor = 1000 
 	const colores = creadorDeColores.coloresCreados()
 
 	method fondo() {
@@ -25,7 +26,8 @@ object nivel1 {
 		keyboard.left().onPressDo{ jugador.moverIzquierda()}
 		game.onCollideDo(jugador, { algo => algo.colisionarCon(jugador)})
 		game.onTick(3000, "COLORES", { creadorDeColores.crearColor()})
-		game.onTick(gravedad, "GRAVEDAD", { colores.forEach{ color => color.caer()}})
+		game.onTick(gravedadColor, "GRAVEDAD", { colores.forEach{ color => gravedad.aplicarEfectoCaida(color)}})
+		game.onTick(gravedadJugador, "GRAVEDADJUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
 		game.onTick(3000, "CREAR COLOR", { creadorDeColores.crearColor()})
 		game.start()
 	}

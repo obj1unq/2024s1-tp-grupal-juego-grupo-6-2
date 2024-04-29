@@ -23,16 +23,6 @@ class Color {
 	method desaparecer(){
 		game.removeVisual(self)
 	}
-	
-	method caer(){
-		if (self.puedeMover(abajo)) {
-			position = abajo.siguiente(self.position())
-		}0
-	}
-	
-	method puedeMover(direccion){
-		return  tablero.puedeIr(self.position(), direccion)
-	}
 }
 
 

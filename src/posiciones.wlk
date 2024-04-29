@@ -8,13 +8,11 @@ object tablero {
 	
 	method pertenece(position) {
 		return position.x().between(0, game.width() - 1) &&
-			   position.y().between(0, game.height() -1 ) 
+			   position.y().between(0, game.height()- 1) 
 	}
 	
-	method puedeIr(desde, direccion) {
-		const aDondeVoy = direccion.siguiente(desde) 
-		return self.pertenece(aDondeVoy)
-				&& not self.hayObstaculo(aDondeVoy) 
+	method puedeIr(desde, direccionAIr) {
+		return self.pertenece(direccionAIr.siguiente(desde))	
 	}
 		
 	method hayObstaculo(position) {
@@ -22,8 +20,20 @@ object tablero {
 		return visuales.any({visual => not visual.esAtravesable()})
 	}
 	
+	method puedeMover(direccionAMover, objetoQueSeMueve){
+		return  self.puedeIr(objetoQueSeMueve.position(), direccionAMover)
+	}
+	
 }
 
+//GRAVEDAD
+object gravedad {
+	method aplicarEfectoCaida(objetoACaer){
+		if (tablero.puedeMover(abajo, objetoACaer)) {
+			objetoACaer.position(abajo.siguiente(objetoACaer.position()))
+		}
+	}
+}
 
 //DIRECCIONES 
 object arriba {
