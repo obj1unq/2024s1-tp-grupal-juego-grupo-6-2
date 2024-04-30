@@ -26,6 +26,32 @@ object tablero {
 	
 }
 
+//
+
+class Baldosa {
+	const property position 
+	
+	method colisionarCon(objeto){
+		game.removeVisual(objeto)
+	}
+	
+}
+
+object creadorDeBaldosa{
+	
+	method crearBaldosas(){
+		(0..(game.width() - 1)).forEach{x => self.crearBaldosa(x) } 
+	}
+	
+	method crearBaldosa(x){
+		const baldosa = new Baldosa(position = game.at(x, 0))
+		game.addVisual(baldosa)
+		game.onCollideDo(baldosa, {objeto => baldosa.colisionarCon(objeto)})
+			
+	}
+	
+}
+
 //GRAVEDAD
 object gravedad {
 	method aplicarEfectoCaida(objetoACaer){

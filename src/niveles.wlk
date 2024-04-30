@@ -5,18 +5,16 @@ import posiciones.*
 
 object nivel1 {
 
-	const property coloresAAtrapar = #{ "negro", "rojo", "azul" }
 	const gravedadJugador = 500
-	const gravedadColor = 1000 
-	const colores = creadorDeColores.coloresCreados()
-
+	const property objetosCreados = []
+	const property factoriesDeObjetos = [creadorDeMonedas, creadorDeHielos, creadorDeVidas]
+	
 	method fondo() {
 		return "fondoNivel1.jpg"
 	}
 
 	method init() {
 		game.title("Nivel 1")
-		console.println("lvl1")
 		game.cellSize(40)
 		game.width(20)
 		game.height(10)
@@ -24,11 +22,11 @@ object nivel1 {
 		game.addVisualCharacter(jugador)
 		keyboard.right().onPressDo{ jugador.moverDerecha()}
 		keyboard.left().onPressDo{ jugador.moverIzquierda()}
-		game.onCollideDo(jugador, { algo => algo.colisionarCon(jugador)})
-		game.onTick(3000, "COLORES", { creadorDeColores.crearColor()})
-		game.onTick(gravedadColor, "GRAVEDAD", { colores.forEach{ color => gravedad.aplicarEfectoCaida(color)}})
+		//game.onCollideDo(colores, { objeto => colores.allElements().colisionarCon(objeto)})
+		creadorDeBaldosa.crearBaldosas()
+		game.onTick(3000, "CREAR OBJETOS", { factoriesDeObjetos.anyOne().nuevoObjeto()})
+		game.onTick(3000, "GRAVEDAD", { objetosCreados.forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		game.onTick(gravedadJugador, "GRAVEDADJUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
-		game.onTick(3000, "CREAR COLOR", { creadorDeColores.crearColor()})
 		game.start()
 	}
 

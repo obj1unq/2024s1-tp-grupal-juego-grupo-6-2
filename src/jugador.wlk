@@ -5,14 +5,23 @@ import posiciones.*
 
 object jugador {
 
-	var property position = game.at(0, 0)
-	const nivel = nivel1
-	var property coloresAtrapados = []
+	var property position = game.at(0, 1)
+	//const nivel = nivel1
+	var property monedasAtrapadas = []
 	var property estadoDeJugador = jugandoDerecha
+	
+	var property vida = 100
+
 
 	method estadoDeJugador(_estadoDeJugador) {
 		estadoDeJugador = _estadoDeJugador
 		estadoDeJugador.activar()
+	}
+	
+	method congelarse(){
+		
+		self.estadoDeJugador(congelado)
+		game.schedule(2000, {self.estadoDeJugador(jugandoDerecha)})
 	}
 
 	method image() {
@@ -28,7 +37,7 @@ object jugador {
 		estadoDeJugador = perdedor
 		estadoDeJugador.activar()
 	}
-
+	
 	method moverIzquierda() {
 		estadoDeJugador = jugandoIzquierda
 		estadoDeJugador.activar()
@@ -39,7 +48,7 @@ object jugador {
 		estadoDeJugador.activar()
 	}
 
-	method atraparColor(color) {
+	/*method atraparColor(color) {
 		self.validarColor(color)
 		coloresAtrapados.add(color)
 		self.chequearResultado()
@@ -59,27 +68,19 @@ object jugador {
 		} else if (coloresAtrapados.size() == 0) {
 			self.perder()
 		}
-	}
+	}*/
 
 }
 
 // ESTADOS DEL JUGADOR
 object jugandoDerecha {
-
 	method puedeMover() = true
-
-	method activar() {
-	}
-
+	method activar() {}
 }
 
 object jugandoIzquierda {
-
 	method puedeMover() = true
-
-	method activar() {
-	}
-
+	method activar() {}
 }
 
 object ganador {
@@ -90,7 +91,11 @@ object ganador {
 		game.say(jugador, "Gané!")
 		game.schedule(5000, { game.stop()})
 	}
+}
 
+object congelado {
+	method puedeMover() = false
+	
 }
 
 object perdedor {

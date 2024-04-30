@@ -2,7 +2,7 @@ import wollok.game.*
 import colores.*
 import jugador.*
 
-describe "test de colores" {
+/*describe "test de colores" {
 
 	var color
 
@@ -17,5 +17,5 @@ describe "test de colores" {
 		assert.equals(2, creadorDeColores.coloresCreados().size())
 	}
 
-}
+}*/
 

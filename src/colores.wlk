@@ -3,28 +3,89 @@ import jugador.*
 import niveles.*
 import posiciones.*
 
-class Color {
-	var property position = randomizer.emptyPosition()
-	var property nombre = null
-	
-	
+class Moneda {
+	var property position 
+	const property velocidadDeCaida = 3000
 	
 	method image(){
-		// console.println(colores.anyOne()+ "png")
-		return nombre + ".png"
-	}
-	
-	method colisionarCon(personaje) {
-		personaje.atraparColor(self)
-		creadorDeColores.coloresCreados().remove(self)
-		self.desaparecer()
+		return "moneda.png"
 	}
 	
 	method desaparecer(){
 		game.removeVisual(self)
 	}
+	
+	method colisionarCon(objeto){
+		
+	}
 }
 
+object creadorDeMonedas {
+	
+	method nuevoObjeto(){
+	const objeto = new Moneda(position = randomizer.emptyPosition())
+		game.addVisual(objeto)
+		nivel1.objetosCreados().add(objeto)
+	}
+	
+	method colisionarCon(objeto){
+		
+	}
+}
+
+
+class Hielo {
+	var property position 
+	const property velocidadDeCaida = 1000
+	
+	method image(){
+		return "hielo.png"
+	}
+	
+	method desaparecer(){
+		game.removeVisual(self)
+	}
+	
+	method colisionarCon(objeto){
+		
+	}
+}
+
+object creadorDeHielos {
+	
+	method nuevoObjeto(){
+	const objeto = new Hielo(position = randomizer.emptyPosition())
+		game.addVisual(objeto)
+		nivel1.objetosCreados().add(objeto)
+	}
+}
+
+class Vida {
+	var property position  
+	const property velocidadDeCaida = 5000
+	
+	method image(){
+		return "vida.png"
+	}
+	
+	method desaparecer(){
+		game.removeVisual(self)
+	}
+	
+	method colisionarCon(objeto){
+		
+	}
+}	
+
+object creadorDeVidas {
+	
+	method nuevoObjeto(){
+	const objeto = new Vida(position = randomizer.emptyPosition())
+	
+		game.addVisual(objeto)
+		nivel1.objetosCreados().add(objeto)
+	}
+}
 
 object randomizer {
 		
@@ -41,32 +102,6 @@ object randomizer {
 			return self.emptyPosition()
 		}
 	}
-	
 }
 	
-object creadorDeColores {
-	const maximaCantidadDeColores = 20
-	const property nombreDeColores = ["negro", "rojo", "rosa", "verde", "azul", "amarillo"]
-	
-	const property coloresCreados = []
-	
-	method crearColor() {
-		if (coloresCreados.size() < maximaCantidadDeColores) {
-		
-			coloresCreados.add(self.nuevoColor())
-		}
-		
 
-	}
-
-	method nuevoColor(){
-		const color = new Color()
-		
-		color.nombre(nombreDeColores.anyOne())
-		game.addVisual(color)
-		coloresCreados.add(color)
-		return color
-	}
-	
-	
-}

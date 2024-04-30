@@ -3,7 +3,7 @@ import niveles.*
 import colores.*
 import wollok.game.*
 
-describe "Tests del juego" {
+/*describe "Tests del juego" {
 
 
 	test "test atrapar color correcto" {
@@ -33,4 +33,4 @@ describe "Tests del juego" {
 //	jugador.coloresAtrapados([])
 //	jugador.atraparColor("rosa")
 //	assert.equals(perdedor,jugador.estadoDeJugador())
-//}  
+//} */ 
