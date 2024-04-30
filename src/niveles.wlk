@@ -15,18 +15,19 @@ object nivel1 {
 
 	method init() {
 		game.title("Nivel 1")
-		game.cellSize(40)
+		game.cellSize(60)
 		game.width(20)
 		game.height(10)
 		game.boardGround(self.fondo())
-		game.addVisualCharacter(jugador)
+		game.addVisual(jugador)
 		keyboard.right().onPressDo{ jugador.moverDerecha()}
 		keyboard.left().onPressDo{ jugador.moverIzquierda()}
-		//game.onCollideDo(colores, { objeto => colores.allElements().colisionarCon(objeto)})
+		keyboard.up().onPressDo{ jugador.saltar()}
+		keyboard.up().onPressDo{game.schedule(gravedadJugador, {gravedad.aplicarEfectoCaida(jugador)})}
 		creadorDeBaldosa.crearBaldosas()
 		game.onTick(3000, "CREAR OBJETOS", { factoriesDeObjetos.anyOne().nuevoObjeto()})
 		game.onTick(3000, "GRAVEDAD", { objetosCreados.forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
-		game.onTick(gravedadJugador, "GRAVEDADJUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
+		
 		game.start()
 	}
 
