@@ -10,8 +10,16 @@ object jugador {
 	var property monedasAtrapadas = []
 	var property estadoDeJugador = jugandoDerecha
 	
-	var property vida = 100
+	var vida = 100
+	
+	
+	method vida(_vida){
+		vida += _vida
+	}
 
+	method vida(){
+		return vida
+	}
 
 	method estadoDeJugador(_estadoDeJugador) {
 		estadoDeJugador = _estadoDeJugador

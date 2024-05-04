@@ -7,6 +7,7 @@ class Moneda {
 	var property position 
 	const property velocidadDeCaida = 3000
 	
+	
 	method image(){
 		return "moneda.png"
 	}
@@ -16,7 +17,8 @@ class Moneda {
 	}
 	
 	method colisionarCon(objeto){
-		
+		objeto.monedasAtrapadas().add(self)
+		self.desaparecer()
 	}
 }
 
@@ -26,10 +28,6 @@ object creadorDeMonedas {
 	const objeto = new Moneda(position = randomizer.emptyPosition())
 		game.addVisual(objeto)
 		nivel1.objetosCreados().add(objeto)
-	}
-	
-	method colisionarCon(objeto){
-		
 	}
 }
 
@@ -47,7 +45,8 @@ class Hielo {
 	}
 	
 	method colisionarCon(objeto){
-		
+		objeto.congelarse()	
+		self.desaparecer()
 	}
 }
 
@@ -73,7 +72,8 @@ class Vida {
 	}
 	
 	method colisionarCon(objeto){
-		
+		objeto.vida(100)
+		self.desaparecer()
 	}
 }	
 
