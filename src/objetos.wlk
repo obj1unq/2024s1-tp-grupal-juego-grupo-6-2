@@ -119,7 +119,7 @@ class Maza {
 	}
 
 	method colisionarCon(objeto) {
-		objeto.vida(0)
+		objeto.perder()
 		self.desaparecer()
 	}
 
