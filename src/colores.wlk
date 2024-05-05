@@ -16,6 +16,10 @@ class Moneda {
 		game.removeVisual(self)
 	}
 	
+	method esAtravesable(){
+		return false
+	}
+	
 	method colisionarCon(objeto){
 		objeto.monedasAtrapadas().add(self)
 		self.desaparecer()
@@ -44,6 +48,10 @@ class Hielo {
 		game.removeVisual(self)
 	}
 	
+	method esAtravesable(){
+		return false
+	}
+	
 	method colisionarCon(objeto){
 		objeto.congelarse()	
 		self.desaparecer()
@@ -57,6 +65,8 @@ object creadorDeHielos {
 		game.addVisual(objeto)
 		nivel1.objetosCreados().add(objeto)
 	}
+	
+	
 }
 
 class Vida {
@@ -69,6 +79,10 @@ class Vida {
 	
 	method desaparecer(){
 		game.removeVisual(self)
+	}
+	
+	method esAtravesable(){
+		return false
 	}
 	
 	method colisionarCon(objeto){
