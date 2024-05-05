@@ -1,6 +1,6 @@
 import jugador.*
 import niveles.*
-import colores.*
+import objetos.*
 import wollok.game.*
 
 /*describe "Tests del juego" {

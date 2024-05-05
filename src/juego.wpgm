@@ -1,7 +1,7 @@
 import wollok.game.*
 import jugador.*
 import niveles.*
-import colores.*
+import objetos.*
 
 program juego {
 	nivel1.init()
