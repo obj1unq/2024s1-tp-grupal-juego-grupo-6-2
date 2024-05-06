@@ -43,9 +43,5 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 	}
 	
 	
-	test "hola"{
-
-	}
-	
 }
 
