@@ -41,6 +41,11 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		maza.colisionarCon(jugador)
 		assert.equals(perdedor, jugador.estadoDeJugador())
 	}
+	
+	
+	test "hola"{
 
+	}
+	
 }
 
