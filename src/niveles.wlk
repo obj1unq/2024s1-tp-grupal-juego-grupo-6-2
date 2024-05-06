@@ -28,6 +28,8 @@ object nivel1 {
 		game.onTick(3000, "CREAR OBJETOS", { factoriesDeObjetos.anyOne().nuevoObjeto()})
 		game.onTick(3000, "GRAVEDAD", { objetosCreados.forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		
+		game.onCollideDo(jugador, { objeto => objeto.colisionarCon(jugador) })
+		
 		game.start()
 	}
 

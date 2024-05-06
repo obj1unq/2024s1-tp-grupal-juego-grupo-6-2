@@ -29,7 +29,7 @@ object jugador {
 	method congelarse(){
 		
 		self.estadoDeJugador(congelado)
-		game.schedule(2000, {self.estadoDeJugador(jugandoDerecha)})
+		game.schedule(4000, {self.estadoDeJugador(jugandoDerecha)})
 	}
 
 	method image() {
@@ -121,6 +121,10 @@ object ganador {
 
 object congelado {
 	method puedeMover() = false
+	
+	method activar(){
+			
+	}
 	
 }
 
