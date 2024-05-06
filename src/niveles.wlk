@@ -7,7 +7,7 @@ object nivel1 {
 
 	const gravedadJugador = 500
 	const property objetosCreados = []
-	const property factoriesDeObjetos = [creadorDeMonedas, creadorDeHielos, creadorDeVidas]
+	const property factoriesDeObjetos = [creadorDeMonedas, creadorDeHielos, creadorDeVidas, creadorDeMazas]
 	
 	method fondo() {
 		return "fondoNivel1.jpg"
