@@ -16,6 +16,10 @@ object jugador {
 	method vida(_vida){
 		vida += _vida
 	}
+	
+	method sumarVida(){
+		vida += 100
+	}
 
 	method vida(){
 		return vida
@@ -29,7 +33,7 @@ object jugador {
 	method congelarse(){
 		
 		self.estadoDeJugador(congelado)
-		game.schedule(4000, {self.estadoDeJugador(jugandoDerecha)})
+		game.schedule(5000, { self.estadoDeJugador(jugandoDerecha)})
 	}
 
 	method image() {
@@ -47,50 +51,36 @@ object jugador {
 	}
 	
 	method moverIzquierda() {
+		self.validarQuePuedeMover()
 		estadoDeJugador = jugandoIzquierda
 		estadoDeJugador.activar()
 		self.position(izquierda.siguiente(self.position()))
 	}
 
 	method moverDerecha() {
+		self.validarQuePuedeMover()
 		estadoDeJugador = jugandoDerecha
 		estadoDeJugador.activar()
 		self.position(derecha.siguiente(self.position()))
 	}
 	method saltar() {
+		self.validarQuePuedeMover()
 		estadoDeJugador = saltando
 		estadoDeJugador.activar()
 		self.position(arriba.siguiente(self.position()))
 		game.schedule(500, {self.estadoDeJugador(jugandoDerecha)})
 	}
 	
+	method validarQuePuedeMover(){
+		if(not self.estadoDeJugador().puedeMover()){
+			self.error("No me puedo mover :/")
+		}
+	}
+	
 	method esAtravesable(){
 		return false
 	}
 	
-
-	/*method atraparColor(color) {
-		self.validarColor(color)
-		coloresAtrapados.add(color)
-		self.chequearResultado()
-	}
-
-	method validarColor(color) {
-		if (not nivel1.coloresAAtrapar().contains(color.nombre())) {
-			self.chequearResultado()
-			coloresAtrapados.remove(coloresAtrapados.last()) // VALIDAR LAST, LISTA VACIA
-			self.error("No puedo atrapar este color..")
-		}
-	}
-
-	method chequearResultado() {
-		if (coloresAtrapados.size() == 10) {
-			self.ganar()
-		} else if (coloresAtrapados.size() == 0) {
-			self.perder()
-		}
-	}*/
-
 }
 
 // ESTADOS DEL JUGADOR

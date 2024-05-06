@@ -6,6 +6,12 @@ import jugador.*
 
 object tablero {
 	
+	const property jugadores = #{jugador}
+	
+	method esJugador(objeto){
+		return self.jugadores().contains(objeto)
+	}
+	
 	method pertenece(position) {
 		return position.x().between(0, game.width() - 1) &&
 			   position.y().between(0, game.height()-1) 
@@ -32,7 +38,8 @@ class Baldosa {
 	const property position 
 	
 	method colisionarCon(objeto){
-		if(objeto!= jugador){
+		//if(objeto!= jugador){
+		if(not tablero.esJugador(objeto)){
 			game.removeVisual(objeto)
 		}
 	}
@@ -62,8 +69,15 @@ object creadorDeBaldosa{
 //GRAVEDAD
 object gravedad {
 	method aplicarEfectoCaida(objetoACaer){
+		self.validarEstadoSiEsJugador(objetoACaer)
 		if (tablero.puedeMover(abajo, objetoACaer)) {
 			objetoACaer.position(abajo.siguiente(objetoACaer.position()))
+		}
+	}
+	
+	method validarEstadoSiEsJugador(objeto){
+		if(tablero.esJugador(objeto)){
+			objeto.validarQuePuedeMover()
 		}
 	}
 }

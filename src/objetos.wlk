@@ -33,6 +33,7 @@ object creadorDeMonedas {
 		const objeto = new Moneda(position = randomizer.emptyPosition())
 		game.addVisual(objeto)
 		nivel1.objetosCreados().add(objeto)
+		return objeto
 	}
 
 }
@@ -67,6 +68,7 @@ object creadorDeHielos {
 		const objeto = new Hielo(position = randomizer.emptyPosition())
 		game.addVisual(objeto)
 		nivel1.objetosCreados().add(objeto)
+		return objeto
 	}
 
 }
@@ -101,6 +103,7 @@ object creadorDeVidas {
 		const objeto = new Vida(position = randomizer.emptyPosition())
 		game.addVisual(objeto)
 		nivel1.objetosCreados().add(objeto)
+		return objeto
 	}
 
 }
@@ -125,12 +128,13 @@ class Maza {
 
 }
 
-object creadorDeMaza {
+object creadorDeMazas {
 
 	method nuevoObjeto() {
 		const objeto = new Maza(position = randomizer.emptyPosition())
 		game.addVisual(objeto)
 		nivel1.objetosCreados().add(objeto)
+		return objeto
 	}
 
 }
