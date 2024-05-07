@@ -18,7 +18,7 @@ object nivel1 {
 		game.cellSize(60)
 		game.width(20)
 		game.height(10)
-		game.boardGround(self.fondo())
+		game.boardGround(self.fondo()) // background
 		game.addVisual(jugador)
 		keyboard.right().onPressDo{ jugador.moverDerecha()}
 		keyboard.left().onPressDo{ jugador.moverIzquierda()}

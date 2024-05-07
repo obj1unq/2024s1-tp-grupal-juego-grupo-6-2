@@ -27,7 +27,7 @@ object tablero {
 	}*/
 	
 	method puedeMover(direccionAMover, objetoQueSeMueve){
-		return  self.puedeIr(objetoQueSeMueve.position(), direccionAMover) 
+		return  objetoQueSeMueve.puedeMover() && self.puedeIr(objetoQueSeMueve.position(), direccionAMover) 
 	}
 	
 }
@@ -69,7 +69,7 @@ object creadorDeBaldosa{
 //GRAVEDAD
 object gravedad {
 	method aplicarEfectoCaida(objetoACaer){
-		self.validarEstadoSiEsJugador(objetoACaer)
+		//self.validarEstadoSiEsJugador(objetoACaer)
 		if (tablero.puedeMover(abajo, objetoACaer)) {
 			objetoACaer.position(abajo.siguiente(objetoACaer.position()))
 		}

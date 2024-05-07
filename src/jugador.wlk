@@ -9,8 +9,11 @@ object jugador {
 	//const nivel = nivel1
 	var property monedasAtrapadas = []
 	var property estadoDeJugador = jugandoDerecha
-	
 	var vida = 100
+	
+	method puedeMover(){
+		return estadoDeJugador.puedeMover()
+	}
 	
 	
 	method vida(_vida){

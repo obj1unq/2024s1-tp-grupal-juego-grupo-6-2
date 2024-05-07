@@ -3,7 +3,15 @@ import jugador.*
 import niveles.*
 import posiciones.*
 
-class Moneda {
+class ObjetoQueCae {
+	
+	method puedeMover(){
+		return true
+	}
+	
+}
+
+class Moneda inherits ObjetoQueCae {
 
 	var property position
 	const property velocidadDeCaida = 3000
@@ -38,7 +46,7 @@ object creadorDeMonedas {
 
 }
 
-class Hielo {
+class Hielo inherits ObjetoQueCae {
 
 	var property position
 	const property velocidadDeCaida = 1000
@@ -73,7 +81,7 @@ object creadorDeHielos {
 
 }
 
-class Vida {
+class Vida inherits ObjetoQueCae {
 
 	var property position
 	const property velocidadDeCaida = 5000
@@ -108,7 +116,7 @@ object creadorDeVidas {
 
 }
 
-class Maza {
+class Maza inherits ObjetoQueCae {
 
 	var property position
 	const property image = "maza.png"
