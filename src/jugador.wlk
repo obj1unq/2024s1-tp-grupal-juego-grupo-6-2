@@ -5,26 +5,25 @@ import posiciones.*
 
 object jugador {
 
-	var property position = game.at(5,1)
-	//const nivel = nivel1
+	var property position = game.at(5, 1)
+	// const nivel = nivel1
 	var property monedasAtrapadas = []
 	var property estadoDeJugador = jugandoDerecha
 	var vida = 100
-	
-	method puedeMover(){
+
+	method puedeMover() {
 		return estadoDeJugador.puedeMover()
 	}
-	
-	
-	method vida(_vida){
+
+	method vida(_vida) {
 		vida += _vida
 	}
-	
-	method sumarVida(){
+
+	method sumarVida() {
 		vida += 100
 	}
 
-	method vida(){
+	method vida() {
 		return vida
 	}
 
@@ -32,9 +31,8 @@ object jugador {
 		estadoDeJugador = _estadoDeJugador
 		estadoDeJugador.activar()
 	}
-	
-	method congelarse(){
-		
+
+	method congelarse() {
 		self.estadoDeJugador(congelado)
 		game.schedule(5000, { self.estadoDeJugador(jugandoDerecha)})
 	}
@@ -52,54 +50,82 @@ object jugador {
 		estadoDeJugador = perdedor
 		estadoDeJugador.activar()
 	}
-	
+
 	method moverIzquierda() {
-		self.validarQuePuedeMover()
+		self.validarQuePuedeMover(izquierda)
 		estadoDeJugador = jugandoIzquierda
 		estadoDeJugador.activar()
 		self.position(izquierda.siguiente(self.position()))
 	}
 
 	method moverDerecha() {
-		self.validarQuePuedeMover()
+		self.validarQuePuedeMover(derecha)
 		estadoDeJugador = jugandoDerecha
 		estadoDeJugador.activar()
 		self.position(derecha.siguiente(self.position()))
 	}
+
 	method saltar() {
-		self.validarQuePuedeMover()
+		self.validarQuePuedeMover(arriba)
 		estadoDeJugador = saltando
 		estadoDeJugador.activar()
 		self.position(arriba.siguiente(self.position()))
-		game.schedule(500, {self.estadoDeJugador(jugandoDerecha)})
+		game.schedule(500, { self.estadoDeJugador(jugandoDerecha)})
 	}
-	
-	method validarQuePuedeMover(){
-		if(not self.estadoDeJugador().puedeMover()){
+
+	method validarQuePuedeMover(hacia) {
+		self.validarPuedeIr(hacia)
+		self.validarEstadoJugador()
+	}
+
+	method validarEstadoJugador() {
+		if (not self.estadoDeJugador().puedeMover()) {
 			self.error("No me puedo mover :/")
 		}
 	}
-	
-	method esAtravesable(){
+
+	method validarPuedeIr(hacia) {
+		if (not self.puedeIr(hacia)) {
+			self.error("No puedo ir en esa direccion")
+		}
+	}
+
+	method puedeIr(hacia) {
+		return tablero.puedeMover(hacia, self)
+	}
+
+	method esAtravesable() {
 		return false
 	}
-	
+
 }
 
 // ESTADOS DEL JUGADOR
 object jugandoDerecha {
+
 	method puedeMover() = true
-	method activar() {}
+
+	method activar() {
+	}
+
 }
 
 object jugandoIzquierda {
+
 	method puedeMover() = true
-	method activar() {}
+
+	method activar() {
+	}
+
 }
 
 object saltando {
+
 	method puedeMover() = true
-	method activar() {}
+
+	method activar() {
+	}
+
 }
 
 object ganador {
@@ -110,15 +136,16 @@ object ganador {
 		game.say(jugador, "Gané!")
 		game.schedule(5000, { game.stop()})
 	}
+
 }
 
 object congelado {
+
 	method puedeMover() = false
-	
-	method activar(){
-			
+
+	method activar() {
 	}
-	
+
 }
 
 object perdedor {
@@ -127,7 +154,7 @@ object perdedor {
 
 	method activar() {
 		game.say(jugador, "Perdí!")
-		game.schedule(0500, { game.stop()})
+		game.schedule(5000, { game.stop()})
 	}
 
 }

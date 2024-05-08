@@ -2,6 +2,7 @@ import jugador.*
 import niveles.*
 import objetos.*
 import wollok.game.*
+import posiciones.*
 
 
 describe "Tests de colision del personaje jugador con los objetos del juego" {
@@ -42,6 +43,14 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.equals(perdedor, jugador.estadoDeJugador())
 	}
 	
+	test "Jugador en el borde izquierdo no puede mover hacia la izquierda" {
+		jugador.position(game.at(0,1))
+		assert.notThat(tablero.puedeIr(jugador.position(), izquierda))
+	}
 	
+	test "Jugador en el borde derecho no puede mover hacia la derecha" {
+		jugador.position(game.at(game.width()-1,1))
+		assert.notThat(tablero.puedeIr(jugador.position(), derecha))
+	}
 }
 

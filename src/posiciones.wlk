@@ -17,13 +17,13 @@ object tablero {
 			   position.y().between(0, game.height()-1) 
 	}
 	
-	method puedeIr(desde, direccionAIr) {
-		return self.pertenece(direccionAIr.siguiente(desde))	
+	method puedeIr(desde, hacia) {
+		return self.pertenece(hacia.siguiente(desde))	
 	}
 		
 	
-	method puedeMover(direccionAMover, objetoQueSeMueve){
-		return  objetoQueSeMueve.puedeMover() && self.puedeIr(objetoQueSeMueve.position(), direccionAMover) 
+	method puedeMover(hacia, objetoQueSeMueve){
+		return  objetoQueSeMueve.puedeMover() && self.puedeIr(objetoQueSeMueve.position(), hacia) 
 	}
 	
 }
