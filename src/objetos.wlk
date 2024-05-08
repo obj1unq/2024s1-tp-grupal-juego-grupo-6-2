@@ -10,9 +10,18 @@ class ObjetoQueCae {
 	method puedeMover() {
 		return true
 	}
-	
-	//METODO ABSTRACTO.
-	method colisionarCon(objeto) 
+
+	method colisionarCon(objeto) {
+		self.accionAlColisionarCon(objeto)
+		self.desaparecer()
+	}
+
+	method desaparecer() {
+		game.removeVisual(self)
+	}
+
+	// Metodo abstracto
+	method accionAlColisionarCon(objeto)
 
 }
 
@@ -24,15 +33,8 @@ class Moneda inherits ObjetoQueCae {
 		return "moneda.png"
 	}
 
-	method desaparecer() {
-		game.removeVisual(self)
-	}
-
-	
-
-	override method colisionarCon(objeto) {
+	override method accionAlColisionarCon(objeto) {
 		objeto.monedasAtrapadas().add(self)
-		self.desaparecer()
 	}
 
 }
@@ -56,15 +58,8 @@ class Hielo inherits ObjetoQueCae {
 		return "hielo.png"
 	}
 
-	method desaparecer() {
-		game.removeVisual(self)
-	}
-
-	
-
-	override method colisionarCon(objeto) {
+	override method accionAlColisionarCon(objeto) {
 		objeto.congelarse()
-		self.desaparecer()
 	}
 
 }
@@ -88,15 +83,8 @@ class Vida inherits ObjetoQueCae {
 		return "vida.png"
 	}
 
-	method desaparecer() {
-		game.removeVisual(self)
-	}
-
-	
-
-	override method colisionarCon(objeto) {
+	override method accionAlColisionarCon(objeto) {
 		objeto.vida(100)
-		self.desaparecer()
 	}
 
 }
@@ -121,10 +109,8 @@ class Maza inherits ObjetoQueCae {
 		game.removeVisual(self)
 	}
 
-	
-	override method colisionarCon(objeto) {
+	override method accionAlColisionarCon(objeto) {
 		objeto.perder()
-		self.desaparecer()
 	}
 
 }
