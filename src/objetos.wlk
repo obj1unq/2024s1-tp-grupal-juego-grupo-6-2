@@ -4,17 +4,21 @@ import niveles.*
 import posiciones.*
 
 class ObjetoQueCae {
-	
-	method puedeMover(){
+
+	const property velocidadDeCaida = null
+
+	method puedeMover() {
 		return true
 	}
 	
+	//METODO ABSTRACTO.
+	method colisionarCon(objeto) 
+
 }
 
 class Moneda inherits ObjetoQueCae {
 
 	var property position
-	const property velocidadDeCaida = 3000
 
 	method image() {
 		return "moneda.png"
@@ -49,7 +53,6 @@ object creadorDeMonedas {
 class Hielo inherits ObjetoQueCae {
 
 	var property position
-	const property velocidadDeCaida = 1000
 
 	method image() {
 		return "hielo.png"
@@ -84,7 +87,6 @@ object creadorDeHielos {
 class Vida inherits ObjetoQueCae {
 
 	var property position
-	const property velocidadDeCaida = 5000
 
 	method image() {
 		return "vida.png"
