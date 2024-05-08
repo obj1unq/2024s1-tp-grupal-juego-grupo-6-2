@@ -30,7 +30,7 @@ class Moneda inherits ObjetoQueCae {
 
 	
 
-	method colisionarCon(objeto) {
+	override method colisionarCon(objeto) {
 		objeto.monedasAtrapadas().add(self)
 		self.desaparecer()
 	}
@@ -62,7 +62,7 @@ class Hielo inherits ObjetoQueCae {
 
 	
 
-	method colisionarCon(objeto) {
+	override method colisionarCon(objeto) {
 		objeto.congelarse()
 		self.desaparecer()
 	}
@@ -94,7 +94,7 @@ class Vida inherits ObjetoQueCae {
 
 	
 
-	method colisionarCon(objeto) {
+	override method colisionarCon(objeto) {
 		objeto.vida(100)
 		self.desaparecer()
 	}
@@ -122,7 +122,7 @@ class Maza inherits ObjetoQueCae {
 	}
 
 	
-	method colisionarCon(objeto) {
+	override method colisionarCon(objeto) {
 		objeto.perder()
 		self.desaparecer()
 	}
