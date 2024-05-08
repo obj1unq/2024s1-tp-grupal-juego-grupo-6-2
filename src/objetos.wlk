@@ -28,9 +28,7 @@ class Moneda inherits ObjetoQueCae {
 		game.removeVisual(self)
 	}
 
-	method esAtravesable() {
-		return false
-	}
+	
 
 	method colisionarCon(objeto) {
 		objeto.monedasAtrapadas().add(self)
@@ -62,9 +60,7 @@ class Hielo inherits ObjetoQueCae {
 		game.removeVisual(self)
 	}
 
-	method esAtravesable() {
-		return false
-	}
+	
 
 	method colisionarCon(objeto) {
 		objeto.congelarse()
@@ -96,9 +92,7 @@ class Vida inherits ObjetoQueCae {
 		game.removeVisual(self)
 	}
 
-	method esAtravesable() {
-		return false
-	}
+	
 
 	method colisionarCon(objeto) {
 		objeto.vida(100)
@@ -127,10 +121,7 @@ class Maza inherits ObjetoQueCae {
 		game.removeVisual(self)
 	}
 
-	method esAtravesable() {
-		return false
-	}
-
+	
 	method colisionarCon(objeto) {
 		objeto.perder()
 		self.desaparecer()

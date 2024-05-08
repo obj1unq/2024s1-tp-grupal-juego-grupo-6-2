@@ -21,10 +21,6 @@ object tablero {
 		return self.pertenece(direccionAIr.siguiente(desde))	
 	}
 		
-	/*method hayObstaculo(position) {
-		const visuales = game.getObjectsIn(position)
-		return visuales.any({visual => not visual.esAtravesable()})
-	}*/
 	
 	method puedeMover(direccionAMover, objetoQueSeMueve){
 		return  objetoQueSeMueve.puedeMover() && self.puedeIr(objetoQueSeMueve.position(), direccionAMover) 
