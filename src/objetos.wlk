@@ -33,9 +33,14 @@ class Moneda inherits ObjetoQueCae {
 	method image() {
 		return "moneda.png"
 	}
+	
+	method valor(){
+		return 10
+	}
 
-	override method accionAlColisionarCon(objeto) {
-		objeto.monedasAtrapadas().add(self)
+	override method accionAlColisionarCon(jugador) {
+		jugador.sumarMoneda(self.valor())
+		jugador.corroborarSiGana()
 	}
 
 }
@@ -84,8 +89,8 @@ class Vida inherits ObjetoQueCae {
 		return "vida.png"
 	}
 
-	override method accionAlColisionarCon(objeto) {
-		objeto.vida(100)
+	override method accionAlColisionarCon(jugador) {
+		jugador.sumarVida()
 	}
 
 }
@@ -106,12 +111,13 @@ class Maza inherits ObjetoQueCae {
 	var property position
 	const property image = "maza.png"
 
-	method desaparecer() {
+	override method desaparecer() {
 		game.removeVisual(self)
 	}
 
-	override method accionAlColisionarCon(objeto) {
-		objeto.perder()
+	override method accionAlColisionarCon(jugador) {
+		jugador.restarVida()
+		jugador.corroborarSiPierde()
 	}
 
 }
