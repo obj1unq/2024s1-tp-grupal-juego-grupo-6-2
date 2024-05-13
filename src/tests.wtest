@@ -13,19 +13,19 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 	}
 
 	test "Jugador suma vidas" {
-		assert.equals(100, jugador.vida()) // cantidad de vida con la que arranca el jugador
+		assert.equals(3, jugador.vida()) // cantidad de vida con la que arranca el jugador
 		var vida = creadorDeVidas.nuevoObjeto()
 		vida.colisionarCon(jugador)
-		assert.equals(200, jugador.vida()) // el jugador colisiono con una vida y ahora sumo a 200 de vida
+		assert.equals(4, jugador.vida()) // el jugador colisiono con una vida y ahora sumo a 4 vidas
 	}
 
 	test "Jugador atrapa dos monedas" {
-		assert.that(jugador.monedasAtrapadas().isEmpty()) // cantidad de vida con la que arranca el jugador
+		assert.that(jugador.valorMonedasAtrapadas() == 0) // cantidad de valor por monedas con la que arranca el jugador
 		var moneda1 = creadorDeMonedas.nuevoObjeto()
 		var moneda2 = creadorDeMonedas.nuevoObjeto()
 		moneda1.colisionarCon(jugador)
 		moneda2.colisionarCon(jugador)
-		assert.equals(2, jugador.monedasAtrapadas().size()) // el jugador colisiono con una vida y ahora sumo a 200 de vida
+		assert.equals(20, jugador.valorMonedasAtrapadas()) // el jugador colisiono con una vida y ahora sumo a 200 de vida
 	}
 	
 	test "Jugador atrapa un hielo, se congela y no se puede mover"{
@@ -37,8 +37,9 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.throwsException({jugador.saltar()})
 	}
 	
-	test "Jugador colisiona con una Maza y pierde"{
+	test "Jugador colisiona con una Maza y pierde"{ //este test chequea el funcionamiento de la maza y el perder del jugador
 		var maza = creadorDeMazas.nuevoObjeto()
+		jugador.vida(1)
 		maza.colisionarCon(jugador)
 		assert.equals(perdedor, jugador.estadoDeJugador())
 	}
@@ -52,5 +53,15 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		jugador.position(game.at(game.width()-1,1))
 		assert.notThat(tablero.puedeIr(jugador.position(), derecha))
 	}
+	
+	test "jugador Gana"{ 
+		var moneda = creadorDeMonedas.nuevoObjeto()
+		
+		jugador.valorMonedasAtrapadas(90)
+		moneda.accionAlColisionarCon(jugador)
+		assert.equals(ganador,jugador.estadoDeJugador())
+	}
+	
+	
 }
 

@@ -7,24 +7,24 @@ object jugador {
 
 	var property position = game.at(5, 1)
 	// const nivel = nivel1
-	var property monedasAtrapadas = []
+	var property valorMonedasAtrapadas = 0
 	var property estadoDeJugador = jugandoDerecha
-	var vida = 100
+	var property vida = 3
 
 	method puedeMover() {
 		return estadoDeJugador.puedeMover()
 	}
-
-	method vida(_vida) {
-		vida += _vida
+	
+	method sumarMoneda(valorMoneda) {
+		valorMonedasAtrapadas += valorMoneda
 	}
 
 	method sumarVida() {
-		vida += 100
+		vida += 1
 	}
-
-	method vida() {
-		return vida
+	
+	method restarVida(){
+		vida = vida - 1
 	}
 
 	method estadoDeJugador(_estadoDeJugador) {
@@ -39,6 +39,18 @@ object jugador {
 
 	method image() {
 		return "jugador-" + estadoDeJugador.toString() + ".png"
+	}
+
+	method corroborarSiGana(){
+		if (valorMonedasAtrapadas == 100){
+			self.ganar()
+		}
+	}
+	
+	method corroborarSiPierde(){
+		if (vida == 0){
+			self.perder()
+		}
 	}
 
 	method ganar() {
@@ -134,7 +146,7 @@ object ganador {
 
 	method activar() {
 		game.say(jugador, "Gané!")
-		game.schedule(5000, { game.stop()})
+		game.schedule(3000, { game.stop()})
 	}
 
 }
@@ -154,7 +166,7 @@ object perdedor {
 
 	method activar() {
 		game.say(jugador, "Perdí!")
-		game.schedule(5000, { game.stop()})
+		game.schedule(3000, { game.stop()})
 	}
 
 }
