@@ -6,10 +6,11 @@ import posiciones.*
 
 
 describe "Tests de colision del personaje jugador con los objetos del juego" {
-
+	var vida = creadorDeVidas.nuevoObjeto()
 	method initialize() {
 		game.clear()
 		game.addVisual(jugador)
+		game.addVisual(vida)
 	}
 
 	test "Jugador suma vidas" {
@@ -60,6 +61,13 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		jugador.valorMonedasAtrapadas(90)
 		moneda.accionAlColisionarCon(jugador)
 		assert.equals(ganador,jugador.estadoDeJugador())
+	}
+	
+	test "desaparecer objeto y remover de la lista" {
+		assert.equals(1, nivel1.objetosCreados().size())
+		nivel1.objetosCreados().get(0).desaparecer()
+		assert.equals(0, nivel1.objetosCreados().size())
+		assert.notThat(game.hasVisual(vida))
 	}
 	
 	

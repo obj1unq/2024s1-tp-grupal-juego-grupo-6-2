@@ -21,6 +21,7 @@ class ObjetoQueCae {
 
 	method desaparecer() {
 		game.removeVisual(self)
+		nivel1.remove(self)
 	}
 
 	// Metodo abstracto

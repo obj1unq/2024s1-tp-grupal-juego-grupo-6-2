@@ -12,6 +12,10 @@ object nivel1 {
 	method fondo() {
 		return "fondoNivel1.jpg"
 	}
+	
+	method remove(objeto) {
+		objetosCreados.remove(objeto)
+	}
 
 	method init() {
 		game.title("Nivel 1")
