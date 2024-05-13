@@ -8,6 +8,8 @@ class ObjetoQueCae {
 
 	const property velocidadDeCaida = null
 
+	method limiteInferior() = 0
+	
 	method puedeMover() {
 		return true
 	}
