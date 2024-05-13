@@ -11,10 +11,12 @@ object jugador {
 	var property estadoDeJugador = jugandoDerecha
 	var property vida = 3
 
+	method limiteInferior() = 1
+
 	method puedeMover() {
 		return estadoDeJugador.puedeMover()
 	}
-	
+
 	method sumarMoneda(valorMoneda) {
 		valorMonedasAtrapadas += valorMoneda
 	}
@@ -22,8 +24,8 @@ object jugador {
 	method sumarVida() {
 		vida += 1
 	}
-	
-	method restarVida(){
+
+	method restarVida() {
 		vida = vida - 1
 	}
 
@@ -41,14 +43,14 @@ object jugador {
 		return "jugador-" + estadoDeJugador.toString() + ".png"
 	}
 
-	method corroborarSiGana(){
-		if (valorMonedasAtrapadas == 100){
+	method corroborarSiGana() {
+		if (valorMonedasAtrapadas == 100) {
 			self.ganar()
 		}
 	}
-	
-	method corroborarSiPierde(){
-		if (vida == 0){
+
+	method corroborarSiPierde() {
+		if (vida == 0) {
 			self.perder()
 		}
 	}
@@ -82,12 +84,11 @@ object jugador {
 		estadoDeJugador = saltando
 		estadoDeJugador.activar()
 		self.position(arriba.siguiente(self.position()))
-		game.schedule(500, { self.estadoDeJugador(jugandoDerecha)})
 	}
 
 	method validarQuePuedeMover(hacia) {
-		self.validarPuedeIr(hacia)
 		self.validarEstadoJugador()
+		self.validarPuedeIr(hacia)
 	}
 
 	method validarEstadoJugador() {

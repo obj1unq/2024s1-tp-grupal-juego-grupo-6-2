@@ -46,12 +46,12 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 	
 	test "Jugador en el borde izquierdo no puede mover hacia la izquierda" {
 		jugador.position(game.at(0,1))
-		assert.notThat(tablero.puedeIr(jugador.position(), izquierda))
+		assert.notThat(tablero.puedeIr(jugador, izquierda))
 	}
 	
 	test "Jugador en el borde derecho no puede mover hacia la derecha" {
 		jugador.position(game.at(game.width()-1,1))
-		assert.notThat(tablero.puedeIr(jugador.position(), derecha))
+		assert.notThat(tablero.puedeIr(jugador, derecha))
 	}
 	
 	test "jugador Gana"{ 
