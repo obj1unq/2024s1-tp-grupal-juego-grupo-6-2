@@ -5,9 +5,9 @@ import jugador.*
 
 object tablero {
 
-	const property jugadores = #{ jugador }
+	const property jugadores = #{ jugador } //revisar esto
 
-	method esJugador(objeto) {
+	method esJugador(objeto) { //evitar esto
 		return self.jugadores().contains(objeto)
 	}
 
@@ -32,19 +32,16 @@ class Baldosa {
 	const property position
 
 	method colisionarCon(objeto) {
-		// if(objeto!= jugador){
-		if (not tablero.esJugador(objeto)) {
-			game.removeVisual(objeto)
-		}
+		objeto.desaparecer()
 	}
-
+	
 	method image() {
 		return "piso.png"
 	}
 
 }
 
-object creadorDeBaldosa {
+object creadorDeBaldosas {
 
 	method crearBaldosas() {
 		(0 .. (game.width() - 1)).forEach{ x => self.crearBaldosa(x)}

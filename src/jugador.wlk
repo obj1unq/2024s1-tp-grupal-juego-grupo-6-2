@@ -7,7 +7,7 @@ object jugador {
 
 	var property position = game.at(5, 1)
 	// const nivel = nivel1
-	var property valorMonedasAtrapadas = 0
+	var property monedas = 0
 	var property estadoDeJugador = jugandoDerecha
 	var property vida = 3
 
@@ -18,7 +18,8 @@ object jugador {
 	}
 
 	method sumarMoneda(valorMoneda) {
-		valorMonedasAtrapadas += valorMoneda
+		monedas += valorMoneda
+		self.corroborarSiGana()
 	}
 
 	method sumarVida() {
@@ -27,6 +28,7 @@ object jugador {
 
 	method restarVida() {
 		vida = vida - 1
+		self.corroborarSiPierde()
 	}
 
 	method estadoDeJugador(_estadoDeJugador) {
@@ -44,7 +46,7 @@ object jugador {
 	}
 
 	method corroborarSiGana() {
-		if (valorMonedasAtrapadas == 100) {
+		if (monedas == 50) {
 			self.ganar()
 		}
 	}
@@ -56,34 +58,26 @@ object jugador {
 	}
 
 	method ganar() {
-		estadoDeJugador = ganador
-		estadoDeJugador.activar()
+		self.estadoDeJugador(ganador)
 	}
 
 	method perder() {
-		estadoDeJugador = perdedor
-		estadoDeJugador.activar()
+		self.estadoDeJugador(perdedor)
 	}
 
 	method moverIzquierda() {
-		self.validarQuePuedeMover(izquierda)
-		estadoDeJugador = jugandoIzquierda
-		estadoDeJugador.activar()
-		self.position(izquierda.siguiente(self.position()))
+		self.estadoDeJugador(jugandoIzquierda)
+		self.estadoDeJugador().mover()
 	}
 
 	method moverDerecha() {
-		self.validarQuePuedeMover(derecha)
-		estadoDeJugador = jugandoDerecha
-		estadoDeJugador.activar()
-		self.position(derecha.siguiente(self.position()))
+		self.estadoDeJugador(jugandoDerecha)
+		self.estadoDeJugador().mover()
 	}
 
 	method saltar() {
-		self.validarQuePuedeMover(arriba)
-		estadoDeJugador = saltando
-		estadoDeJugador.activar()
-		self.position(arriba.siguiente(self.position()))
+		self.estadoDeJugador(saltando)
+		self.estadoDeJugador().mover()
 	}
 
 	method validarQuePuedeMover(hacia) {
@@ -113,59 +107,61 @@ object jugador {
 
 }
 
+class EstadoJugador {
+	
+	method direccion(){return null}
+	
+	method puedeMover() = true
+
+	method mover(){
+		jugador.validarQuePuedeMover(self.direccion())
+		jugador.estadoDeJugador(self)
+		jugador.position(self.direccion().siguiente(jugador.position()))
+	}
+
+	method activar(){}
+
+}
+
 // ESTADOS DEL JUGADOR
-object jugandoDerecha {
 
-	method puedeMover() = true
-
-	method activar() {
-	}
-
+object jugandoDerecha inherits EstadoJugador {
+	override method direccion(){return derecha}
+	
 }
 
-object jugandoIzquierda {
-
-	method puedeMover() = true
-
-	method activar() {
-	}
-
+object jugandoIzquierda inherits EstadoJugador {
+	override method direccion(){return izquierda}
+	
 }
 
-object saltando {
-
-	method puedeMover() = true
-
-	method activar() {
-	}
-
+object saltando inherits EstadoJugador {
+	override method direccion(){return arriba}
+	
 }
 
-object ganador {
+object ganador inherits EstadoJugador {
 
-	method puedeMover() = false
+	override method puedeMover() = false
 
-	method activar() {
+	override method activar() {
 		game.say(jugador, "Gané!")
 		game.schedule(3000, { game.stop()})
 	}
 
 }
 
-object congelado {
+object congelado inherits EstadoJugador {
 
-	method puedeMover() = false
-
-	method activar() {
-	}
+	override method puedeMover() = false
 
 }
 
-object perdedor {
+object perdedor inherits EstadoJugador {
 
-	method puedeMover() = false
+	override method puedeMover() = false
 
-	method activar() {
+	override method activar() {
 		game.say(jugador, "Perdí!")
 		game.schedule(3000, { game.stop()})
 	}

@@ -5,7 +5,7 @@ import posiciones.*
 import randomizer.*
 
 class ObjetoQueCae {
-
+	var property position
 	const property velocidadDeCaida = null
 
 	method limiteInferior() = 0
@@ -31,8 +31,6 @@ class ObjetoQueCae {
 
 class Moneda inherits ObjetoQueCae {
 
-	var property position
-
 	method image() {
 		return "moneda.png"
 	}
@@ -43,25 +41,31 @@ class Moneda inherits ObjetoQueCae {
 
 	override method accionAlColisionarCon(jugador) {
 		jugador.sumarMoneda(self.valor())
-		jugador.corroborarSiGana()
 	}
 
 }
 
-object creadorDeMonedas {
-
+class ObjetoQueCaeFactory {
+	
 	method nuevoObjeto() {
-		const objeto = new Moneda(position = randomizer.emptyPosition())
+		const objeto = self.crear( randomizer.emptyPosition() )
 		game.addVisual(objeto)
-		nivel1.objetosCreados().add(objeto)
+		nivel1.objetosCreados().add(objeto) //ojo cuando haya muchos niveles
 		return objeto
 	}
+	
+	method crear(position)
+}
 
+
+object creadorDeMonedas inherits ObjetoQueCaeFactory { 
+
+	override method crear(position) {
+		return  new Moneda(position = position)
+	}
 }
 
 class Hielo inherits ObjetoQueCae {
-
-	var property position
 
 	method image() {
 		return "hielo.png"
@@ -73,65 +77,49 @@ class Hielo inherits ObjetoQueCae {
 
 }
 
-object creadorDeHielos {
+object creadorDeHielos inherits ObjetoQueCaeFactory {
 
-	method nuevoObjeto() {
-		const objeto = new Hielo(position = randomizer.emptyPosition())
-		game.addVisual(objeto)
-		nivel1.objetosCreados().add(objeto)
-		return objeto
+	override method crear(position) {
+		return  new Hielo (position = position)
 	}
-
 }
 
 class Vida inherits ObjetoQueCae {
-
-	var property position
 
 	method image() {
 		return "vida.png"
 	}
 
-	override method accionAlColisionarCon(jugador) {
-		jugador.sumarVida()
+	override method accionAlColisionarCon(objeto) {
+		objeto.sumarVida()
 	}
 
 }
 
-object creadorDeVidas {
-
-	method nuevoObjeto() {
-		const objeto = new Vida(position = randomizer.emptyPosition())
-		game.addVisual(objeto)
-		nivel1.objetosCreados().add(objeto)
-		return objeto
+object creadorDeVidas inherits ObjetoQueCaeFactory {
+	
+	override method crear(position) {
+		return  new Vida (position = position)
 	}
-
 }
 
 class Maza inherits ObjetoQueCae {
 
-	var property position
 	const property image = "maza.png"
 
 	override method desaparecer() {
 		game.removeVisual(self)
 	}
 
-	override method accionAlColisionarCon(jugador) {
-		jugador.restarVida()
-		jugador.corroborarSiPierde()
+	override method accionAlColisionarCon(objeto) {
+		objeto.restarVida()
 	}
 
 }
 
-object creadorDeMazas {
-
-	method nuevoObjeto() {
-		const objeto = new Maza(position = randomizer.emptyPosition())
-		game.addVisual(objeto)
-		nivel1.objetosCreados().add(objeto)
-		return objeto
+object creadorDeMazas inherits ObjetoQueCaeFactory{
+	override method crear(position) {
+		return  new Maza (position = position)
 	}
 
 }
