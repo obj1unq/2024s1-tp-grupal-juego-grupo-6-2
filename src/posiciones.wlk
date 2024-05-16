@@ -59,7 +59,7 @@ object creadorDeBaldosas {
 object gravedad {
 
 	method aplicarEfectoCaida(objetoACaer) {
-		if (tablero.puedeMover(abajo, objetoACaer)) {
+		if (objetoACaer.puedeCaer() && tablero.puedeIr(objetoACaer, abajo)) {
 			objetoACaer.position(abajo.siguiente(objetoACaer.position()))
 		}
 	}

@@ -10,7 +10,7 @@ class ObjetoQueCae {
 
 	method limiteInferior() = 0
 	
-	method puedeMover() {
+	method puedeCaer() {
 		return true
 	}
 
