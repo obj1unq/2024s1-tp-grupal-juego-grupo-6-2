@@ -83,8 +83,7 @@ object jugador {
 
 class EstadoJugador {
 
-	method activar() {
-	}
+	method activar() 
 
 	method puedeMover()
 
