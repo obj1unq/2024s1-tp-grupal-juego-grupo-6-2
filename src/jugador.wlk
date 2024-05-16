@@ -83,11 +83,27 @@ object jugador {
 
 class EstadoJugador {
 
-	method activar() 
+	method activar()
 
 	method puedeMover()
 
 	method direccion()
+
+}
+
+class EstadoJugadorMovible inherits EstadoJugador {
+
+	override method puedeMover() = true
+
+	override method activar() {
+		jugador.position(self.direccion().siguiente((jugador.position() )))
+	}
+
+}
+
+class EstadoJugadorInmovible inherits EstadoJugador {
+
+	override method puedeMover() = false
 
 }
 
