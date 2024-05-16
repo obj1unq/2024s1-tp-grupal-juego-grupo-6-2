@@ -144,6 +144,7 @@ object ganador inherits EstadoJugadorInmovible {
 object congelado inherits EstadoJugadorInmovible {
 
 	override method activar() {
+		game.say(jugador, "Estoy congelado")
 		game.schedule(5000, { jugador.cambiarEstado(jugandoDerecha)})
 	}
 
