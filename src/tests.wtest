@@ -4,19 +4,21 @@ import objetos.*
 import wollok.game.*
 import posiciones.*
 
-
 describe "Tests de colision del personaje jugador con los objetos del juego" {
+
 	var vida
+
 	method initialize() {
 		game.clear()
+		game.width(20)
+		game.height(10)
 		game.addVisual(jugador)
-		game.addVisual(vida)
+		jugador.nivel(objetivoNivel1)
 		vida = creadorDeVidas.nuevoObjeto()
 	}
 
 	test "Jugador suma vidas" {
 		assert.equals(3, jugador.vida()) // cantidad de vida con la que arranca el jugador
-		
 		vida.colisionarCon(jugador)
 		assert.equals(4, jugador.vida()) // el jugador colisiono con una vida y ahora sumo a 4 vidas
 	}
@@ -29,48 +31,48 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		moneda2.colisionarCon(jugador)
 		assert.equals(20, jugador.monedas()) // el jugador colisiono con una vida y ahora sumo a 200 de vida
 	}
-	
-	test "Jugador atrapa un hielo, se congela y no se puede mover"{
+
+	test "Jugador atrapa un hielo, se congela y no se puede mover" {
+		var posicionActual = jugador.position()
 		var hielo = creadorDeHielos.nuevoObjeto()
-		hielo.colisionarCon(jugador) 
+		hielo.colisionarCon(jugador)
 		// al colisinar, el jugador no puede moverse ni saltar
-		assert.throwsException({jugador.moverDerecha()})
-		assert.throwsException({jugador.moverIzquierda()})
-		assert.throwsException({jugador.saltar()})
+		jugador.mover(jugandoDerecha)
+		jugador.mover(jugandoDerecha)
+		jugador.mover(saltando)
+		assert.equals(posicionActual, jugador.position())
 	}
-	
-	test "Jugador colisiona con una Maza y pierde"{ //este test chequea el funcionamiento de la maza y el perder del jugador
+
+	test "Jugador colisiona con una Maza y pierde" { // este test chequea el funcionamiento de la maza y el perder del jugador
 		var maza = creadorDeMazas.nuevoObjeto()
 		jugador.vida(1)
 		maza.colisionarCon(jugador)
 		assert.equals(perdedor, jugador.estadoDeJugador())
 	}
-	
+
 	test "Jugador en el borde izquierdo no puede mover hacia la izquierda" {
-		jugador.position(game.at(0,1))
+		jugador.position(game.at(0, 1))
 		assert.notThat(tablero.puedeIr(jugador, izquierda))
 	}
-	
+
 	test "Jugador en el borde derecho no puede mover hacia la derecha" {
-		jugador.position(game.at(game.width()-1,1))
+		jugador.position(game.at(game.width() - 1, 1))
 		assert.notThat(tablero.puedeIr(jugador, derecha))
 	}
-	
-	test "jugador Gana"{ 
+
+	test "jugador Gana" {
 		var moneda = creadorDeMonedas.nuevoObjeto()
-		
 		jugador.monedas(90)
 		moneda.accionAlColisionarCon(jugador)
-		assert.equals(ganador,jugador.estadoDeJugador())
+		assert.equals(ganador, jugador.estadoDeJugador())
 	}
-	
+
 	test "desaparecer objeto y remover de la lista" {
 		assert.equals(1, nivel1.objetosCreados().size())
 		nivel1.objetosCreados().get(0).desaparecer()
 		assert.equals(0, nivel1.objetosCreados().size())
 		assert.notThat(game.hasVisual(vida))
 	}
-	
-	
+
 }
 

@@ -3,26 +3,43 @@ import jugador.*
 import objetos.*
 import posiciones.*
 
-class VisorDeAtributos{
-	method position()	
+class VisorDeAtributos {
+
+	method position()
+
 	method text()
+
 }
+
 object visorVida inherits VisorDeAtributos {
-	override method position(){return game.at(0, game.height()- 1)}
-		
+
+	override method position() {
+		return game.at(0, game.height() - 1)
+	}
+
 	method text() {
 		return "Vida: " + jugador.vida()
 	}
+
 }
 
 object visorMonedas inherits VisorDeAtributos {
-	override method position(){return game.at(0, game.height()- 2)}
-		
+
+	override method position() {
+		return game.at(0, game.height() - 2)
+	}
+
 	method text() {
 		return "Monedas: " + jugador.monedas()
 	}
+
 }
 
+object objetivoNivel1 {
+	method cumpleObjetivo(personaje) {
+		return personaje.monedas() >= 50
+	}
+}
 
 object nivel1 {
 
@@ -33,7 +50,7 @@ object nivel1 {
 	method fondo() {
 		return "fondoNivel1.jpg"
 	}
-	
+
 	method remove(objeto) {
 		objetosCreados.remove(objeto)
 	}
@@ -45,15 +62,15 @@ object nivel1 {
 		game.height(10)
 		game.boardGround(self.fondo()) // background
 		game.addVisual(jugador)
-		keyboard.right().onPressDo{ jugador.moverDerecha()}
-		keyboard.left().onPressDo{ jugador.moverIzquierda()}
-		keyboard.up().onPressDo{ jugador.saltar()}
+		jugador.nivel(objetivoNivel1)
+		keyboard.right().onPressDo{ jugador.mover(jugandoDerecha)}
+		keyboard.left().onPressDo{ jugador.mover(jugandoIzquierda)}
+		keyboard.up().onPressDo{ jugador.mover(saltando)}
 		creadorDeBaldosas.crearBaldosas()
 		game.onTick(gravedadJugador, "GRAVEDAD_JUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
 		game.onTick(1000, "CREAR OBJETOS", { factoriesDeObjetos.anyOne().nuevoObjeto()})
 		game.onTick(1000, "GRAVEDAD", { objetosCreados.forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		game.onCollideDo(jugador, { objeto => objeto.colisionarCon(jugador)})
-		
 		game.addVisualIn(visorVida, visorVida.position())
 		game.addVisualIn(visorMonedas, visorMonedas.position())
 		game.start()

@@ -10,12 +10,9 @@ object jugador {
 	var property monedas = 0
 	var property estadoDeJugador = jugandoDerecha
 	var property vida = 3
+	var property nivel = null
 
 	method limiteInferior() = 1
-
-	method puedeMover() {
-		return estadoDeJugador.puedeMover()
-	}
 
 	method sumarMoneda(valorMoneda) {
 		monedas += valorMoneda
@@ -31,14 +28,8 @@ object jugador {
 		self.corroborarSiPierde()
 	}
 
-	method estadoDeJugador(_estadoDeJugador) {
-		estadoDeJugador = _estadoDeJugador
-		estadoDeJugador.activar()
-	}
-
 	method congelarse() {
-		self.estadoDeJugador(congelado)
-		game.schedule(5000, { self.estadoDeJugador(jugandoDerecha)})
+		self.cambiarEstado(congelado)
 	}
 
 	method image() {
@@ -46,7 +37,7 @@ object jugador {
 	}
 
 	method corroborarSiGana() {
-		if (monedas == 50) {
+		if (nivel.cumpleObjetivo(self)) {
 			self.ganar()
 		}
 	}
@@ -58,47 +49,30 @@ object jugador {
 	}
 
 	method ganar() {
-		self.estadoDeJugador(ganador)
+		self.cambiarEstado(ganador)
 	}
 
 	method perder() {
-		self.estadoDeJugador(perdedor)
+		self.cambiarEstado(perdedor)
 	}
 
-	method moverIzquierda() {
-		self.estadoDeJugador(jugandoIzquierda)
-		self.estadoDeJugador().mover()
-	}
-
-	method moverDerecha() {
-		self.estadoDeJugador(jugandoDerecha)
-		self.estadoDeJugador().mover()
-	}
-
-	method saltar() {
-		self.estadoDeJugador(saltando)
-		self.estadoDeJugador().mover()
-	}
-
-	method validarQuePuedeMover(hacia) {
-		self.validarEstadoJugador()
-		self.validarPuedeIr(hacia)
-	}
-
-	method validarEstadoJugador() {
-		if (not self.estadoDeJugador().puedeMover()) {
-			self.error("No me puedo mover :/")
+	method mover(_estadoDeJugador) {
+		if (self.puedeMover(_estadoDeJugador)) {
+			self.cambiarEstado(_estadoDeJugador)
 		}
 	}
 
-	method validarPuedeIr(hacia) {
-		if (not self.puedeIr(hacia)) {
-			self.error("No puedo ir en esa direccion")
-		}
+	method puedeCaer() {
+		return self.puedeMover(estadoDeJugador)
 	}
 
-	method puedeIr(hacia) {
-		return tablero.puedeMover(hacia, self)
+	method puedeMover(estadoJugador) {
+		return estadoDeJugador.puedeMover() && tablero.puedeIr(self, estadoJugador.direccion())
+	}
+
+	method cambiarEstado(_estadoDeJugador) {
+		estadoDeJugador = _estadoDeJugador
+		estadoDeJugador.activar()
 	}
 
 	method esAtravesable() {
@@ -108,41 +82,57 @@ object jugador {
 }
 
 class EstadoJugador {
-	
-	method direccion(){return null}
-	
-	method puedeMover() = true
 
-	method mover(){
-		jugador.validarQuePuedeMover(self.direccion())
-		jugador.estadoDeJugador(self)
-		jugador.position(self.direccion().siguiente(jugador.position()))
+	method puedeMover()
+
+	method activar()
+
+}
+
+class EstadoJugadorMovible inherits EstadoJugador {
+
+	override method puedeMover() = true
+
+	override method activar() {
+		jugador.position(self.direccion().siguiente((jugador.position() )))
 	}
 
-	method activar(){}
+	method direccion()
+
+}
+
+class EstadoJugadorInmovible inherits EstadoJugador {
+
+	override method puedeMover() = false
 
 }
 
 // ESTADOS DEL JUGADOR
+object jugandoDerecha inherits EstadoJugadorMovible {
 
-object jugandoDerecha inherits EstadoJugador {
-	override method direccion(){return derecha}
-	
+	override method direccion() {
+		return derecha
+	}
+
 }
 
-object jugandoIzquierda inherits EstadoJugador {
-	override method direccion(){return izquierda}
-	
+object jugandoIzquierda inherits EstadoJugadorMovible {
+
+	override method direccion() {
+		return izquierda
+	}
+
 }
 
-object saltando inherits EstadoJugador {
-	override method direccion(){return arriba}
-	
+object saltando inherits EstadoJugadorMovible {
+
+	override method direccion() {
+		return arriba
+	}
+
 }
 
-object ganador inherits EstadoJugador {
-
-	override method puedeMover() = false
+object ganador inherits EstadoJugadorInmovible {
 
 	override method activar() {
 		game.say(jugador, "Gané!")
@@ -151,15 +141,16 @@ object ganador inherits EstadoJugador {
 
 }
 
-object congelado inherits EstadoJugador {
+object congelado inherits EstadoJugadorInmovible {
 
-	override method puedeMover() = false
+	override method activar() {
+		game.say(jugador, "Estoy congelado")
+		game.schedule(5000, { jugador.cambiarEstado(jugandoDerecha)})
+	}
 
 }
 
-object perdedor inherits EstadoJugador {
-
-	override method puedeMover() = false
+object perdedor inherits EstadoJugadorInmovible {
 
 	override method activar() {
 		game.say(jugador, "Perdí!")
