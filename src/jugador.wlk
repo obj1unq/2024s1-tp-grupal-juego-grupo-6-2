@@ -83,11 +83,9 @@ object jugador {
 
 class EstadoJugador {
 
-	method activar()
-
 	method puedeMover()
 
-	method direccion()
+	method activar()
 
 }
 
@@ -99,6 +97,8 @@ class EstadoJugadorMovible inherits EstadoJugador {
 		jugador.position(self.direccion().siguiente((jugador.position() )))
 	}
 
+	method direccion()
+
 }
 
 class EstadoJugadorInmovible inherits EstadoJugador {
@@ -108,69 +108,40 @@ class EstadoJugadorInmovible inherits EstadoJugador {
 }
 
 // ESTADOS DEL JUGADOR
-object jugandoDerecha inherits EstadoJugador {
-
-	override method puedeMover() = true
+object jugandoDerecha inherits EstadoJugadorMovible {
 
 	override method direccion() {
 		return derecha
 	}
 
-	override method activar() {
-		jugador.position(self.direccion().siguiente((jugador.position() )))
-	}
-
 }
 
-object jugandoIzquierda inherits EstadoJugador {
-
-	override method puedeMover() = true
+object jugandoIzquierda inherits EstadoJugadorMovible {
 
 	override method direccion() {
 		return izquierda
 	}
 
-	override method activar() {
-		jugador.position(self.direccion().siguiente((jugador.position() )))
-	}
-
 }
 
-object saltando inherits EstadoJugador {
-
-	override method puedeMover() = true
+object saltando inherits EstadoJugadorMovible {
 
 	override method direccion() {
 		return arriba
 	}
 
-	override method activar() {
-		jugador.position(self.direccion().siguiente((jugador.position() )))
-	}
-
 }
 
-object ganador inherits EstadoJugador {
-
-	override method puedeMover() = false
+object ganador inherits EstadoJugadorInmovible {
 
 	override method activar() {
 		game.say(jugador, "Gané!")
 		game.schedule(3000, { game.stop()})
 	}
 
-	override method direccion() {
-	}
-
 }
 
-object congelado inherits EstadoJugador {
-
-	override method puedeMover() = false
-
-	override method direccion() {
-		self.error("Este estado no tiene direccion")
-	}
+object congelado inherits EstadoJugadorInmovible {
 
 	override method activar() {
 		game.schedule(5000, { jugador.cambiarEstado(jugandoDerecha)})
@@ -178,17 +149,11 @@ object congelado inherits EstadoJugador {
 
 }
 
-object perdedor inherits EstadoJugador {
-
-	override method puedeMover() = false
+object perdedor inherits EstadoJugadorInmovible {
 
 	override method activar() {
 		game.say(jugador, "Perdí!")
 		game.schedule(3000, { game.stop()})
-	}
-
-	override method direccion() {
-		self.error("Este estado no tiene direccion")
 	}
 
 }
