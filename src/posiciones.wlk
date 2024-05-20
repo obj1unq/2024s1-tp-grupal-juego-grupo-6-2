@@ -5,12 +5,6 @@ import jugador.*
 
 object tablero {
 
-	const property jugadores = #{ jugador } //revisar esto
-
-	method esJugador(objeto) { //evitar esto
-		return self.jugadores().contains(objeto)
-	}
-
 	method pertenece(position, limiteInferior) {
 		return position.x().between(0, game.width() - 1) && position.y().between(limiteInferior, game.height() - 1)
 	}
@@ -20,7 +14,6 @@ object tablero {
 	}
 
 	method puedeMover(hacia, objetoQueSeMueve) {
-		
 		return objetoQueSeMueve.puedeMover() && self.puedeIr(objetoQueSeMueve, hacia)
 	}
 
@@ -34,7 +27,7 @@ class Baldosa {
 	method colisionarCon(objeto) {
 		objeto.desaparecer()
 	}
-	
+
 	method image() {
 		return "piso.png"
 	}
