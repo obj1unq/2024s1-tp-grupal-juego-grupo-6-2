@@ -8,7 +8,7 @@ object jugador {
 	var property position = game.at(5, 1)
 	// const nivel = nivel1
 	var property monedas = 0
-	var property estadoDeJugador = jugandoDerecha
+	var property estadoActual = jugandoDerecha
 	var property vida = 3
 	var property nivel = null
 
@@ -33,7 +33,7 @@ object jugador {
 	}
 
 	method image() {
-		return "jugador-" + estadoDeJugador.toString() + ".png"
+		return "jugador-" + estadoActual.imagenEstado() + ".png"
 	}
 
 	method corroborarSiGana() {
@@ -56,83 +56,99 @@ object jugador {
 		self.cambiarEstado(perdedor)
 	}
 
-	method mover(_estadoDeJugador) {
-		if (self.puedeMover(_estadoDeJugador)) {
-			self.cambiarEstado(_estadoDeJugador)
+	method mover(estadoProximo) {
+		if (self.puedeMover(estadoProximo)) {
+			self.cambiarEstado(estadoProximo)
 		}
 	}
 
 	method puedeCaer() {
-		return self.puedeMover(estadoDeJugador)
+		return self.puedeMover(estadoActual)
 	}
 
-	method puedeMover(estadoJugador) {
-		return estadoDeJugador.puedeMover() && tablero.puedeIr(self, estadoJugador.direccion())
+	method puedeMover(estadoProximo) {
+		return estadoActual.puedeMover() && tablero.puedeIr(self, estadoProximo.direccion())
 	}
 
 	method cambiarEstado(_estadoDeJugador) {
-		estadoDeJugador = _estadoDeJugador
-		estadoDeJugador.activar()
+		estadoActual = _estadoDeJugador
+		estadoActual.activar()
 	}
 
 	method esAtravesable() {
 		return false
 	}
 
+	method accionAlColisionarCon(objeto) {
+	}
+
 }
 
 class EstadoJugador {
 
-	method puedeMover()
+	method puedeMover() = false
 
 	method activar()
+	
+	method imagenEstado(){
+		return self
+	}
 
 }
 
-class EstadoJugadorMovible inherits EstadoJugador {
+class EstadosDeMovimiento inherits EstadoJugador {
 
+	const property direccion
+	
 	override method puedeMover() = true
 
 	override method activar() {
 		jugador.position(self.direccion().siguiente((jugador.position() )))
 	}
 
-	method direccion()
+}
+
+// ESTADOS DEL JUGADOR MOVIMIENTO
+object jugandoDerecha inherits EstadosDeMovimiento(direccion = derecha) {
 
 }
 
-class EstadoJugadorInmovible inherits EstadoJugador {
-
-	override method puedeMover() = false
+object jugandoIzquierda inherits EstadosDeMovimiento (direccion = izquierda) {
 
 }
 
-// ESTADOS DEL JUGADOR
-object jugandoDerecha inherits EstadoJugadorMovible {
+object saltando inherits EstadosDeMovimiento(direccion = arriba) {
+	var estadoImagen = saltando
+	override method activar() {
+		if (self.puedeSaltar()) {
+			estadoImagen = saltando
+			super()
+			game.schedule(300,{self.aterrizar()})
+		}
+		
+	}
 
-	override method direccion() {
-		return derecha
+	method puedeSaltar() {
+		return jugador.position().y() == 1
+	}
+	
+	
+	method aterrizar(){
+		estadoImagen = jugandoDerecha
+	}
+	
+	override method imagenEstado(){
+		return estadoImagen
 	}
 
 }
 
-object jugandoIzquierda inherits EstadoJugadorMovible {
-
-	override method direccion() {
-		return izquierda
-	}
+object agachando inherits EstadosDeMovimiento(direccion = abajo) {
 
 }
 
-object saltando inherits EstadoJugadorMovible {
-
-	override method direccion() {
-		return arriba
-	}
-
-}
-
-object ganador inherits EstadoJugadorInmovible {
+// ESTADOS DEL JUGADOR JUGABILIDAD
+object ganador inherits EstadoJugador {
 
 	override method activar() {
 		game.say(jugador, "Gané!")
@@ -141,7 +157,7 @@ object ganador inherits EstadoJugadorInmovible {
 
 }
 
-object congelado inherits EstadoJugadorInmovible {
+object congelado inherits EstadoJugador {
 
 	override method activar() {
 		game.say(jugador, "Estoy congelado")
@@ -150,7 +166,7 @@ object congelado inherits EstadoJugadorInmovible {
 
 }
 
-object perdedor inherits EstadoJugadorInmovible {
+object perdedor inherits EstadoJugador {
 
 	override method activar() {
 		game.say(jugador, "Perdí!")

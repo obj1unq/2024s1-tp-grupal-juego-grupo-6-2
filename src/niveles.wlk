@@ -11,7 +11,7 @@ class Nivel {
 	method fondo()
 	
 	method init(){
-		game.cellSize(60)
+		game.cellSize(64)
 		game.width(20)
 		game.height(10)
 		game.boardGround(self.fondo()) // background
@@ -22,10 +22,11 @@ class Nivel {
 		keyboard.up().onPressDo{ jugador.mover(saltando)}
 		creadorDeBaldosas.crearBaldosas()
 		game.onTick(self.gravedadJugador(), "GRAVEDAD_JUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
-		game.onTick(1000, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
-		game.onTick(1000, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
+		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
+		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		game.addVisualIn(visorVida, visorVida.position())
 		game.addVisualIn(visorMonedas, visorMonedas.position())
+		game.addVisualIn(visorObjetivo, visorObjetivo.position())
 	}		
 }
 
@@ -39,7 +40,7 @@ object nivel1 inherits Nivel {
 	} 
 
 	override method gravedadJugador(){
-		return 500
+		return 1000
 	} 
 	
 	override method fondo() {
@@ -54,15 +55,28 @@ object nivel1 inherits Nivel {
 		super()
 		game.title("Nivel 1")
 		jugador.nivel(objetivoNivel1)
-		game.start() 
+	
 	}
 
 }
 
-object objetivoNivel1 {
-	method cumpleObjetivo(personaje) {
-		return personaje.monedas() >= 50
+class ObjetivoNivel {
+	
+	method cumpleObjetivo(personaje) 
+	method descripcionDeObjetivos()
+	
+}
+
+object objetivoNivel1 inherits ObjetivoNivel {
+	
+	override method cumpleObjetivo(personaje){
+		return personaje.monedas() >= 10
 	}
+	
+	override method descripcionDeObjetivos(){ //
+		return "Reuní 10 monedas de Oro para pasar nivel"
+	}
+	
 }
 
 
@@ -80,7 +94,7 @@ object visorVida inherits VisorDeAtributos {
 		return game.at(0, game.height() - 1)
 	}
 
-	method text() {
+	override method text() {
 		return "Vida: " + jugador.vida()
 	}
 
@@ -89,12 +103,24 @@ object visorVida inherits VisorDeAtributos {
 object visorMonedas inherits VisorDeAtributos {
 
 	override method position() {
-		return game.at(0, game.height() - 2)
+		return game.at(2, game.height() - 1)
 	}
 
-	method text() {
+	override method text() {
 		return "Monedas: " + jugador.monedas()
 	}
+	
+}
+	
+object visorObjetivo inherits VisorDeAtributos {
+
+	override method position() {
+		return game.at(6, game.height() - 1)
+	}
+
+	override method text() {
+		return objetivoNivel1.descripcionDeObjetivos()
+	}	
 
 }
 

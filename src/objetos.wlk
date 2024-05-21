@@ -25,7 +25,9 @@ class ObjetoQueCae {
 	}
 
 	// Metodo abstracto
-	method accionAlColisionarCon(objeto)
+	method accionAlColisionarCon(objeto) {
+		
+	}
 
 }
 
@@ -36,11 +38,11 @@ class Moneda inherits ObjetoQueCae {
 	}
 	
 	method valor(){
-		return 10
+		return 1
 	}
 
-	override method accionAlColisionarCon(jugador) {
-		jugador.sumarMoneda(self.valor())
+	override method accionAlColisionarCon(personaje) {
+		personaje.sumarMoneda(self.valor())
 	}
 
 }

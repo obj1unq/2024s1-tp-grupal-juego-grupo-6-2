@@ -4,5 +4,6 @@ import niveles.*
 import objetos.*
 
 program juego {
-	nivel1.init()
+	nivel1.init()// separar en dos (uno propio del nivel y otro general)
+	game.start() 
 }
