@@ -11,12 +11,10 @@ object jugador {
 	var property estadoActual = jugandoDerecha
 	var property vida = 3
 
-
 	method limiteInferior() = 1
 
 	method sumarMoneda(valorMoneda) {
 		monedas += valorMoneda
-		self.corroborarSiGana()
 	}
 
 	method sumarVida() {
@@ -34,12 +32,6 @@ object jugador {
 
 	method image() {
 		return "jugador-" + estadoActual.imagenEstado() + ".png"
-	}
-
-	method corroborarSiGana() {
-		if (nivel.nivel().cumpleObjetivo(self)) {
-			self.ganar()
-		}
 	}
 
 	method corroborarSiPierde() {
@@ -119,11 +111,11 @@ object jugandoIzquierda inherits EstadosDeMovimiento (direccion = izquierda) {
 
 object saltando inherits EstadosDeMovimiento(direccion = arriba) {
 
-	var estadoImagen = saltando
+	var estadoImagen = self
 
 	override method activar() {
 		if (self.puedeSaltar()) {
-			estadoImagen = saltando
+			estadoImagen = self
 			super()
 			game.schedule(300, { self.aterrizar()})
 		}
@@ -172,6 +164,10 @@ object congelado inherits EstadoJugador {
 object perdedor inherits EstadoJugador {
 
 	override method activar() {
+		game.removeTickEvent("CRONOMETRO")
+		game.removeTickEvent("GRAVEDAD_JUGADOR")
+		game.removeTickEvent("CREAR OBJETOS")
+		game.removeTickEvent("GRAVEDAD")
 		game.say(jugador, "Perdí!")
 		game.schedule(3000, { game.stop()})
 	}

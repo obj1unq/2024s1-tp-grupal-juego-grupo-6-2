@@ -2,11 +2,15 @@ import wollok.game.*
 import jugador.*
 import objetos.*
 import posiciones.*
+import visores.*
 
 class Nivel {
 
-	method cumpleObjetivo (personaje)
-	method descripcionDeObjetivos()
+	const tiempoDeJuego = 20
+
+	method descripcionDeObjetivos() {
+		return "Reuní la mayor cantidad de monedas antes de que finalice el tiempo"
+	}
 
 	method objetosCreados()
 
@@ -17,6 +21,10 @@ class Nivel {
 	method fondo()
 
 	method siguiente()
+
+	method tiempoDeJuego() {
+		return 20
+	}
 
 	method init() {
 		game.cellSize(64)
@@ -32,9 +40,13 @@ class Nivel {
 		game.onTick(self.gravedadJugador(), "GRAVEDAD_JUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
 		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
 		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
+		game.onTick(1000, "CRONOMETRO", { visorDeTiempo.descontar(1)})
 		game.addVisualIn(visorVida, visorVida.position())
 		game.addVisualIn(visorMonedas, visorMonedas.position())
 		game.addVisualIn(visorObjetivo, visorObjetivo.position())
+		visorDeTiempo.tiempo(tiempoDeJuego)
+		game.addVisualIn(visorDeTiempo, visorDeTiempo.position())
+		game.addVisualIn(visorDeNivel, visorDeNivel.position())
 	}
 
 }
@@ -76,20 +88,10 @@ object nivel1 inherits Nivel {
 	override method init() {
 		super()
 		game.title("Nivel 1")
-		//jugador.nivel(objetivoNivel1)
-		
 	}
 
 	override method siguiente() {
 		return nivel2
-	}
-	
-	override method cumpleObjetivo(personaje) {
-		return personaje.monedas() >= 3
-	}
-
-	override method descripcionDeObjetivos() { //
-		return "Reuní 10 monedas de Oro para pasar nivel"
 	}
 
 }
@@ -117,19 +119,10 @@ object nivel2 inherits Nivel {
 	override method init() {
 		super()
 		game.title("Nivel 2")
-		
 	}
 
 	override method siguiente() {
 		return nivel3
-	}
-	
-	override method cumpleObjetivo(personaje) {
-		return personaje.monedas() >= 3
-	}
-
-	override method descripcionDeObjetivos() { //
-		return "Reuní 10 monedas de Oro para pasar nivel"
 	}
 
 }
@@ -157,83 +150,13 @@ object nivel3 inherits Nivel {
 	override method init() {
 		super()
 		game.title("Nivel 3")
-		
 	}
 
 	override method siguiente() {
-		game.stop()
-	}
-	
-	override method cumpleObjetivo(personaje) {
-		return personaje.monedas() >= 3
-	}
-
-	override method descripcionDeObjetivos() { //
-		return "Reuní 10 monedas de Oro para pasar nivel"
-	}
-
-}
-
-class ObjetivoNivel {
-
-	method cumpleObjetivo(personaje)
-
-	method descripcionDeObjetivos()
-
-}
-
-object objetivoNivel1 inherits ObjetivoNivel {
-
-	override method cumpleObjetivo(personaje) {
-		return personaje.monedas() >= 3
-	}
-
-	override method descripcionDeObjetivos() { //
-		return "Reuní 10 monedas de Oro para pasar nivel"
-	}
-
-}
-
-class VisorDeAtributos {
-
-	method position()
-
-	method text()
-
-}
-
-object visorVida inherits VisorDeAtributos {
-
-	override method position() {
-		return game.at(0, game.height() - 1)
-	}
-
-	override method text() {
-		return "Vida: " + jugador.vida()
-	}
-
-}
-
-object visorMonedas inherits VisorDeAtributos {
-
-	override method position() {
-		return game.at(2, game.height() - 1)
-	}
-
-	override method text() {
-		return "Monedas: " + jugador.monedas()
-	}
-
-}
-
-object visorObjetivo inherits VisorDeAtributos {
-
-	override method position() {
-		return game.at(6, game.height() - 1)
-	}
-
-	override method text() {
-		return objetivoNivel1.descripcionDeObjetivos()
+		game.clear()
+		visorCentral.text("FIN DE JUEGO")
+		game.addVisualIn(visorCentral, visorCentral.position())
+		game.schedule(3000, { game.stop()})
 	}
 
 }
