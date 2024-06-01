@@ -3,14 +3,22 @@ import jugador.*
 import objetos.*
 import posiciones.*
 
-
 class Nivel {
+
+	method cumpleObjetivo (personaje)
+	method descripcionDeObjetivos()
+
 	method objetosCreados()
+
 	method gravedadJugador()
+
 	method factoriesDeObjetos()
+
 	method fondo()
-	
-	method init(){
+
+	method siguiente()
+
+	method init() {
 		game.cellSize(64)
 		game.width(20)
 		game.height(10)
@@ -27,22 +35,36 @@ class Nivel {
 		game.addVisualIn(visorVida, visorVida.position())
 		game.addVisualIn(visorMonedas, visorMonedas.position())
 		game.addVisualIn(visorObjetivo, visorObjetivo.position())
-	}		
+	}
+
 }
 
+object nivel {
+
+	var nivel = nivel1
+
+	method pasarNivel() {
+		nivel = nivel.siguiente()
+	}
+
+	method nivel() {
+		return nivel
+	}
+
+}
 
 object nivel1 inherits Nivel {
 
 	const property objetosCreados = []
-		
-	override method factoriesDeObjetos(){
-		return [ creadorDeMonedas, creadorDeHielos, creadorDeVidas, creadorDeMazas ]
-	} 
 
-	override method gravedadJugador(){
+	override method factoriesDeObjetos() {
+		return [ creadorDeMonedas, creadorDeHielos, creadorDeVidas, creadorDeMazas ]
+	}
+
+	override method gravedadJugador() {
 		return 1000
-	} 
-	
+	}
+
 	override method fondo() {
 		return "fondoNivel1.jpg"
 	}
@@ -54,31 +76,123 @@ object nivel1 inherits Nivel {
 	override method init() {
 		super()
 		game.title("Nivel 1")
-		jugador.nivel(objetivoNivel1)
+		//jugador.nivel(objetivoNivel1)
+		
+	}
+
+	override method siguiente() {
+		return nivel2
+	}
 	
+	override method cumpleObjetivo(personaje) {
+		return personaje.monedas() >= 3
+	}
+
+	override method descripcionDeObjetivos() { //
+		return "Reuní 10 monedas de Oro para pasar nivel"
+	}
+
+}
+
+object nivel2 inherits Nivel {
+
+	const property objetosCreados = []
+
+	override method factoriesDeObjetos() {
+		return [ creadorDeMonedas, creadorDeHielos, creadorDeVidas, creadorDeMazas ]
+	}
+
+	override method gravedadJugador() {
+		return 1000
+	}
+
+	override method fondo() {
+		return "fondoNivel1.jpg"
+	}
+
+	method remove(objeto) {
+		objetosCreados.remove(objeto)
+	}
+
+	override method init() {
+		super()
+		game.title("Nivel 2")
+		
+	}
+
+	override method siguiente() {
+		return nivel3
+	}
+	
+	override method cumpleObjetivo(personaje) {
+		return personaje.monedas() >= 3
+	}
+
+	override method descripcionDeObjetivos() { //
+		return "Reuní 10 monedas de Oro para pasar nivel"
+	}
+
+}
+
+object nivel3 inherits Nivel {
+
+	const property objetosCreados = []
+
+	override method factoriesDeObjetos() {
+		return [ creadorDeMonedas, creadorDeHielos, creadorDeVidas, creadorDeMazas ]
+	}
+
+	override method gravedadJugador() {
+		return 1000
+	}
+
+	override method fondo() {
+		return "fondoNivel1.jpg"
+	}
+
+	method remove(objeto) {
+		objetosCreados.remove(objeto)
+	}
+
+	override method init() {
+		super()
+		game.title("Nivel 3")
+		
+	}
+
+	override method siguiente() {
+		game.stop()
+	}
+	
+	override method cumpleObjetivo(personaje) {
+		return personaje.monedas() >= 3
+	}
+
+	override method descripcionDeObjetivos() { //
+		return "Reuní 10 monedas de Oro para pasar nivel"
 	}
 
 }
 
 class ObjetivoNivel {
-	
-	method cumpleObjetivo(personaje) 
+
+	method cumpleObjetivo(personaje)
+
 	method descripcionDeObjetivos()
-	
+
 }
 
 object objetivoNivel1 inherits ObjetivoNivel {
-	
-	override method cumpleObjetivo(personaje){
-		return personaje.monedas() >= 10
+
+	override method cumpleObjetivo(personaje) {
+		return personaje.monedas() >= 3
 	}
-	
-	override method descripcionDeObjetivos(){ //
+
+	override method descripcionDeObjetivos() { //
 		return "Reuní 10 monedas de Oro para pasar nivel"
 	}
-	
-}
 
+}
 
 class VisorDeAtributos {
 
@@ -109,9 +223,9 @@ object visorMonedas inherits VisorDeAtributos {
 	override method text() {
 		return "Monedas: " + jugador.monedas()
 	}
-	
+
 }
-	
+
 object visorObjetivo inherits VisorDeAtributos {
 
 	override method position() {
@@ -120,8 +234,7 @@ object visorObjetivo inherits VisorDeAtributos {
 
 	override method text() {
 		return objetivoNivel1.descripcionDeObjetivos()
-	}	
+	}
 
 }
-
 

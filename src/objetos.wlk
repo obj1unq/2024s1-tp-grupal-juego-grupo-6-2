@@ -21,7 +21,7 @@ class ObjetoQueCae {
 
 	method desaparecer() {
 		game.removeVisual(self)
-		nivel1.remove(self)
+		nivel.nivel().remove(self)
 	}
 
 	// Metodo abstracto
@@ -52,7 +52,7 @@ class ObjetoQueCaeFactory {
 	method nuevoObjeto() {
 		const objeto = self.crear( randomizer.emptyPosition() )
 		game.addVisual(objeto)
-		nivel1.objetosCreados().add(objeto) //ojo cuando haya muchos niveles
+		nivel.nivel().objetosCreados().add(objeto) 
 		return objeto
 	}
 	
