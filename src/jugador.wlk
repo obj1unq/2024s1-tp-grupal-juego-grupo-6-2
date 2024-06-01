@@ -10,7 +10,7 @@ object jugador {
 	var property monedas = 0
 	var property estadoActual = jugandoDerecha
 	var property vida = 3
-	var property nivel = null
+
 
 	method limiteInferior() = 1
 
@@ -37,7 +37,7 @@ object jugador {
 	}
 
 	method corroborarSiGana() {
-		if (nivel.cumpleObjetivo(self)) {
+		if (nivel.nivel().cumpleObjetivo(self)) {
 			self.ganar()
 		}
 	}
@@ -89,8 +89,8 @@ class EstadoJugador {
 	method puedeMover() = false
 
 	method activar()
-	
-	method imagenEstado(){
+
+	method imagenEstado() {
 		return self
 	}
 
@@ -99,7 +99,7 @@ class EstadoJugador {
 class EstadosDeMovimiento inherits EstadoJugador {
 
 	const property direccion
-	
+
 	override method puedeMover() = true
 
 	override method activar() {
@@ -118,26 +118,26 @@ object jugandoIzquierda inherits EstadosDeMovimiento (direccion = izquierda) {
 }
 
 object saltando inherits EstadosDeMovimiento(direccion = arriba) {
+
 	var estadoImagen = saltando
+
 	override method activar() {
 		if (self.puedeSaltar()) {
 			estadoImagen = saltando
 			super()
-			game.schedule(300,{self.aterrizar()})
+			game.schedule(300, { self.aterrizar()})
 		}
-		
 	}
 
 	method puedeSaltar() {
 		return jugador.position().y() == 1
 	}
-	
-	
-	method aterrizar(){
+
+	method aterrizar() {
 		estadoImagen = jugandoDerecha
 	}
-	
-	override method imagenEstado(){
+
+	override method imagenEstado() {
 		return estadoImagen
 	}
 
@@ -152,7 +152,10 @@ object ganador inherits EstadoJugador {
 
 	override method activar() {
 		game.say(jugador, "Gané!")
-		game.schedule(3000, { game.stop()})
+		jugador.cambiarEstado(jugandoDerecha)
+		nivel.pasarNivel()
+		game.clear()
+		game.schedule(3000, { nivel.nivel().init()})
 	}
 
 }
