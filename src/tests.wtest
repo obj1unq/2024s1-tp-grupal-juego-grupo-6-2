@@ -3,6 +3,7 @@ import niveles.*
 import objetos.*
 import wollok.game.*
 import posiciones.*
+import visores.*
 
 describe "Tests de colision del personaje jugador con los objetos del juego" {
 
@@ -13,7 +14,6 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		game.width(20)
 		game.height(10)
 		game.addVisual(jugador)
-		
 		vida = creadorDeVidas.nuevoObjeto()
 	}
 
@@ -66,7 +66,6 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 //		moneda.accionAlColisionarCon(jugador)
 //		assert.equals(ganador, jugador.estadoActual())
 //	}
-
 	test "desaparecer objeto y remover de la lista" {
 		assert.equals(1, nivel.nivel().objetosCreados().size())
 		nivel1.objetosCreados().get(0).desaparecer()
