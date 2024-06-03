@@ -4,6 +4,7 @@ import objetos.*
 import wollok.game.*
 import posiciones.*
 import visores.*
+import ranking.*
 
 describe "Tests de colision del personaje jugador con los objetos del juego" {
 
@@ -81,5 +82,19 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.equals(nivel3, nivel.nivel())
 	}
 
+	test "ultimo nivel guarda ranking" {
+		jugador.monedas(10)
+		nivel.pasarNivel()
+		nivel.pasarNivel()
+		nivel.pasarNivel()
+		assert.equals(10, ranking.top())
+		assert.equals(0, jugador.monedas())
+		jugador.monedas(20)
+		nivel.pasarNivel()
+		nivel.pasarNivel()
+		nivel.pasarNivel()
+		assert.equals(20, ranking.top())
+		
+	}
 }
 

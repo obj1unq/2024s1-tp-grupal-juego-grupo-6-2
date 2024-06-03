@@ -74,6 +74,10 @@ object jugador {
 	method accionAlColisionarCon(objeto) {
 	}
 
+	method reiniciar() {
+		monedas = 0
+	}
+
 }
 
 class EstadoJugador {

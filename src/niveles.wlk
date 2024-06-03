@@ -1,3 +1,4 @@
+import ranking.* 
 import wollok.game.*
 import jugador.*
 import objetos.*
@@ -6,7 +7,7 @@ import visores.*
 
 class Nivel {
 
-	const tiempoDeJuego = 20
+	const tiempoDeJuego = 10
 
 	method descripcionDeObjetivos() {
 		return "Reuní la mayor cantidad de monedas antes de que finalice el tiempo"
@@ -47,6 +48,7 @@ class Nivel {
 		visorDeTiempo.tiempo(tiempoDeJuego)
 		game.addVisualIn(visorDeTiempo, visorDeTiempo.position())
 		game.addVisualIn(visorDeNivel, visorDeNivel.position())
+		game.addVisualIn(visorDeRanking, visorDeRanking.position())
 	}
 
 }
@@ -85,10 +87,10 @@ object nivel1 inherits Nivel {
 		objetosCreados.remove(objeto)
 	}
 
-	override method init() {
-		super()
-		game.title("Nivel 1")
-	}
+//	override method init() {
+//		super()
+//		game.title("Nivel 1")
+//	}
 
 	override method siguiente() {
 		return nivel2
@@ -116,10 +118,10 @@ object nivel2 inherits Nivel {
 		objetosCreados.remove(objeto)
 	}
 
-	override method init() {
-		super()
-		game.title("Nivel 2")
-	}
+//	override method init() {
+//		super()
+//		game.title("Nivel 2")
+//	}
 
 	override method siguiente() {
 		return nivel3
@@ -147,16 +149,16 @@ object nivel3 inherits Nivel {
 		objetosCreados.remove(objeto)
 	}
 
-	override method init() {
-		super()
-		game.title("Nivel 3")
-	}
+//	override method init() {
+//		super()
+//		game.title("Nivel 3")
+//	}
 
 	override method siguiente() {
-		game.clear()
-		visorCentral.text("FIN DE JUEGO")
-		game.addVisualIn(visorCentral, visorCentral.position())
-		game.schedule(3000, { game.stop()})
+		ranking.guardar(jugador.monedas())
+		jugador.reiniciar()
+		return nivel1
+		
 	}
 
 }

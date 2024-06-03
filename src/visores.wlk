@@ -1,6 +1,7 @@
 import wollok.game.*
 import jugador.*
-import niveles.* 
+import niveles.*
+import ranking.* 
 
 class VisorDeAtributos {
 
@@ -103,3 +104,12 @@ object visorDeNivel inherits VisorDeAtributos {
 
 }
 
+object visorDeRanking inherits VisorDeAtributos {
+	override method position() {
+		return game.at(16, game.height() - 1)
+	}
+
+	override method text() {
+		return "Top: " + ranking.top().toString()
+	}	
+}
