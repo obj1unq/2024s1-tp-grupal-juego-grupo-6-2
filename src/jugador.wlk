@@ -73,6 +73,10 @@ object jugador {
 
 	method accionAlColisionarCon(objeto) {
 	}
+	
+	method duplicarMonedas() {
+		monedas *= 2
+	}
 
 }
 
