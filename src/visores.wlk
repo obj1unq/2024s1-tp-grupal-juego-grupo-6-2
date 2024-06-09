@@ -75,6 +75,10 @@ object visorDeTiempo inherits VisorDeAtributos {
 			nivel.nivel().init()
 		})
 	}
+	
+	method aumentar(_tiempo) {
+		tiempo += _tiempo
+	}
 
 }
 
