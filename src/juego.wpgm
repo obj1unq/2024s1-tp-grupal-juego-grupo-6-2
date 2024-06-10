@@ -8,7 +8,7 @@ import visores.*
 import menu.*
 
 program juego {
-	
+
 	menuInicial.init()
 	game.start() 
 	

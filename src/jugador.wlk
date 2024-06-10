@@ -82,7 +82,7 @@ class EstadoJugador {
 
 	method puedeMover() = false
 
-	method activar()
+	method activar(nivel)
 
 	method imagenEstado() {
 		return self
@@ -96,7 +96,7 @@ class EstadosDeMovimiento inherits EstadoJugador {
 
 	override method puedeMover() = true
 
-	override method activar() {
+	override method activar(nivel) {
 		jugador.position(self.direccion().siguiente((jugador.position() )))
 	}
 
@@ -115,10 +115,10 @@ object saltando inherits EstadosDeMovimiento(direccion = arriba) {
 
 	var estadoImagen = self
 
-	override method activar() {
+	override method activar(nivel) {
 		if (self.puedeSaltar()) {
 			estadoImagen = self
-			super()
+			super(nivel)
 			game.schedule(300, { self.aterrizar()})
 		}
 	}
@@ -144,7 +144,7 @@ object agachando inherits EstadosDeMovimiento(direccion = abajo) {
 // ESTADOS DEL JUGADOR JUGABILIDAD
 object ganador inherits EstadoJugador {
 
-	override method activar() {
+	override method activar(nivel) {
 		game.say(jugador, "Gané!")
 		jugador.cambiarEstado(jugandoDerecha)
 		nivel.pasarNivel()
@@ -156,7 +156,7 @@ object ganador inherits EstadoJugador {
 
 object congelado inherits EstadoJugador {
 
-	override method activar() {
+	override method activar(nivel) {
 		game.say(jugador, "Estoy congelado")
 		game.schedule(5000, { jugador.cambiarEstado(jugandoDerecha)})
 	}
@@ -165,7 +165,7 @@ object congelado inherits EstadoJugador {
 
 object perdedor inherits EstadoJugador {
 
-	override method activar() {
+	override method activar(nivel) {
 		game.say(jugador, "Perdí!")
 		game.schedule(3000, { game.stop()})
 	}

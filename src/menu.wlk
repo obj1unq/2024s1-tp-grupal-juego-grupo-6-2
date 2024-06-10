@@ -10,9 +10,17 @@ import visores.*
 class Menu {
 	const objetosMenu =[botonEmpezar, botonInstrucciones, botonSalir]
 	var posicionBoton = 0
+	
+	const botonEmpezar = new BotonEmpezar (menu=self)
+	const botonInstrucciones = new BotonInstrucciones(menu=self)
+	const botonSalir = new BotonSalir ()
 			
 	method instrucciones(){
-		return visorInstruccionesMenuTransicion.text()
+		return self.tipoDeInstrucciones().text()
+	}
+	
+	method tipoDeInstrucciones(){
+		return new VisorInstruccionesMenuTransicion()	
 	}
 	
 	method salir(){
@@ -25,16 +33,25 @@ class Menu {
 		game.cellSize(64)
 		game.width(20)
 		game.height(10)
-		game.boardGround(self.fondo()) // background
+		game.boardGround(self.fondo()) 
 		game.addVisual(botonEmpezar)
 		game.addVisual(botonInstrucciones)
 		game.addVisual(botonSalir)
-		game.addVisualIn(visorDeSeleccion, game.at(objetosMenu.get(posicionBoton).positionX(), objetosMenu.get(posicionBoton).positionY()-2))
-		/*keyboard.down().onPressDo{posicionBoton = posicionBoton + 1}
-		keyboard.right().onPressDo{ objetosMenu.get(posicionBoton).activar()}
-		keyboard.left().onPressDo{ objetosMenu.get(posicionBoton).desactivar()}
-		keyboard.up().onPressDo{ posicionBoton = posicionBoton - 1 }
-		*/
+		game.addVisual(visorDeSeleccion)
+		
+		keyboard.down().onPressDo{
+			posicionBoton = posicionBoton + 1
+			visorDeSeleccion.moverAbajo()
+		}
+		
+		keyboard.right().onPressDo{ 
+			objetosMenu.get(posicionBoton).activar()
+			visorDeSeleccion.moverArriba()
+		}
+		
+		keyboard.up().onPressDo{ 
+			posicionBoton = posicionBoton - 1
+		}
 	}
 	
 	method siguiente()
@@ -47,90 +64,64 @@ object menuInicial inherits Menu {
 		return nivel1
 	}
 	
-	override method instrucciones(){
-		return visorInstruccionesMenuInicial.text()
-	}
-	
-	override method init(){
-		super() 
-		game.addVisualIn(visorMenuInicial, visorMenuInicial.position())
+	override method tipoDeInstrucciones(){
+		return new VisorInstruccionesMenuInicial()
 	}
 }
 
-object menuTransicion1 inherits Menu {
+class MenuTransicion inherits Menu {
+	const siguienteNivel
 	
 	override method siguiente(){
-		return nivel2
+		return siguienteNivel
 	}
 		
-}
-
-object menuTransicion2 inherits Menu {
-	
-	override method siguiente(){
-		return nivel3
-	}
-	
-}
-
-object menuTransicion3 inherits Menu {
-	
-	override method siguiente(){
-		return menuInicial
-	}
-	
 }
 
 class Boton {
-	method positionX() {return 5}
 	
-	method positionY() {return 0}
+	method ejeX() {return 5}
+	
+	method ejeY() {return 0}
 		
 	method position(){
-		return game.at(self.positionX(),self.positionY())
+		return game.at(self.ejeX(),self.ejeY())
 	}
 	
 	method image() { return self + ".png" }	
 	
-	method activar(menu)
-	
-	method desactivar(menu){}
+	method activar()
 	
 }
 
-object botonEmpezar inherits Boton {
+class BotonEmpezar inherits Boton {
+	const menu
 	
-	override method positionY(){return 3}
-		
-	override method activar(menu){
+	override method ejeY(){return 3}
+	
+	override method activar(){
 		menu.siguiente().init()
 	}
+	
 }
 
-object botonInstrucciones inherits Boton {
+class BotonInstrucciones inherits Boton {
+	const menu
 	
-	override method positionY(){return 5}
+	override method ejeY(){return 5}
 	
-		override method activar(menu){
-		menu.instrucciones()
+	override method activar(){
+		game.say(self, menu.instrucciones())
 	}
-	
 }
 	
-object botonSalir inherits Boton {
+class BotonSalir inherits Boton {
 	
-	override method positionY(){return 9}
+	override method ejeY(){return 9}
 	
-	override method activar(menu){
+	override method activar(){
 		game.stop()
 	}
 
 }
 
-object visorDeSeleccion{
-var property position = game.at(0,0)
-	
-	method image() {
-		return "moneda.png"
-	}
-}
