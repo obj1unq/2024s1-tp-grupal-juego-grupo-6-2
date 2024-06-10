@@ -2,6 +2,7 @@ import wollok.game.*
 import jugador.*
 import objetos.*
 import posiciones.*
+import randomizer.*
 import visores.*
 
 class Nivel {
@@ -22,10 +23,12 @@ class Nivel {
 
 	method siguiente()
 
-	method tiempoDeJuego() {
-		return 20
-	}
+	method tiempoDeJuego() {return 20}
+	
+	method pasarNivel() {self.siguiente()}
 
+	method nivel() {return self}
+	
 	method init() {
 		game.cellSize(64)
 		game.width(20)
@@ -62,7 +65,6 @@ object nivel {
 	method nivel() {
 		return nivel
 	}
-
 }
 
 object nivel1 inherits Nivel {

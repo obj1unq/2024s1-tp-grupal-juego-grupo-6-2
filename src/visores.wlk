@@ -1,6 +1,10 @@
 import wollok.game.*
 import jugador.*
-import niveles.* 
+import niveles.*
+import objetos.*
+import posiciones.*
+import randomizer.*
+
 
 class VisorDeAtributos {
 
@@ -102,4 +106,32 @@ object visorDeNivel inherits VisorDeAtributos {
 	}
 
 }
+
+object visorMenuInicial inherits VisorDeAtributos {
+	var property text = "Usa las flechas para moverte en el menu."
+	
+	override method position() {return game.at(0,0)}
+
+	override method text() {return text}
+
+}
+
+object visorInstruccionesMenuInicial inherits VisorDeAtributos {
+	var property text = "Para empezar el nivel seleccioná empezar y junta la mayor cantidad de monedas."
+	
+	override method position() {return game.center()}
+
+	override method text() {return text}
+
+}
+
+object visorInstruccionesMenuTransicion inherits VisorDeAtributos {
+	var property text = "Para comprar 1 vida por 10 monedas pulsa la tecla v."
+	
+	override method position() {return game.center()}
+
+	override method text() {return text}
+
+}
+
 

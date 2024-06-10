@@ -3,6 +3,7 @@ import jugador.*
 import niveles.*
 import posiciones.*
 import randomizer.*
+import visores.*
 
 class ObjetoQueCae {
 	var property position

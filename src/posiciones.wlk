@@ -1,7 +1,9 @@
 import wollok.game.*
+import jugador.*
 import niveles.*
 import objetos.*
-import jugador.*
+import randomizer.*
+import visores.*
 
 object tablero {
 
