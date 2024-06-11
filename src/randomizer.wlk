@@ -8,7 +8,7 @@ import visores.*
 object randomizer {
 
 	method position() {
-		return game.at((0 .. game.width() - 1 ).anyOne(), (game.height() - 1))
+		return game.at((0 .. game.width() - 1 ).anyOne(), (game.height() - 2))
 	}
 
 	method emptyPosition() {

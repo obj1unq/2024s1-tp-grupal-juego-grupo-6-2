@@ -21,6 +21,28 @@ object tablero {
 
 }
 
+class Head {
+
+	const property position
+
+	method image() {
+		return "head.png"
+	}
+
+}
+object creadorDeEncabezado {
+
+	method crearEncabezado() {
+		(0 .. (game.width() - 1)).forEach{ x => self.celda(x)}
+	}
+
+	method celda(x) {
+		const celda = new Head(position = game.at(x, game.height() - 1))
+		game.addVisual(celda)
+		
+	}
+
+}
 //
 class Baldosa {
 

@@ -73,7 +73,9 @@ class Nivel {
 		keyboard.left().onPressDo{ jugador.mover(jugandoIzquierda)}
 		keyboard.up().onPressDo{ jugador.mover(saltando)}
 		creadorDeBaldosas.crearBaldosas()
+		creadorDeEncabezado.crearEncabezado()
 		game.onTick(self.gravedadJugador(), "GRAVEDAD_JUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
+		//los objetos se crean en altura - 2 porque en altura -1 esta el encabezado
 		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
 		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		game.onTick(1000, "CRONOMETRO", { self.descontarTiempo()})

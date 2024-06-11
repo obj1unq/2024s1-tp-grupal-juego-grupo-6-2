@@ -17,6 +17,8 @@ class VisorDeAtributos {
 	}
 
 	method text()
+	
+	method textColor() = paleta.blanco()
 
 }
 
@@ -145,5 +147,11 @@ object visorDeRanking inherits VisorDeAtributos {
 		return "High-Score: " + ranking.top().toString()
 	}
 
+}
+
+object paleta {
+	const property verde = "00FF00FF"
+	const property rojo = "FF0000FF"
+	const property blanco = "FAFAFA"
 }
 
