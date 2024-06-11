@@ -8,12 +8,9 @@ import visores.*
 
 
 class Menu {
-	const objetosMenu =[botonEmpezar, botonInstrucciones, botonSalir]
+	const objetosMenu =[new BotonEmpezar(), new BotonInstrucciones(), new BotonSalir()]
 	var posicionBoton = 0
-	
-	const botonEmpezar = new BotonEmpezar (menu=self)
-	const botonInstrucciones = new BotonInstrucciones(menu=self)
-	const botonSalir = new BotonSalir ()
+	const property position = game.at(0,0)
 			
 	method instrucciones(){
 		return self.tipoDeInstrucciones().text()
@@ -27,60 +24,54 @@ class Menu {
 		game.stop()
 	}
 	
-	method fondo(){return "fondoMenu.png"}
+	method image(){return "fondoMenu.png"}
 	
 	method init(){
 		game.cellSize(64)
 		game.width(20)
 		game.height(10)
-		game.boardGround(self.fondo()) 
-		game.addVisual(botonEmpezar)
-		game.addVisual(botonInstrucciones)
-		game.addVisual(botonSalir)
+		game.addVisual(self)
+		game.addVisual(objetosMenu.get(0))
+		game.addVisual(objetosMenu.get(1))
+		game.addVisual(objetosMenu.get(2))
 		game.addVisual(visorDeSeleccion)
+		
 		
 		keyboard.down().onPressDo{
 			posicionBoton = posicionBoton + 1
 			visorDeSeleccion.moverAbajo()
 		}
 		
-		keyboard.right().onPressDo{ 
+		keyboard.enter().onPressDo{ 
 			objetosMenu.get(posicionBoton).activar()
-			visorDeSeleccion.moverArriba()
+			
 		}
 		
 		keyboard.up().onPressDo{ 
 			posicionBoton = posicionBoton - 1
+			visorDeSeleccion.moverArriba()
 		}
 	}
-	
-	method siguiente()
-	
-}
+}	
+
 
 object menuInicial inherits Menu {
-	
-	override method siguiente(){
-		return nivel1
-	}
 	
 	override method tipoDeInstrucciones(){
 		return new VisorInstruccionesMenuInicial()
 	}
 }
 
-class MenuTransicion inherits Menu {
-	const siguienteNivel
+object menuTransicion inherits Menu {
 	
-	override method siguiente(){
-		return siguienteNivel
-	}
+	method canjearMonedas(){}
+	
 		
 }
 
 class Boton {
 	
-	method ejeX() {return 5}
+	method ejeX() {return 6}
 	
 	method ejeY() {return 0}
 		
@@ -88,39 +79,51 @@ class Boton {
 		return game.at(self.ejeX(),self.ejeY())
 	}
 	
-	method image() { return self + ".png" }	
+	method image() { return self.nombre() }	
 	
 	method activar()
+	
+	method nombre()
 	
 }
 
 class BotonEmpezar inherits Boton {
-	const menu
 	
-	override method ejeY(){return 3}
+	override method ejeY(){return 8}
 	
 	override method activar(){
-		menu.siguiente().init()
+		game.clear()
+		controladorDeNivel.nivel().init()
 	}
 	
+	override method nombre(){
+		return "botonEmpezar.png"
+	}
 }
 
 class BotonInstrucciones inherits Boton {
-	const menu
-	
-	override method ejeY(){return 5}
+
+	override method ejeY(){return 7}
 	
 	override method activar(){
-		game.say(self, menu.instrucciones())
+		game.say(self, controladorDeNivel.nivel().descripcionDeObjetivos())
+	}
+	
+	override method nombre(){
+		return "botonInstrucciones.png"
 	}
 }
 	
 class BotonSalir inherits Boton {
 	
-	override method ejeY(){return 9}
+	override method ejeY(){return 5}
 	
 	override method activar(){
 		game.stop()
+	}
+	
+	override method nombre(){
+		return "botonSalir.png"
 	}
 
 }

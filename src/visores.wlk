@@ -5,19 +5,21 @@ import objetos.*
 import posiciones.*
 import randomizer.*
 
-
 class VisorDeAtributos {
-	
-	method position(){
+
+	method position() {
 		return game.at(self.posicionX(), game.height() - 1)
 	}
-	method posicionX(){return 0}
-	
+
+	method posicionX() {
+		return 0
+	}
+
 	method text()
 
 }
 
-class VisorVida inherits VisorDeAtributos {
+object visorVida inherits VisorDeAtributos {
 
 	override method text() {
 		return "Vida: " + jugador.vida()
@@ -25,7 +27,7 @@ class VisorVida inherits VisorDeAtributos {
 
 }
 
-class VisorMonedas inherits VisorDeAtributos {
+object visorMonedas inherits VisorDeAtributos {
 
 	override method posicionX() {
 		return 2
@@ -37,35 +39,25 @@ class VisorMonedas inherits VisorDeAtributos {
 
 }
 
-class VisorDeTiempo inherits VisorDeAtributos {
+object visorDeTiempo inherits VisorDeAtributos {
 
-	var property tiempo = 20
-
-	override method posicionX(){
+	override method posicionX() {
 		return 10
 	}
 
 	override method text() {
-		return "Tiempo: " + tiempo.toString()
+		return "Tiempo: " + controladorDeNivel.nivel().tiempo().toString()
 	}
 
-	method descontar(segundos) {
-		if(self.tieneTiempo())
-		tiempo -= segundos
-		
-	}
+}
 
-	method tieneTiempo() {
-		return tiempo > 0
-	}
-}	
+object visorFinDeTiempo inherits VisorDeAtributos {
 
-class VisorFinDeTiempo inherits VisorDeAtributos {
 	var property text = "Fin de tiempo!"
+
 	override method position() {
 		return game.center()
 	}
-
 
 	override method text() {
 		return text
@@ -73,56 +65,72 @@ class VisorFinDeTiempo inherits VisorDeAtributos {
 
 }
 
-class VisorDeNivel inherits VisorDeAtributos {
-	const property nivel 
-	override method posicionX() {
+object visorDeNivel inherits VisorDeAtributos {
+
+//	override method posicionX() {
+//		return 
+//	}
+	override method position() {
 		return game.at(14, game.height() - 1)
 	}
 
 	override method text() {
-		return "Nivel: " + nivel.toString()
+		return "Nivel: " + controladorDeNivel.nivel().toString()
 	}
 
 }
 
 class VisorMenuInicial inherits VisorDeAtributos {
-	
-	override method position() {return game.at(0,0)}
 
-	override method text() {return "Usa las flechas para moverte en el menu."}
+	override method position() {
+		return game.at(0, 0)
+	}
+
+	override method text() {
+		return "Usa las flechas para moverte en el menu."
+	}
 
 }
 
 class VisorInstruccionesMenuInicial inherits VisorDeAtributos {
 
-	override method position() {return game.center()}
+	override method position() {
+		return game.center()
+	}
 
-	override method text() {return "Para empezar el nivel seleccioná empezar y junta la mayor cantidad de monedas."}
+	override method text() {
+		return "Para empezar el nivel seleccioná empezar y junta la mayor cantidad de monedas."
+	}
 
 }
 
 class VisorInstruccionesMenuTransicion inherits VisorDeAtributos {
 
-	
-	override method position() {return game.center()}
+	override method position() {
+		return game.center()
+	}
 
-	override method text() {return "Para comprar 1 vida por 10 monedas pulsa la tecla v."}
+	override method text() {
+		return "Para comprar 1 vida por 10 monedas pulsa la tecla v."
+	}
 
 }
 
 object visorDeSeleccion {
-	var property position = game.at(self.ejeX(), self.ejeY())
-	
-	method moverAbajo() {return self.ejeY()+2.max(9)}
-	
-	method moverArriba() {return self.ejeY()-2.max(3)}
-	
-	method ejeX(){return 3}
-	
-	method ejeY(){return 3}
-	
-	method image() {return "moneda.png"}
+
+	var property position = game.at(3, 8)
+
+	method moverAbajo() {
+		self.position(game.at(position.x(), (position.y() - 1).max(5)))
+	}
+
+	method moverArriba() {
+		self.position(game.at(position.x(), (position.y() + 1).min(8)))
+	}
+
+	method image() {
+		return "moneda.png"
+	}
+
 }
-
-
 

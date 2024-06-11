@@ -7,32 +7,28 @@ import visores.*
 import menu.*
 
 class Nivel {
-	const visorMonedas = new VisorMonedas()
-	const visorVida = new VisorVida()
-	const visorTiempo = new VisorDeTiempo()
-	const visorNivel = new VisorDeNivel(nivel = self)
-	const visorFinDeTiempo = new VisorFinDeTiempo()
-	
 	var property tiempo = self.tiempoDeJuego()
+	const property position = game.at(0,0)
 	
+
 	method descontarTiempo() {
-		if(self.tieneTiempo())
-		tiempo -= self.segundosADescontar()
+		return if (self.tieneTiempo()) {tiempo -= self.segundosADescontar()}
+		else {self.pasarDeNivel()}
 		
 	}
 
 	method tieneTiempo() {
 		return tiempo > 0
 	}
-	
-	method tiempoDeJuego(){
-		return  30
+
+	method tiempoDeJuego() {
+		return 3
 	}
-			
-	method segundosADescontar(){
+
+	method segundosADescontar() {
 		return 1
 	}
-	
+
 	method descripcionDeObjetivos() {
 		return "Reuní la mayor cantidad de monedas antes de que finalice el tiempo"
 	}
@@ -41,32 +37,33 @@ class Nivel {
 
 	method gravedadJugador()
 
-	method factoriesDeObjetos(){
-		return [new CreadorDeMonedas(nivel=self), new CreadorDeHielos(nivel=self), new CreadorDeVidas(nivel=self), new CreadorDeMazas(nivel=self) ]
+	method factoriesDeObjetos() {
+		return [ new CreadorDeMonedas(nivel=self), new CreadorDeHielos(nivel=self), new CreadorDeVidas(nivel=self), new CreadorDeMazas(nivel=self) ]
 	}
 
-	method fondo()
+	method image()
 
 	method siguiente()
-	
-	method nivel() {return self}
-	
+
+	method nivel() {
+		return self
+	}
+
 	method pasarDeNivel() {
-		return if (not self.tieneTiempo()){ 
+		if (not self.tieneTiempo()) {
 			game.clear()
 			game.addVisual(visorFinDeTiempo)
 			visorFinDeTiempo.text()
-			game.schedule(3000, { new MenuTransicion(siguienteNivel = self.siguiente()).init()})
-		} else {} 
+			controladorDeNivel.pasarNivel()
+			game.schedule(1000, {menuTransicion.init()})
+		}
 	}
-	
-	method init() {
 
-		
+	method init() {
 		game.cellSize(64)
 		game.width(20)
 		game.height(10)
-		game.boardGround(self.fondo()) 
+		game.addVisual(self)
 		game.addVisual(jugador)
 		game.onCollideDo(jugador, { objeto => objeto.colisionarCon(jugador)})
 		keyboard.right().onPressDo{ jugador.mover(jugandoDerecha)}
@@ -76,24 +73,39 @@ class Nivel {
 		game.onTick(self.gravedadJugador(), "GRAVEDAD_JUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
 		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
 		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
-		game.onTick(1000, "CRONOMETRO", { visorTiempo.descontar(1)})
+		game.onTick(1000, "CRONOMETRO", { self.descontarTiempo()})
 		game.addVisual(visorVida)
 		game.addVisual(visorMonedas)
-		game.addVisual(visorTiempo)
-		game.addVisual(visorNivel)
+		game.addVisual(visorDeTiempo)
+		game.addVisual(visorDeNivel)
 	}
+	
+	method desaparecer(){}
+}
+
+object controladorDeNivel {
+
+	var nivel = nivel1
+
+	method pasarNivel() {
+		nivel = nivel.siguiente()
+	}
+
+	method nivel() {
+		return nivel
+	}
+
 }
 
 object nivel1 inherits Nivel {
 
 	const property objetosCreados = []
-	
 
 	override method gravedadJugador() {
 		return 1000
 	}
 
-	override method fondo() {
+	override method image() {
 		return "fondoNivel1.jpg"
 	}
 
@@ -101,15 +113,10 @@ object nivel1 inherits Nivel {
 		objetosCreados.remove(objeto)
 	}
 
-	override method init() {
-		super()
-		game.title("Nivel 1")
-	}
-
 	override method siguiente() {
 		return nivel2
 	}
-	
+
 }
 
 object nivel2 inherits Nivel {
@@ -119,22 +126,17 @@ object nivel2 inherits Nivel {
 	override method gravedadJugador() {
 		return 1000
 	}
-	
-	override method tiempoDeJuego(){
-		return  20
+
+	override method tiempoDeJuego() {
+		return 5
 	}
-	
-	override method fondo() {
+
+	override method image() {
 		return "fondoNivel1.jpg"
 	}
 
 	method remove(objeto) {
 		objetosCreados.remove(objeto)
-	}
-
-	override method init() {
-		super()
-		game.title("Nivel 2")
 	}
 
 	override method siguiente() {
@@ -150,12 +152,12 @@ object nivel3 inherits Nivel {
 	override method gravedadJugador() {
 		return 1000
 	}
-	
-	override method tiempoDeJuego(){
-		return  10
+
+	override method tiempoDeJuego() {
+		return 10
 	}
 
-	override method fondo() {
+	override method image() {
 		return "fondoNivel1.jpg"
 	}
 
@@ -163,16 +165,9 @@ object nivel3 inherits Nivel {
 		objetosCreados.remove(objeto)
 	}
 
-	override method init() {
-		super()
-		game.title("Nivel 3")
-	}
-
 	override method siguiente() {
-		
+		return nivel1
 	}
-	
+
 }
-
-
 
