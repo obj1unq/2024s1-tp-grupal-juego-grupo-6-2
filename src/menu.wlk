@@ -93,7 +93,8 @@ class BotonEmpezar inherits Boton {
 	
 	override method activar(){
 		game.clear()
-		controladorDeNivel.nivel().init()
+		controladorDeNivel.nivel().iniciar()
+		
 	}
 	
 	override method nombre(){

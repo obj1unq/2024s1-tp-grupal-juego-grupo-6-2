@@ -142,7 +142,7 @@ object visorDeRanking inherits VisorDeAtributos {
 	}
 
 	override method text() {
-		return "Top: " + ranking.top().toString()
+		return "High-Score: " + ranking.top().toString()
 	}
 
 }
