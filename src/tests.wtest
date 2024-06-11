@@ -7,24 +7,34 @@ import visores.*
 import ranking.*
 
 describe "Tests de colision del personaje jugador con los objetos del juego" {
+
 	var nivel
 	var vida
 	var posicionActual
-	var hielo 
-	var maza 
-	
+	var hielo
+	var maza
 
 	method initialize() {
 		game.clear()
 		game.width(20)
 		game.height(10)
 		game.addVisual(jugador)
-		
 		nivel = nivel1
 		vida = new CreadorDeVidas(nivel=nivel).nuevoObjeto()
 		posicionActual = jugador.position()
 		hielo = new CreadorDeHielos(nivel=nivel).nuevoObjeto()
 		maza = new CreadorDeMazas(nivel=nivel).nuevoObjeto()
+	}
+
+	test "jugador movimientos" {
+		jugador.position(game.at(5, 5))
+		jugador.mover(jugandoDerecha)
+		jugador.mover(jugandoDerecha)
+		assert.equals(game.at(7, 5), jugador.position())
+		jugador.mover(jugandoIzquierda)
+		assert.equals(game.at(6, 5), jugador.position())
+		jugador.mover(saltando) //salta y cae
+		assert.equals(game.at(6, 5), jugador.position())
 	}
 
 	test "Jugador suma vidas" {
@@ -42,13 +52,13 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.equals(2, jugador.monedas()) // el jugador colisiono con una vida y ahora sumo a 200 de vida
 	}
 
-	/*test "Jugador atrapa un hielo, se congela y no se puede mover" {
-		hielo.colisionarCon(jugador)// al colisinar, el jugador no puede moverse ni saltar
+	test "Jugador atrapa un hielo, se congela y no se puede mover" {
+		jugador.position(game.at(3, 3))
+		hielo.colisionarCon(jugador)
+		assert.equals(congelado, jugador.estadoActual())
 		jugador.mover(jugandoDerecha)
-		jugador.mover(jugandoDerecha)
-		jugador.mover(saltando)
-		assert.equals(posicionActual, jugador.position())
-	}*/
+		jugador.position(game.at(3, 3))
+	}
 
 	test "Jugador colisiona con una Maza y pierde" { // este test chequea el funcionamiento de la maza y el perder del jugador
 		jugador.vida(1)
@@ -66,14 +76,12 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.notThat(tablero.puedeIr(jugador, derecha))
 	}
 
-
 	test "desaparecer objeto y remover de la lista" {
 		assert.equals(3, controladorDeNivel.nivel().objetosCreados().size())
 		nivel1.objetosCreados().get(0).desaparecer()
 		assert.equals(2, controladorDeNivel.nivel().objetosCreados().size())
 		assert.notThat(game.hasVisual(vida))
 	}
-
 
 	test "ultimo nivel guarda ranking" {
 		jugador.monedas(10)
@@ -87,9 +95,8 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		controladorDeNivel.pasarNivel()
 		controladorDeNivel.pasarNivel()
 		assert.equals(20, ranking.top())
-		
 	}
-	
+
 	test "reinicio de tiempo entre niveles" {
 		assert.equals(10, nivel1.tiempo())
 		nivel1.tiempo(0)
