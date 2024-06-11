@@ -91,6 +91,7 @@ class Nivel {
 
 	method iniciar() {
 		self.reestablecerTiempo()
+		jugador.cambiarEstado(jugandoDerecha)
 		self.init()
 	}
 
