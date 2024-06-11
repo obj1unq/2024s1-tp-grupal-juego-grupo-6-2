@@ -12,11 +12,13 @@ object jugador {
 	var property monedas = 0
 	var property estadoActual = jugandoDerecha
 	var property vida = 3
-
+	var property potenciadorMonedas = 1
+	var property potenciadorTiempo = 1
+	
 	method limiteInferior() = 1
 
 	method sumarMoneda(valorMoneda) {
-		monedas += valorMoneda
+		monedas += valorMoneda*potenciadorMonedas
 	}
 
 	method sumarVida() {
