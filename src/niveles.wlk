@@ -9,6 +9,7 @@ import menu.*
 
 class Nivel {
 
+	const property objetosCreados = []
 	var property tiempo = self.tiempoDeJuego()
 	const property position = game.at(0, 0)
 
@@ -37,6 +38,10 @@ class Nivel {
 	}
 
 	method objetosCreados()
+
+	method remove(objeto) {
+		objetosCreados.remove(objeto)
+	}
 
 	method gravedadJugador()
 
@@ -75,7 +80,7 @@ class Nivel {
 		creadorDeBaldosas.crearBaldosas()
 		creadorDeEncabezado.crearEncabezado()
 		game.onTick(self.gravedadJugador(), "GRAVEDAD_JUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
-		//los objetos se crean en altura - 2 porque en altura -1 esta el encabezado
+			// los objetos se crean en altura - 2 porque en altura -1 esta el encabezado
 		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
 		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		game.onTick(1000, "CRONOMETRO", { self.descontarTiempo()})
@@ -117,18 +122,12 @@ object controladorDeNivel {
 
 object nivel1 inherits Nivel {
 
-	const property objetosCreados = []
-
 	override method gravedadJugador() {
 		return 1000
 	}
 
 	override method image() {
 		return "fondoNivel1.jpg"
-	}
-
-	method remove(objeto) {
-		objetosCreados.remove(objeto)
 	}
 
 	override method siguiente() {
@@ -138,8 +137,6 @@ object nivel1 inherits Nivel {
 }
 
 object nivel2 inherits Nivel {
-
-	const property objetosCreados = []
 
 	override method gravedadJugador() {
 		return 1000
@@ -153,10 +150,6 @@ object nivel2 inherits Nivel {
 		return "fondoNivel1.jpg"
 	}
 
-	method remove(objeto) {
-		objetosCreados.remove(objeto)
-	}
-
 	override method siguiente() {
 		return nivel3
 	}
@@ -164,8 +157,6 @@ object nivel2 inherits Nivel {
 }
 
 object nivel3 inherits Nivel {
-
-	const property objetosCreados = []
 
 	override method gravedadJugador() {
 		return 1000
@@ -177,10 +168,6 @@ object nivel3 inherits Nivel {
 
 	override method image() {
 		return "fondoNivel1.jpg"
-	}
-
-	method remove(objeto) {
-		objetosCreados.remove(objeto)
 	}
 
 	override method siguiente() {
