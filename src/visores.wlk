@@ -4,6 +4,7 @@ import niveles.*
 import objetos.*
 import posiciones.*
 import randomizer.*
+import ranking.*
 
 class VisorDeAtributos {
 
@@ -130,6 +131,18 @@ object visorDeSeleccion {
 
 	method image() {
 		return "moneda.png"
+	}
+
+}
+
+object visorDeRanking inherits VisorDeAtributos {
+
+	override method position() {
+		return game.at(16, game.height() - 1)
+	}
+
+	override method text() {
+		return "Top: " + ranking.top().toString()
 	}
 
 }

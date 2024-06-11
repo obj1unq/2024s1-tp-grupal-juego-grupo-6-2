@@ -1,3 +1,4 @@
+import ranking.*
 import wollok.game.*
 import jugador.*
 import objetos.*
@@ -7,14 +8,16 @@ import visores.*
 import menu.*
 
 class Nivel {
+
 	var property tiempo = self.tiempoDeJuego()
-	const property position = game.at(0,0)
-	
+	const property position = game.at(0, 0)
 
 	method descontarTiempo() {
-		return if (self.tieneTiempo()) {tiempo -= self.segundosADescontar()}
-		else {self.pasarDeNivel()}
-		
+		return if (self.tieneTiempo()) {
+			tiempo -= self.segundosADescontar()
+		} else {
+			self.pasarDeNivel()
+		}
 	}
 
 	method tieneTiempo() {
@@ -22,7 +25,7 @@ class Nivel {
 	}
 
 	method tiempoDeJuego() {
-		return 3
+		return 10
 	}
 
 	method segundosADescontar() {
@@ -55,7 +58,7 @@ class Nivel {
 			game.addVisual(visorFinDeTiempo)
 			visorFinDeTiempo.text()
 			controladorDeNivel.pasarNivel()
-			game.schedule(1000, {menuTransicion.init()})
+			game.schedule(1000, { menuTransicion.init()})
 		}
 	}
 
@@ -78,9 +81,12 @@ class Nivel {
 		game.addVisual(visorMonedas)
 		game.addVisual(visorDeTiempo)
 		game.addVisual(visorDeNivel)
+		game.addVisual(visorDeRanking)
 	}
-	
-	method desaparecer(){}
+
+	method desaparecer() {
+	}
+
 }
 
 object controladorDeNivel {
@@ -166,6 +172,8 @@ object nivel3 inherits Nivel {
 	}
 
 	override method siguiente() {
+		ranking.guardar(jugador.monedas())
+		jugador.reiniciar()
 		return nivel1
 	}
 

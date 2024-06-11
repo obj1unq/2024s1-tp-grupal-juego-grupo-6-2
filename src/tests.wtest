@@ -4,6 +4,7 @@ import objetos.*
 import wollok.game.*
 import posiciones.*
 import visores.*
+import ranking.*
 
 describe "Tests de colision del personaje jugador con los objetos del juego" {
 	var nivel
@@ -65,12 +66,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.notThat(tablero.puedeIr(jugador, derecha))
 	}
 
-//	test "jugador Gana" {
-//		var moneda = creadorDeMonedas.nuevoObjeto()
-//		jugador.monedas(90)
-//		moneda.accionAlColisionarCon(jugador)
-//		assert.equals(ganador, jugador.estadoActual())
-//	}
+
 	test "desaparecer objeto y remover de la lista" {
 		assert.equals(3, nivel.nivel().objetosCreados().size())
 		nivel1.objetosCreados().get(0).desaparecer()
@@ -78,13 +74,22 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.notThat(game.hasVisual(vida))
 	}
 
-	/*test "Pasar de nivel" {
-		assert.equals(nivel1, nivel.nivel())
-		nivel.pasarNivel()
-		assert.equals(nivel2, nivel.nivel())
-		nivel.pasarNivel()
-		assert.equals(nivel3, nivel.nivel())
-	}*/
+
+	test "ultimo nivel guarda ranking" {
+		jugador.monedas(10)
+		controladorDeNivel.pasarNivel()
+		controladorDeNivel.pasarNivel()
+		controladorDeNivel.pasarNivel()
+		assert.equals(10, ranking.top())
+		assert.equals(0, jugador.monedas())
+		jugador.monedas(20)
+		controladorDeNivel.pasarNivel()
+		controladorDeNivel.pasarNivel()
+		controladorDeNivel.pasarNivel()
+		assert.equals(20, ranking.top())
+		
+	}
+	
 
 }
 
