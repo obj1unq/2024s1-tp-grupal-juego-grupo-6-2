@@ -46,7 +46,9 @@ class Nivel {
 
 	method image()
 
-	method nivel()
+	method nivel() {
+		return self
+	}
 
 	method siguiente()
 
