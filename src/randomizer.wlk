@@ -1,4 +1,9 @@
 import wollok.game.*
+import jugador.*
+import niveles.*
+import objetos.*
+import posiciones.*
+import visores.*
 
 object randomizer {
 

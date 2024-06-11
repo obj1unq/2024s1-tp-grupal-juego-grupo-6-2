@@ -2,6 +2,8 @@ import wollok.game.*
 import niveles.*
 import objetos.*
 import posiciones.*
+import randomizer.*
+import visores.*
 
 object jugador {
 
@@ -145,9 +147,9 @@ object ganador inherits EstadoJugador {
 	override method activar() {
 		game.say(jugador, "Gané!")
 		jugador.cambiarEstado(jugandoDerecha)
-		nivel.pasarNivel()
+		controladorDeNivel.pasarNivel()
 		game.clear()
-		game.schedule(3000, { nivel.nivel().init()})
+		game.schedule(3000, { controladorDeNivel.nivel().init()})
 	}
 
 }

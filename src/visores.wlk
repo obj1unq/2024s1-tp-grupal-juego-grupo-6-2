@@ -1,20 +1,25 @@
 import wollok.game.*
 import jugador.*
-import niveles.* 
+import niveles.*
+import objetos.*
+import posiciones.*
+import randomizer.*
 
 class VisorDeAtributos {
 
-	method position()
+	method position() {
+		return game.at(self.posicionX(), game.height() - 1)
+	}
+
+	method posicionX() {
+		return 0
+	}
 
 	method text()
 
 }
 
 object visorVida inherits VisorDeAtributos {
-
-	override method position() {
-		return game.at(0, game.height() - 1)
-	}
 
 	override method text() {
 		return "Vida: " + jugador.vida()
@@ -24,8 +29,8 @@ object visorVida inherits VisorDeAtributos {
 
 object visorMonedas inherits VisorDeAtributos {
 
-	override method position() {
-		return game.at(2, game.height() - 1)
+	override method posicionX() {
+		return 2
 	}
 
 	override method text() {
@@ -34,56 +39,25 @@ object visorMonedas inherits VisorDeAtributos {
 
 }
 
-object visorObjetivo inherits VisorDeAtributos {
-
-	override method position() {
-		return game.at(6, game.height() - 1)
-	}
-
-	override method text() {
-		return nivel.nivel().descripcionDeObjetivos()
-	}
-
-}
-
 object visorDeTiempo inherits VisorDeAtributos {
 
-	var property tiempo = 20
-
-	override method position() {
-		return game.at(10, game.height() - 1)
+	override method posicionX() {
+		return 10
 	}
 
 	override method text() {
-		return "Tiempo: " + tiempo.toString()
-	}
-
-	method descontar(segundos) {
-		tiempo -= segundos
-		self.chequearFinDeTiempo()
-	}
-
-	method chequearFinDeTiempo() {
-		if (tiempo == 0) self.pasarDeNivel()
-	}
-
-	method pasarDeNivel() {
-		game.clear()
-		game.addVisualIn(visorCentral, visorCentral.position())
-		nivel.pasarNivel()
-		game.schedule(3000, { game.clear()
-			nivel.nivel().init()
-		})
+		return "Tiempo: " + controladorDeNivel.nivel().tiempo().toString()
 	}
 
 }
 
-object visorCentral inherits VisorDeAtributos {
-	var property text = "Fin de tiempo!. Siguiente nivel mas complejo"
+object visorFinDeTiempo inherits VisorDeAtributos {
+
+	var property text = "Fin de tiempo!"
+
 	override method position() {
 		return game.center()
 	}
-
 
 	override method text() {
 		return text
@@ -93,12 +67,69 @@ object visorCentral inherits VisorDeAtributos {
 
 object visorDeNivel inherits VisorDeAtributos {
 
+//	override method posicionX() {
+//		return 
+//	}
 	override method position() {
 		return game.at(14, game.height() - 1)
 	}
 
 	override method text() {
-		return "Nivel: " + nivel.nivel().toString()
+		return "Nivel: " + controladorDeNivel.nivel().toString()
+	}
+
+}
+
+class VisorMenuInicial inherits VisorDeAtributos {
+
+	override method position() {
+		return game.at(0, 0)
+	}
+
+	override method text() {
+		return "Usa las flechas para moverte en el menu."
+	}
+
+}
+
+class VisorInstruccionesMenuInicial inherits VisorDeAtributos {
+
+	override method position() {
+		return game.center()
+	}
+
+	override method text() {
+		return "Para empezar el nivel seleccioná empezar y junta la mayor cantidad de monedas."
+	}
+
+}
+
+class VisorInstruccionesMenuTransicion inherits VisorDeAtributos {
+
+	override method position() {
+		return game.center()
+	}
+
+	override method text() {
+		return "Para comprar 1 vida por 10 monedas pulsa la tecla v."
+	}
+
+}
+
+object visorDeSeleccion {
+
+	var property position = game.at(3, 8)
+
+	method moverAbajo() {
+		self.position(game.at(position.x(), (position.y() - 1).max(5)))
+	}
+
+	method moverArriba() {
+		self.position(game.at(position.x(), (position.y() + 1).min(8)))
+	}
+
+	method image() {
+		return "moneda.png"
 	}
 
 }

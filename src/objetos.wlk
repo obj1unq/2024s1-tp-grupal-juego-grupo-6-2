@@ -3,10 +3,13 @@ import jugador.*
 import niveles.*
 import posiciones.*
 import randomizer.*
+import visores.*
 
 class ObjetoQueCae {
 	var property position
+	const property nivel
 	const property velocidadDeCaida = null
+	
 
 	method limiteInferior() = 0
 	
@@ -21,7 +24,7 @@ class ObjetoQueCae {
 
 	method desaparecer() {
 		game.removeVisual(self)
-		nivel.nivel().remove(self)
+		nivel.remove(self)
 	}
 
 	// Metodo abstracto
@@ -48,11 +51,12 @@ class Moneda inherits ObjetoQueCae {
 }
 
 class ObjetoQueCaeFactory {
+	const nivel 
 	
 	method nuevoObjeto() {
 		const objeto = self.crear( randomizer.emptyPosition() )
 		game.addVisual(objeto)
-		nivel.nivel().objetosCreados().add(objeto) 
+		nivel.objetosCreados().add(objeto) 
 		return objeto
 	}
 	
@@ -60,10 +64,10 @@ class ObjetoQueCaeFactory {
 }
 
 
-object creadorDeMonedas inherits ObjetoQueCaeFactory { 
-
+class CreadorDeMonedas inherits ObjetoQueCaeFactory { 
+	
 	override method crear(position) {
-		return  new Moneda(position = position)
+		return  new Moneda(nivel = nivel,  position = position)
 	}
 }
 
@@ -79,10 +83,10 @@ class Hielo inherits ObjetoQueCae {
 
 }
 
-object creadorDeHielos inherits ObjetoQueCaeFactory {
+class CreadorDeHielos inherits ObjetoQueCaeFactory {
 
 	override method crear(position) {
-		return  new Hielo (position = position)
+		return  new Hielo (nivel=nivel, position = position)
 	}
 }
 
@@ -98,10 +102,10 @@ class Vida inherits ObjetoQueCae {
 
 }
 
-object creadorDeVidas inherits ObjetoQueCaeFactory {
+class CreadorDeVidas inherits ObjetoQueCaeFactory {
 	
 	override method crear(position) {
-		return  new Vida (position = position)
+		return  new Vida (nivel=nivel, position = position)
 	}
 }
 
@@ -119,9 +123,10 @@ class Maza inherits ObjetoQueCae {
 
 }
 
-object creadorDeMazas inherits ObjetoQueCaeFactory{
+class CreadorDeMazas inherits ObjetoQueCaeFactory{
+	
 	override method crear(position) {
-		return  new Maza (position = position)
+		return  new Maza (nivel=nivel, position = position)
 	}
 
 }
