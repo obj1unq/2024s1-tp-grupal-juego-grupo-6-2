@@ -46,11 +46,11 @@ class Nivel {
 
 	method image()
 
-	method siguiente()
-
 	method nivel() {
 		return self
 	}
+
+	method siguiente()
 
 	method pasarDeNivel() {
 		if (not self.tieneTiempo()) {
@@ -85,6 +85,15 @@ class Nivel {
 	}
 
 	method desaparecer() {
+	}
+
+	method iniciar() {
+		self.reestablecerTiempo()
+		self.init()
+	}
+
+	method reestablecerTiempo() {
+		tiempo = self.tiempoDeJuego()
 	}
 
 }

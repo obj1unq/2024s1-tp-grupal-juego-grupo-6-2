@@ -68,9 +68,9 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 
 
 	test "desaparecer objeto y remover de la lista" {
-		assert.equals(3, nivel.nivel().objetosCreados().size())
+		assert.equals(3, controladorDeNivel.nivel().objetosCreados().size())
 		nivel1.objetosCreados().get(0).desaparecer()
-		assert.equals(2, nivel.nivel().objetosCreados().size())
+		assert.equals(2, controladorDeNivel.nivel().objetosCreados().size())
 		assert.notThat(game.hasVisual(vida))
 	}
 
@@ -90,6 +90,12 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		
 	}
 	
+	test "reinicio de tiempo entre niveles" {
+		assert.equals(10, nivel1.tiempo())
+		nivel1.tiempo(0)
+		nivel1.reestablecerTiempo()
+		assert.equals(10, nivel1.tiempo())
+	}
 
 }
 
