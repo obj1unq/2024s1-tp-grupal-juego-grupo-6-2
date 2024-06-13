@@ -12,10 +12,14 @@ class Nivel {
 	const property objetosCreados = []
 	var property tiempo = self.tiempoDeJuego()
 	const property position = game.at(0, 0)
+	const vidas = new CreadorDeVidas(nivel=self)
+	const monedas = new CreadorDeMonedas(nivel=self)
+	const hielos = new CreadorDeHielos(nivel=self)
+	const mazas = new CreadorDeMazas(nivel=self)
 
-	method descontarTiempo() {
+	method descontarTiempo(cantidad) {
 		return if (self.tieneTiempo()) {
-			tiempo -= self.segundosADescontar()
+			tiempo -= cantidad
 		} else {
 			self.pasarDeNivel()
 		}
@@ -29,9 +33,9 @@ class Nivel {
 		return 10
 	}
 
-	method segundosADescontar() {
-		return 1
-	}
+//	method segundosADescontar() {
+//		return 1
+//	}
 
 	method descripcionDeObjetivos() {
 		return "Reuní la mayor cantidad de monedas antes de que finalice el tiempo"
@@ -45,8 +49,9 @@ class Nivel {
 
 	method gravedadJugador()
 
+
 	method factoriesDeObjetos() {
-		return [ new CreadorDeMonedas(nivel=self), new CreadorDeHielos(nivel=self), new CreadorDeVidas(nivel=self), new CreadorDeMazas(nivel=self) ]
+		return [ vidas, monedas, hielos,  mazas]
 	}
 
 	method image()
@@ -83,7 +88,8 @@ class Nivel {
 			// los objetos se crean en altura - 2 porque en altura -1 esta el encabezado
 		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
 		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
-		game.onTick(1000, "CRONOMETRO", { self.descontarTiempo()})
+		game.onTick(1000, "CRONOMETRO", { self.descontarTiempo(1)})
+		game.addVisual(new Cofre())
 		game.addVisual(visorVida)
 		game.addVisual(visorMonedas)
 		game.addVisual(visorDeTiempo)
@@ -133,7 +139,7 @@ object nivel1 inherits Nivel {
 	override method siguiente() {
 		return nivel2
 	}
-
+	
 }
 
 object nivel2 inherits Nivel {
@@ -154,6 +160,15 @@ object nivel2 inherits Nivel {
 		return nivel3
 	}
 
+	override method init() {
+		super()
+		game.addVisual(new Cofre())
+	}
+
+	
+	override method factoriesDeObjetos() {
+		return super() + [new CreadorDeCraneos(nivel=self)]
+	}
 }
 
 object nivel3 inherits Nivel {
@@ -176,5 +191,16 @@ object nivel3 inherits Nivel {
 		return nivel1
 	}
 
+	override method init() {
+		super()
+		game.addVisual(new Cofre())
+		game.addVisual(new Cofre())
+	}
+
+	override method factoriesDeObjetos() {
+		const objetos = super()
+		objetos.remove(vidas)
+		return objetos + [new CreadorDeCraneos(nivel=self), new CreadorDeRelojes(nivel=self)]
+	}
 }
 

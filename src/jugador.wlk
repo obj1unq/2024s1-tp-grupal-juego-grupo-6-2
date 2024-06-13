@@ -61,7 +61,7 @@ object jugador {
 	}
 
 	method puedeMover(estadoProximo) {
-		return estadoActual.puedeMover() && tablero.puedeIr(self, estadoProximo.direccion())
+		return estadoActual.puedeMover() && tablero.puedeIr(self, estadoProximo.direccion()) && not tablero.hayObstaculo(estadoProximo.siguienteDireccion())
 	}
 
 	method cambiarEstado(_estadoDeJugador) {
@@ -98,6 +98,10 @@ class EstadosDeMovimiento inherits EstadoJugador {
 
 	const property direccion
 
+	method siguienteDireccion(){
+		return self.direccion().siguiente((jugador.position() ))
+	}
+	
 	override method puedeMover() = true
 
 	override method activar() {
