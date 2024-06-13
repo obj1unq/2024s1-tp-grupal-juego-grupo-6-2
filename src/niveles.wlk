@@ -26,7 +26,7 @@ class Nivel {
 	}
 
 	method tiempoDeJuego() {
-		return 10
+		return 5 * jugador.potenciadorTiempo()
 	}
 
 	method segundosADescontar() {
@@ -34,7 +34,7 @@ class Nivel {
 	}
 
 	method descripcionDeObjetivos() {
-		return "Reuní la mayor cantidad de monedas antes de que finalice el tiempo"
+		return "Reuní la mayor cantidad de monedas antes de que finalice el tiempo. (Pulsa Esc para volver)"
 	}
 
 	method objetosCreados()
@@ -91,8 +91,7 @@ class Nivel {
 		game.addVisual(visorDeRanking)
 	}
 
-	method desaparecer() {
-	}
+	method desaparecer() {}
 
 	method iniciar() {
 		self.reestablecerTiempo()
@@ -127,7 +126,7 @@ object nivel1 inherits Nivel {
 	}
 
 	override method image() {
-		return "fondoNivel1.jpg"
+		return "fondoNivel1.png"
 	}
 
 	override method siguiente() {
@@ -143,11 +142,11 @@ object nivel2 inherits Nivel {
 	}
 
 	override method tiempoDeJuego() {
-		return 5
+		return 4
 	}
 
 	override method image() {
-		return "fondoNivel1.jpg"
+		return "fondoNivel2.png"
 	}
 
 	override method siguiente() {
@@ -167,7 +166,7 @@ object nivel3 inherits Nivel {
 	}
 
 	override method image() {
-		return "fondoNivel1.jpg"
+		return "fondoNivel3.png"
 	}
 
 	override method siguiente() {
