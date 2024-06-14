@@ -269,6 +269,9 @@ class BotonCreditos inherits Boton {
 class BotonCanjear inherits Boton {
 	//subir y bajar en la posicion (cada menu debe saber su  limite inferior y superior)
 	//hacer validaciones para que solo ejecute el canjear cuando tiene las monedas
+	//ver desactivar (similar al activar, clear e init) o mejor hacer un boton "atras" que haga esto
+	//hacer test
+
 
 	var property estado = false
 	const duplicadorMonedas = new BotonDuplicarMonedas()
@@ -292,6 +295,7 @@ class BotonCanjear inherits Boton {
 	}
 
 	override method desactivar() {
+		
 		game.removeVisual(dupllicadorDeTiempo)
 		game.removeVisual(duplicadorMonedas)
 	}
@@ -314,7 +318,6 @@ class BotonDuplicarMonedas inherits Boton {
 	override method activar() {
 		jugador.monedas(jugador.monedas() - 10)
 		jugador.potenciadorMonedas(2)
-		//game.addVisual(self)
 		super()
 		
 	}
