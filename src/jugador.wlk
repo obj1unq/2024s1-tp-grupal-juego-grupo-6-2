@@ -8,7 +8,7 @@ import visores.*
 object jugador {
 
 	var property position = game.at(5, 1)
-	var property monedas = 20
+	var property monedas = 0
 	var property estadoActual = jugandoDerecha
 	var property vida = 3
 	var property potenciadorMonedas = 1

@@ -26,7 +26,7 @@ class Nivel {
 	}
 
 	method tiempoDeJuego() {
-		return 5 * jugador.potenciadorTiempo()
+		return 10 * jugador.potenciadorTiempo()
 	}
 
 	method segundosADescontar() {
@@ -142,7 +142,7 @@ object nivel2 inherits Nivel {
 	}
 
 	override method tiempoDeJuego() {
-		return 4
+		return 10
 	}
 
 	override method image() {
