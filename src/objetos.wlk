@@ -36,14 +36,14 @@ class ObjetoQueCae {
 
 class Moneda inherits ObjetoQueCae {
 
+	method valor(){
+		return 1
+	} 
+
 	method image() {
 		return "moneda.png"
 	}
 	
-	method valor(){
-		return 1
-	}
-
 	override method accionAlColisionarCon(personaje) {
 		personaje.sumarMoneda(self.valor())
 	}
