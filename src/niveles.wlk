@@ -16,6 +16,7 @@ class Nivel {
 	const monedas = new CreadorDeMonedas(nivel=self)
 	const hielos = new CreadorDeHielos(nivel=self)
 	const mazas = new CreadorDeMazas(nivel=self)
+	const venenos =  new CreadorDeVenenos(nivel=self)
 
 	method descontarTiempo(cantidad) {
 		return if (self.tieneTiempo()) {

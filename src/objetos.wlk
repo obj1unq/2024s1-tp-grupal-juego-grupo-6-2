@@ -135,6 +135,25 @@ class CreadorDeMazas inherits ObjetoQueCaeFactory{
 
 }
 
+class Veneno inherits ObjetoQueCae {
+
+	const property image = "veneno.png"
+	
+
+	override method accionAlColisionarCon(objeto) {
+		objeto.tomarVeneno()
+	}
+
+}
+
+class CreadorDeVenenos inherits ObjetoQueCaeFactory {
+
+	override method crear(position) {
+		return new Veneno(nivel=nivel, position = position)
+	}
+
+}
+
 class Craneo inherits ObjetoQueCae {
 
 	const property image = "craneo.png"
