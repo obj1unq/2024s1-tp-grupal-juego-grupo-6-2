@@ -121,14 +121,14 @@ class VisorInstruccionesMenuTransicion inherits VisorDeAtributos {
 
 object visorDeSeleccion {
 
-	var property position = game.at(3, 8)
+	var property position = game.at(7, 5)
 
 	method moverAbajo() {
-		self.position(game.at(position.x(), (position.y() - 1).max(5)))
+		self.position(game.at(position.x(), (position.y() - 1).max(2)))
 	}
 
 	method moverArriba() {
-		self.position(game.at(position.x(), (position.y() + 1).min(8)))
+		self.position(game.at(position.x(), (position.y() + 1).min(5)))
 	}
 
 	method image() {
@@ -154,4 +154,3 @@ object paleta {
 	const property rojo = "FF0000FF"
 	const property blanco = "FAFAFA"
 }
-
