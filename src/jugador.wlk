@@ -79,6 +79,9 @@ object jugador {
 
 	method reiniciar() {
 		monedas = 0
+		self.potenciadorMonedas(1)
+		self.potenciadorTiempo(1)
+		self.vida(3)
 	}
 
 

@@ -30,8 +30,6 @@ class Menu {
 	method objetosMenu(){
 		return objetosMenu
 	}
-	
-	 
 
 	method tipoDeInstrucciones() {
 		return new VisorInstruccionesMenuTransicion()
@@ -122,6 +120,7 @@ object menuCanjear inherits Menu {
 		game.addVisual(self.objetosMenu().get(0))//empezar
 		game.addVisual(self.objetosMenu().get(1))//instrucciones(ayuda)
 	}
+
 }
 
 class Boton {
@@ -268,8 +267,6 @@ class BotonCreditos inherits Boton {
 
 class BotonCanjear inherits Boton {
 	//subir y bajar en la posicion (cada menu debe saber su  limite inferior y superior)
-	//hacer validaciones para que solo ejecute el canjear cuando tiene las monedas
-	//ver desactivar (similar al activar, clear e init) o mejor hacer un boton "atras" que haga esto
 	//hacer test
 
 
@@ -284,21 +281,32 @@ class BotonCanjear inherits Boton {
 	method actualizarEstado() {
 		if (jugador.monedas() >= 10) {
 			estado = true
+		}else{
+			estado = false
+
 		}
 	}
 	
 	override method activar() {
+		self.validarEstado()
 		game.clear()
 		menuCanjear.init()
 		game.addVisual(duplicadorMonedas)
 		game.addVisual(dupllicadorDeTiempo)
 	}
-
+	
 	override method desactivar() {
-		
-		game.removeVisual(dupllicadorDeTiempo)
-		game.removeVisual(duplicadorMonedas)
+		game.removeVisual(self)
+		game.removeVisual(self)
 	}
+	
+	
+	method validarEstado(){
+		if (not estado){
+			self.error("No tiene suficientes monedas para Canejar")
+		}
+	}
+
 	
 
 	override method nombre() {
@@ -308,45 +316,62 @@ class BotonCanjear inherits Boton {
 
 }
 
-class BotonDuplicarMonedas inherits Boton {
+class BotonDuplicador inherits Boton{
+	
+	override method ejeY(){
+		return 2
+	}
+	
+	override method activar(){
+		jugador.monedas(jugador.monedas() - 10)
+		self.potenciador(2)
+		super()
+	}
+	
+	method potenciador(cantidad)
+	
+	override method desactivar(){
+		game.clear()
+		menuTransicion.init()
+	}
+	
+	override method nombre() {
+		return "botonDuplicar" + self.objetoADuplicar().toString() + ".png"
+	}
+	
+	method objetoADuplicar()
+	
+}
+
+class BotonDuplicarMonedas inherits BotonDuplicador {
 
 	override method ejeY() {
 		return 3
 	}
 
-
-	override method activar() {
-		jugador.monedas(jugador.monedas() - 10)
-		jugador.potenciadorMonedas(2)
-		super()
-		
+	override method objetoADuplicar(){
+		return "Monedas"
 	}
 
-	override method nombre() {
-		return "botonDuplicarMonedas.png"
+	override method potenciador(cantidad){
+		return jugador.potenciadorMonedas(cantidad)
 	}
 
 }
 
-class BotonDuplicarTiempo inherits Boton {
-
-	override method ejeY() {
-		return 2
+class BotonDuplicarTiempo inherits BotonDuplicador {
+	
+	override method objetoADuplicar(){
+		return "Tiempo"
 	}
 	
-
-	override method activar() {
-		jugador.monedas(jugador.monedas() - 10)
-		jugador.potenciadorTiempo(2)
-		//game.addVisual(self)
-		super()
+	override method potenciador(cantidad){
+		return jugador.potenciadorTiempo(cantidad)
 	}
 
-	override method nombre() {
-		return "botonDuplicarTiempo.png"
-	}
 
 }
+
 
 class BotonSalir inherits Boton {
 

@@ -6,6 +6,7 @@ import posiciones.*
 import visores.*
 import ranking.*
 
+
 describe "Tests de colision del personaje jugador con los objetos del juego" {
 
 	var nivel
@@ -26,6 +27,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		hielo = new CreadorDeHielos(nivel=nivel).nuevoObjeto()
 		maza = new CreadorDeMazas(nivel=nivel).nuevoObjeto()
 		craneo = new CreadorDeCraneos(nivel=nivel).nuevoObjeto()
+
 	}
 
 	test "jugador movimientos" {
@@ -111,6 +113,8 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		nivel1.reestablecerTiempo()
 		assert.equals(10, nivel1.tiempo())
 	}
+
+
 
 }
 
