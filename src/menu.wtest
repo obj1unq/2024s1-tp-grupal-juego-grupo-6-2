@@ -1,0 +1,24 @@
+import menu.*
+import jugador.*
+import niveles.*
+import objetos.*
+import wollok.game.*
+import posiciones.*
+import visores.*
+import ranking.*
+
+
+test "canjear"{
+	const duplicarMonedas = new BotonDuplicarMonedas()
+	const canjear = new BotonCanjear()
+		
+	jugador.monedas(11)
+	duplicarMonedas.activar()
+	assert.equals(1, jugador.monedas())
+	assert.throwsException({canjear.activar()})
+	assert.equals(false,canjear.estado())
+		
+}
+
+
+

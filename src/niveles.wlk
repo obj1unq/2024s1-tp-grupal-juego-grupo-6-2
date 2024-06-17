@@ -26,7 +26,7 @@ class Nivel {
 	}
 
 	method tiempoDeJuego() {
-		return 10 * jugador.potenciadorTiempo()
+		return 3 * jugador.potenciadorTiempo()
 	}
 
 	method segundosADescontar() {
