@@ -30,7 +30,6 @@ class Menu {
 	method objetosMenu(){
 		return objetosMenu
 	}
-	
 
 	method tipoDeInstrucciones() {
 		return new VisorInstruccionesMenuTransicion()
@@ -121,7 +120,7 @@ object menuCanjear inherits Menu {
 		game.addVisual(self.objetosMenu().get(0))//empezar
 		game.addVisual(self.objetosMenu().get(1))//instrucciones(ayuda)
 	}
-	
+
 }
 
 class Boton {
@@ -284,6 +283,7 @@ class BotonCanjear inherits Boton {
 			estado = true
 		}else{
 			estado = false
+
 		}
 	}
 	
@@ -369,7 +369,9 @@ class BotonDuplicarTiempo inherits BotonDuplicador {
 		return jugador.potenciadorTiempo(cantidad)
 	}
 
+
 }
+
 
 class BotonSalir inherits Boton {
 

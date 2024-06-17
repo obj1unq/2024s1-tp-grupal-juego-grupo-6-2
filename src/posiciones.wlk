@@ -18,7 +18,11 @@ object tablero {
 	method puedeMover(hacia, objetoQueSeMueve) {
 		return objetoQueSeMueve.puedeMover() && self.puedeIr(objetoQueSeMueve, hacia)
 	}
-
+	
+	method hayObstaculo(position) {
+		const visuales = game.getObjectsIn(position)
+		return visuales.any({visual => not visual.esAtravesable()})
+	}
 }
 
 class Head {
@@ -43,7 +47,7 @@ object creadorDeEncabezado {
 	}
 
 }
-//
+
 class Baldosa {
 
 	const property position

@@ -31,6 +31,10 @@ class ObjetoQueCae {
 	method accionAlColisionarCon(objeto) {
 		
 	}
+	
+	method esAtravesable() {
+		return true
+	}
 
 }
 
@@ -130,5 +134,96 @@ class CreadorDeMazas inherits ObjetoQueCaeFactory{
 	}
 
 }
+
+class Veneno inherits ObjetoQueCae {
+
+	const property image = "veneno.png"
+	
+
+	override method accionAlColisionarCon(objeto) {
+		objeto.tomarVeneno()
+	}
+
+}
+
+class CreadorDeVenenos inherits ObjetoQueCaeFactory {
+
+	override method crear(position) {
+		return new Veneno(nivel=nivel, position = position)
+	}
+
+}
+
+class Craneo inherits ObjetoQueCae {
+
+	const property image = "craneo.png"
+
+	override method accionAlColisionarCon(objeto) {
+		objeto.perder()
+	}
+
+}
+
+class CreadorDeCraneos inherits ObjetoQueCaeFactory {
+
+	override method crear(position) {
+		return new Craneo(nivel=nivel, position = position)
+	}
+
+}
+
+class Reloj inherits ObjetoQueCae {
+
+	const property image = "reloj.png"
+	
+
+	override method accionAlColisionarCon(objeto) {
+		self.descontarTiempo()
+	}
+
+	method descontarTiempo() {
+		const tiempoADescontar = 0.max(controladorDeNivel.nivel().tiempo() - 5)
+		controladorDeNivel.nivel().descontarTiempo(tiempoADescontar)
+		game.say(jugador, "¡Uy! Perdí 5 segundos")
+	}
+
+}
+
+class CreadorDeRelojes inherits ObjetoQueCaeFactory {
+
+	override method crear(position) {
+		return new Reloj(nivel = nivel, position = position)
+	}
+
+}
+
+
+class Cofre {
+
+	const x = (0 .. 10).anyOne()
+
+	method position() {
+		return game.at(x, 1)
+	}
+
+	method image() {
+		return "cofre.png"
+	}
+
+	method esAtravesable() {
+		return false
+	}
+
+	method colisionarCon(objeto) {
+	}
+
+}
+
+
+
+
+
+
+
 
 

@@ -8,7 +8,7 @@ import visores.*
 object jugador {
 
 	var property position = game.at(5, 1)
-	var property monedas = 0
+	var property monedas = 10
 	var property estadoActual = jugandoDerecha
 	var property vida = 3
 	var property potenciadorMonedas = 1
@@ -62,7 +62,7 @@ object jugador {
 	}
 
 	method puedeMover(estadoProximo) {
-		return estadoActual.puedeMover() && tablero.puedeIr(self, estadoProximo.direccion())
+		return estadoActual.puedeMover() && tablero.puedeIr(self, estadoProximo.direccion()) && not tablero.hayObstaculo(estadoProximo.siguienteDireccion())
 	}
 
 	method cambiarEstado(_estadoDeJugador) {
@@ -84,9 +84,37 @@ object jugador {
 		self.vida(3)
 	}
 
+
+	method tomarVeneno() {
+		game.say(self, "Tomé veneno y ahora estoy mareado")
+		estadoActual.marearse()
+			
+//		estadoActual.alternarMareo()
+//		if (estadoActual.mareado()) {
+//			game.say(self, "Tomé veneno y ahora estoy mareado")
+//		} else {
+//			game.say(self, "Tomé veneno y ya no estoy mareado")
+//		}
+	}
 }
 
 class EstadoJugador {
+
+	var mareado = false
+
+	method mareado() {
+		return mareado
+	}
+	
+	method marearse(){
+		mareado = true
+		game.schedule(4000, { mareado = false})
+	}
+	
+//	method alternarMareo() {
+//		mareado = not mareado
+//	}
+
 
 	method puedeMover() = false
 
@@ -100,8 +128,12 @@ class EstadoJugador {
 
 class EstadosDeMovimiento inherits EstadoJugador {
 
-	const property direccion
+	method direccion()
 
+	method siguienteDireccion(){
+		return self.direccion().siguiente((jugador.position() ))
+	}
+	
 	override method puedeMover() = true
 
 	override method activar() {
@@ -111,17 +143,38 @@ class EstadosDeMovimiento inherits EstadoJugador {
 }
 
 // ESTADOS DEL JUGADOR MOVIMIENTO
-object jugandoDerecha inherits EstadosDeMovimiento(direccion = derecha) {
+object jugandoDerecha inherits EstadosDeMovimiento {
+
+	override method direccion() {
+		return if (not self.mareado()) derecha else izquierda
+	}
+
+	override method imagenEstado() {
+		return if (not self.mareado()) self else jugandoIzquierda
+	}
 
 }
 
-object jugandoIzquierda inherits EstadosDeMovimiento (direccion = izquierda) {
+object jugandoIzquierda inherits EstadosDeMovimiento {
+
+	override method direccion() {
+		return if (not self.mareado()) izquierda else derecha
+	}
+
+	override method imagenEstado() {
+		return if (not self.mareado()) self else jugandoDerecha
+	}
 
 }
 
-object saltando inherits EstadosDeMovimiento(direccion = arriba) {
+
+object saltando inherits EstadosDeMovimiento{
 
 	var estadoImagen = self
+
+	override method direccion() {
+		return arriba
+	}
 
 	override method activar() {
 		if (self.puedeSaltar()) {
@@ -145,8 +198,10 @@ object saltando inherits EstadosDeMovimiento(direccion = arriba) {
 
 }
 
-object agachando inherits EstadosDeMovimiento(direccion = abajo) {
-
+object agachando inherits EstadosDeMovimiento{
+	override method direccion() {
+		return abajo
+	}
 }
 
 // ESTADOS DEL JUGADOR JUGABILIDAD
