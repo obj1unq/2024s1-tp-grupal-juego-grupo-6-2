@@ -17,7 +17,7 @@ class VisorDeAtributos {
 	}
 
 	method text()
-	
+
 	method textColor() = paleta.blanco()
 
 }
@@ -121,10 +121,16 @@ class VisorInstruccionesMenuTransicion inherits VisorDeAtributos {
 
 object visorDeSeleccion {
 
+	var property menuActual = null
 	var property position = game.at(7, 5)
 
+	method irAPosicionInicial() {
+		self.position(game.at(7, 5))
+	}
+
 	method moverAbajo() {
-		self.position(game.at(position.x(), (position.y() - 1).max(2)))
+		//self.position(game.at(position.x(), (position.y() - 1).max(2)))
+		self.position(game.at(position.x(), (position.y() - 1).max(menuActual.limiteInferiorEjeY())))
 	}
 
 	method moverArriba() {
@@ -150,7 +156,10 @@ object visorDeRanking inherits VisorDeAtributos {
 }
 
 object paleta {
+
 	const property verde = "00FF00FF"
 	const property rojo = "FF0000FF"
 	const property blanco = "FAFAFA"
+
 }
+

@@ -21,6 +21,14 @@ class Menu {
 		return self.tipoDeInstrucciones().text()
 	}
 
+	method limiteInferiorEjeY() {
+		return 2
+	}
+
+	method limiteIndiceOpciones() {
+		return objetosMenu.size() - 1
+	}
+
 	method objetosDelMenu() {
 //		 objetosMenu.add(self.botonesDelMenuActual())
 		self.botonesDelMenuActual().forEach({ boton => objetosMenu.add(boton)})
@@ -49,12 +57,15 @@ class Menu {
 		self.objetosDelMenu()
 		game.addVisual(self)
 		self.visuales()
+		visorDeSeleccion.irAPosicionInicial()
+			// Al visor de seleccion le seteo el menu actual que seria el proprio objeto para poder conocer sus limites
+		visorDeSeleccion.menuActual(self)
 		game.addVisual(visorDeSeleccion)
-		keyboard.down().onPressDo{ posicionBoton = posicionBoton + 1
+		keyboard.down().onPressDo{ posicionBoton = (posicionBoton + 1).min(self.limiteIndiceOpciones())
 			visorDeSeleccion.moverAbajo()
 		}
 		keyboard.enter().onPressDo{ self.objetosMenu().get(posicionBoton).activar()}
-		keyboard.up().onPressDo{ posicionBoton = posicionBoton - 1
+		keyboard.up().onPressDo{ posicionBoton = (posicionBoton - 1).max(0)
 			visorDeSeleccion.moverArriba()
 		}
 		keyboard.backspace().onPressDo{ self.objetosMenu().get(posicionBoton).desactivar()}
@@ -114,6 +125,10 @@ object menuCanjear inherits Menu {
 	override method visuales() {
 		game.addVisual(self.objetosMenu().get(0)) // empezar
 		game.addVisual(self.objetosMenu().get(1)) // instrucciones(ayuda)
+	}
+
+	override method limiteInferiorEjeY() {
+		return 4
 	}
 
 }
@@ -265,7 +280,7 @@ class BotonCanjear inherits Boton {
 	}
 
 	method actualizarEstado() {
-		if (jugador.monedas() >= 10) estado = true
+		if (jugador.monedas() >= 10) estado = true else estado = false
 	}
 
 	override method activar() {
@@ -296,10 +311,6 @@ class BotonCanjear inherits Boton {
 
 class BotonDuplicador inherits Boton {
 
-	override method ejeY() {
-		return 2
-	}
-
 	override method activar() {
 		jugador.monedas(jugador.monedas() - 10)
 		self.potenciador(2)
@@ -324,7 +335,7 @@ class BotonDuplicador inherits Boton {
 class BotonDuplicarMonedas inherits BotonDuplicador {
 
 	override method ejeY() {
-		return 3
+		return 5
 	}
 
 	override method objetoADuplicar() {
@@ -338,6 +349,10 @@ class BotonDuplicarMonedas inherits BotonDuplicador {
 }
 
 class BotonDuplicarTiempo inherits BotonDuplicador {
+
+	override method ejeY() {
+		return 4
+	}
 
 	override method objetoADuplicar() {
 		return "Tiempo"
