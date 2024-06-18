@@ -50,6 +50,11 @@ class Menu {
 		return "fondoMenu.png"
 	}
 
+	method inicializarVisorDeSeleccion() {
+		visorDeSeleccion.irAPosicionInicial()
+		posicionBoton = 0
+	}
+
 	method init() {
 		game.cellSize(64)
 		game.width(20)
@@ -57,7 +62,7 @@ class Menu {
 		self.objetosDelMenu()
 		game.addVisual(self)
 		self.visuales()
-		visorDeSeleccion.irAPosicionInicial()
+		self.inicializarVisorDeSeleccion()
 			// Al visor de seleccion le seteo el menu actual que seria el proprio objeto para poder conocer sus limites
 		visorDeSeleccion.menuActual(self)
 		game.addVisual(visorDeSeleccion)
