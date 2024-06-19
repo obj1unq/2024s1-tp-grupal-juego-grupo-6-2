@@ -43,10 +43,6 @@ object jugador {
 		}
 	}
 
-	method ganar() {
-		self.cambiarEstado(ganador)
-	}
-
 	method perder() {
 		self.cambiarEstado(perdedor)
 	}
@@ -205,17 +201,6 @@ object agachando inherits EstadosDeMovimiento{
 }
 
 // ESTADOS DEL JUGADOR JUGABILIDAD
-object ganador inherits EstadoJugador {
-
-	override method activar() {
-		game.say(jugador, "Gané!")
-		jugador.cambiarEstado(jugandoDerecha)
-		controladorDeNivel.pasarNivel()
-		game.clear()
-		game.schedule(3000, { controladorDeNivel.nivel().init()})
-	}
-
-}
 
 object congelado inherits EstadoJugador {
 
