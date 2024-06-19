@@ -285,7 +285,7 @@ class BotonCanjear inherits Boton {
 	}
 
 	method actualizarEstado() {
-		if (jugador.monedas() >= 10) estado = true else estado = false
+		if (jugador.monedas() >= 1) estado = true else estado = false
 	}
 
 	override method activar() {
@@ -299,6 +299,7 @@ class BotonCanjear inherits Boton {
 	override method desactivar() {
 		game.removeVisual(self)
 		game.removeVisual(self)
+		self.estado(false)
 	}
 
 	method validarEstado() {
@@ -317,12 +318,12 @@ class BotonCanjear inherits Boton {
 class BotonDuplicador inherits Boton {
 
 	override method activar() {
-		jugador.monedas(jugador.monedas() - 10)
-		self.potenciador(2)
+		jugador.monedas(jugador.monedas() - 1)
+		self.potenciador()
 		super()
 	}
 
-	method potenciador(cantidad)
+	method potenciador()
 
 	override method desactivar() {
 		game.clear()
@@ -347,8 +348,8 @@ class BotonDuplicarMonedas inherits BotonDuplicador {
 		return "Monedas"
 	}
 
-	override method potenciador(cantidad) {
-		return jugador.potenciadorMonedas(cantidad)
+	override method potenciador() {
+		return jugador.potenciadorMonedas()*2
 	}
 
 }
@@ -363,8 +364,8 @@ class BotonDuplicarTiempo inherits BotonDuplicador {
 		return "Tiempo"
 	}
 
-	override method potenciador(cantidad) {
-		return jugador.potenciadorTiempo(cantidad)
+	override method potenciador() {
+		return jugador.potenciadorTiempo()
 	}
 
 }

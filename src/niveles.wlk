@@ -50,7 +50,7 @@ class Nivel {
 	method gravedadJugador()
 
 	method factoriesDeObjetos() {
-		return [ vidas, monedas, hielos, mazas ]
+		return [ vidas, monedas, hielos, mazas, monedas, monedas ]
 	}
 
 	method image()
