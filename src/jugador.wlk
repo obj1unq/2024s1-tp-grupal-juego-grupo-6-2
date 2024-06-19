@@ -19,6 +19,14 @@ object jugador {
 	method sumarMoneda(valorMoneda) {
 		monedas += valorMoneda*potenciadorMonedas
 	}
+	
+	method duplicarMonedas(){
+		potenciadorMonedas = potenciadorMonedas * 2
+	}
+	
+	method duplicarTiempo(){
+		potenciadorTiempo = potenciadorTiempo * 2
+	}
 
 	method sumarVida() {
 		vida += 1

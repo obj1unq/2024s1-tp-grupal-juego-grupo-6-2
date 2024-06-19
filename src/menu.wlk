@@ -296,12 +296,6 @@ class BotonCanjear inherits Boton {
 		game.addVisual(dupllicadorDeTiempo)
 	}
 
-	override method desactivar() {
-		game.removeVisual(self)
-		game.removeVisual(self)
-		self.estado(false)
-	}
-
 	method validarEstado() {
 		if (not estado) {
 			self.error("No tiene suficientes monedas para Canejar")
@@ -349,7 +343,7 @@ class BotonDuplicarMonedas inherits BotonDuplicador {
 	}
 
 	override method potenciador() {
-		return jugador.potenciadorMonedas()*2
+		 jugador.duplicarMonedas()
 	}
 
 }
@@ -365,7 +359,7 @@ class BotonDuplicarTiempo inherits BotonDuplicador {
 	}
 
 	override method potenciador() {
-		return jugador.potenciadorTiempo()
+		 jugador.duplicarTiempo()
 	}
 
 }
