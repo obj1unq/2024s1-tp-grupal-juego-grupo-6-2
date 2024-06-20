@@ -14,7 +14,7 @@ test "canjear"{
 		
 	jugador.monedas(11)
 	duplicarMonedas.activar()
-	assert.equals(1, jugador.monedas())
+	assert.equals(10, jugador.monedas())
 	assert.throwsException({canjear.activar()})
 	assert.notThat(canjear.estado())
 		

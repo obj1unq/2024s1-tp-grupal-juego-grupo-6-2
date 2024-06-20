@@ -214,8 +214,11 @@ object congelado inherits EstadoJugador {
 object perdedor inherits EstadoJugador {
 
 	override method activar() {
+		game.removeTickEvent("CRONOMETRO")
+		game.removeTickEvent("CREAR OBJETOS")
+		game.removeTickEvent("GRAVEDAD")
 		game.say(jugador, "Perdí!")
-		game.schedule(3000, { game.stop()})
+		game.schedule(3000, { controladorDeNivel.reiniciarJuego()})
 	}
 
 }

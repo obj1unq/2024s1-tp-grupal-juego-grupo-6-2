@@ -34,9 +34,6 @@ class Nivel {
 		return 10 * jugador.potenciadorTiempo()
 	}
 
-//	method segundosADescontar() {
-//		return 1
-//	}
 	method descripcionDeObjetivos() {
 		return "Reuní la mayor cantidad de monedas antes de que finalice el tiempo. (Pulsa Esc para volver)"
 	}
@@ -62,13 +59,11 @@ class Nivel {
 	method siguiente()
 
 	method pasarDeNivel() {
-		if (not self.tieneTiempo()) {
-			game.clear()
-			game.addVisual(visorFinDeTiempo)
-			visorFinDeTiempo.text()
-			controladorDeNivel.pasarNivel()
-			self.cargarMenu()
-		}
+		game.clear()
+		game.addVisual(visorFinDeTiempo)
+		visorFinDeTiempo.text()
+		controladorDeNivel.pasarNivel()
+		self.cargarMenu()
 	}
 
 	method cargarMenu() {
@@ -125,6 +120,13 @@ object controladorDeNivel {
 
 	method nivel() {
 		return nivel
+	}
+
+	method reiniciarJuego() {
+		juego.reiniciar()
+		nivel = nivel1
+		game.clear()
+		menuInicial.init()
 	}
 
 }
@@ -189,8 +191,7 @@ object nivel3 inherits Nivel {
 	}
 
 	override method siguiente() {
-		ranking.guardar(jugador.monedas())
-		jugador.reiniciar()
+		juego.reiniciar()
 		return nivel1
 	}
 
@@ -205,10 +206,16 @@ object nivel3 inherits Nivel {
 		objetos.remove(vidas)
 		return objetos + [ new CreadorDeCraneos(nivel=self), new CreadorDeRelojes(nivel=self) ]
 	}
-	
+
 	override method cargarMenu() {
 		game.schedule(1000, { menuInicial.init()})
 	}
 
 }
 
+object juego {
+	method reiniciar() {
+		ranking.guardar(jugador.monedas())
+		jugador.reiniciar()
+	}
+}
