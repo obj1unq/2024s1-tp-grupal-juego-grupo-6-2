@@ -70,9 +70,6 @@ object visorFinDeTiempo inherits VisorDeAtributos {
 
 object visorDeNivel inherits VisorDeAtributos {
 
-//	override method posicionX() {
-//		return 
-//	}
 	override method position() {
 		return game.at(14, game.height() - 1)
 	}
@@ -83,51 +80,17 @@ object visorDeNivel inherits VisorDeAtributos {
 
 }
 
-class VisorMenuInicial inherits VisorDeAtributos {
-
-	override method position() {
-		return game.at(0, 0)
-	}
-
-	override method text() {
-		return "Usa las flechas para moverte en el menu."
-	}
-
-}
-
-class VisorInstruccionesMenuInicial inherits VisorDeAtributos {
-
-	override method position() {
-		return game.center()
-	}
-
-	override method text() {
-		return "Para empezar el nivel seleccioná empezar y junta la mayor cantidad de monedas."
-	}
-
-}
-
-class VisorInstruccionesMenuTransicion inherits VisorDeAtributos {
-
-	override method position() {
-		return game.center()
-	}
-
-	override method text() {
-		return "Para comprar 1 vida por 10 monedas pulsa la tecla v."
-	}
-
-}
-
 object visorDeSeleccion {
 
 	var property menuActual = null
 	var property position = game.at(7, 5)
 
 	method irAPosicionInicial() {
-		self.position(game.at(7, 5))
+		self.position(game.at(self.posicionPrimerBoton().x()-1, self.posicionPrimerBoton().y()))
 	}
-
+	method posicionPrimerBoton(){
+		return menuActual.botonesDelMenuActual().first().position()
+	}
 	method moverAbajo() {
 		//self.position(game.at(position.x(), (position.y() - 1).max(2)))
 		self.position(game.at(position.x(), (position.y() - 1).max(menuActual.limiteInferiorEjeY())))

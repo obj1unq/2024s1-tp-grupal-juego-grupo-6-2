@@ -13,13 +13,7 @@ class Menu {
 	var posicionBoton = 0
 	const property position = game.at(0, 0)
 
-	method botonesDelMenuActual() {
-		return [ new BotonEmpezar(), new BotonInstrucciones(instrucciones = instruccionesMenuInicial), self.tercerBoton(), new BotonSalir() ]
-	}
-
-	method instrucciones() {
-		return self.tipoDeInstrucciones().text()
-	}
+	method botonesDelMenuActual() 
 
 	method limiteInferiorEjeY() {
 		return 2
@@ -30,7 +24,6 @@ class Menu {
 	}
 
 	method objetosDelMenu() {
-//		 objetosMenu.add(self.botonesDelMenuActual())
 		self.botonesDelMenuActual().forEach({ boton => objetosMenu.add(boton)})
 	}
 
@@ -38,9 +31,6 @@ class Menu {
 		return objetosMenu
 	}
 
-	method tipoDeInstrucciones() {
-		return new VisorInstruccionesMenuTransicion()
-	}
 
 	method salir() {
 		game.stop()
@@ -51,6 +41,7 @@ class Menu {
 	}
 
 	method inicializarVisorDeSeleccion() {
+		visorDeSeleccion.menuActual(self)
 		visorDeSeleccion.irAPosicionInicial()
 		posicionBoton = 0
 	}
@@ -63,8 +54,6 @@ class Menu {
 		game.addVisual(self)
 		self.visuales()
 		self.inicializarVisorDeSeleccion()
-			// Al visor de seleccion le seteo el menu actual que seria el proprio objeto para poder conocer sus limites
-		visorDeSeleccion.menuActual(self)
 		game.addVisual(visorDeSeleccion)
 		keyboard.down().onPressDo{ posicionBoton = (posicionBoton + 1).min(self.limiteIndiceOpciones())
 			visorDeSeleccion.moverAbajo()
@@ -73,109 +62,113 @@ class Menu {
 		keyboard.up().onPressDo{ posicionBoton = (posicionBoton - 1).max(0)
 			visorDeSeleccion.moverArriba()
 		}
-		keyboard.backspace().onPressDo{ self.objetosMenu().get(posicionBoton).desactivar()}
 	}
 
 	method visuales() {
-		game.addVisual(self.objetosMenu().get(0)) // empezar
-		game.addVisual(self.objetosMenu().get(1)) // instrucciones(ayuda)
-		game.addVisual(self.objetosMenu().get(2)) // creditos
-		game.addVisual(self.objetosMenu().get(3)) // salir
+		self.botonesDelMenuActual().forEach {boton => game.addVisual(boton)}
 	}
-
-	method tercerBoton()
-
 }
 
 object menuInicial inherits Menu {
-
-	override method tipoDeInstrucciones() {
-		return new VisorInstruccionesMenuInicial()
-	}
-
-	override method tercerBoton() {
-		return new BotonCreditos(instrucciones = creditos)
+	
+	override method botonesDelMenuActual() {
+		return [ new BotonEmpezar(), new BotonInstrucciones(), new BotonCreditos(), new BotonSalir() ]
 	}
 
 }
 
 object menuTransicion inherits Menu {
 
-	method canjearMonedas() {
+	override method botonesDelMenuActual() {
+		return [ new BotonEmpezar(), new BotonInstrucciones(), new BotonCreditos(), new BotonSalir() ]
 	}
-
+	
 	override method image() {
 		return "fondoMenuTransicion.png"
 	}
-
-	override method objetosMenu() {
-		return objetosMenu
-	}
-
-	override method tercerBoton() {
-		return new BotonCanjear()
-	}
-
 }
 
-object menuCanjear inherits Menu {
-
+class SubMenu inherits Menu {
+	const property menuAnterior = controladorDeNivel.menu()
+	
+	override method init() {
+	super()
+	game.addVisual(self.contenidoSubmenu())
+	}
+	
+	method contenidoSubmenu()
+	
 	override method botonesDelMenuActual() {
-		return [ new BotonDuplicarMonedas(), new BotonDuplicarTiempo() ]
+		return [new BotonVolver()]
 	}
+}
 
-	override method tercerBoton() {
-	}
-
-	override method visuales() {
-		game.addVisual(self.objetosMenu().get(0)) // empezar
-		game.addVisual(self.objetosMenu().get(1)) // instrucciones(ayuda)
+object menuCanjear inherits SubMenu {
+	
+	override method botonesDelMenuActual() {
+		return [ new BotonDuplicarMonedas(), new BotonDuplicarTiempo(), new BotonVolver()]
 	}
 
 	override method limiteInferiorEjeY() {
-		return 4
+		return 2
 	}
-
+	
+	override method contenidoSubmenu(){}
 }
+	
+object menuInstrucciones inherits SubMenu{
+	
+	override method contenidoSubmenu(){
+		return controladorDeNivel.nivel().instrucciones()
+	}
+	
+
+	
+}
+
+object menuCreditos inherits SubMenu{
+	
+	override method contenidoSubmenu(){
+		return creditos
+	}
+}
+
 
 //INSTRUCCIONES 
 class Instrucciones {
 
-	var property estado = false
-
 	method position() {
-		return game.at(12, 4)
+		return game.at(7,2)
 	}
 
 	method image()
-
-	method activar() {
-		game.addVisual(self)
-		self.estado(true)
-	}
-
-	method desactivar() {
-		game.removeVisual(self)
-		self.estado(false)
-	}
-
 }
 
 object instruccionesMenuInicial inherits Instrucciones {
 
 	override method image() {
-		return "fondoInstruccionesMenuInicial.png"
+		return "instruccionesMenuInicial.png"
 	}
 
 }
 
-object instruccionesMenuTransicion inherits Instrucciones {
+object instruccionesNivel1 inherits Instrucciones {
 
 	override method image() {
-		return "fondoInstruccionesMenuTransicion.png"
+		return "instruccionesNivel1.png"
 	}
 
 }
+
+object instruccionesNivel2 inherits Instrucciones {
+
+	override method image() {
+		return "instruccionesNivel2.png"
+	}
+
+}
+
+
 
 object creditos inherits Instrucciones {
 
@@ -204,13 +197,7 @@ class Boton {
 		return self.nombre()
 	}
 
-	method activar() { // ver!!! (preguntar)
-		game.clear()
-		controladorDeNivel.nivel().iniciar()
-	}
-
-	method desactivar() {
-	}
+	method activar()
 
 	method nombre()
 
@@ -225,23 +212,23 @@ class BotonEmpezar inherits Boton {
 	override method nombre() {
 		return "botonEmpezar.png"
 	}
+	
+	override method activar() { 
+		game.clear()
+		controladorDeNivel.nivel().iniciar()
+	}
 
 }
 
 class BotonInstrucciones inherits Boton {
-
-	const instrucciones
 
 	override method ejeY() {
 		return 4
 	}
 
 	override method activar() {
-		instrucciones.activar()
-	}
-
-	override method desactivar() {
-		instrucciones.desactivar()
+		game.clear()
+		menuInstrucciones.init()
 	}
 
 	override method nombre() {
@@ -252,18 +239,13 @@ class BotonInstrucciones inherits Boton {
 
 class BotonCreditos inherits Boton {
 
-	const instrucciones
-
 	override method ejeY() {
 		return 3
 	}
 
 	override method activar() {
-		instrucciones.activar()
-	}
-
-	override method desactivar() {
-		instrucciones.desactivar()
+		game.clear()
+		menuCreditos.init()
 	}
 
 	override method nombre() {
@@ -273,44 +255,31 @@ class BotonCreditos inherits Boton {
 }
 
 class BotonCanjear inherits Boton {
-
-	// subir y bajar en la posicion (cada menu debe saber su  limite inferior y superior)
-	// hacer test
-	var property estado = false
-	const duplicadorMonedas = new BotonDuplicarMonedas()
-	const dupllicadorDeTiempo = new BotonDuplicarTiempo()
+	var property activado = false
 
 	override method ejeY() {
 		return 3
 	}
-
-	method actualizarEstado() {
-		if (jugador.monedas() >= 1) estado = true else estado = false
+	
+	method estado() {
+		if (jugador.monedas() >= 1) activado = true else activado = false
 	}
 
 	override method activar() {
 		self.validarEstado()
 		game.clear()
 		menuCanjear.init()
-		game.addVisual(duplicadorMonedas)
-		game.addVisual(dupllicadorDeTiempo)
 	}
 
-	override method desactivar() {
-		game.removeVisual(self)
-		game.removeVisual(self)
-		self.estado(false)
-	}
-
+	
 	method validarEstado() {
-		if (not estado) {
-			self.error("No tiene suficientes monedas para Canejar")
+		if (not activado) {
+			self.error("No tiene suficientes monedas para Canjear")
 		}
 	}
 
 	override method nombre() {
-		self.actualizarEstado()
-		return "botonCanjear" + self.estado().toString() + ".png"
+		return "botonCanjear" + self.activado().toString() + ".png"
 	}
 
 }
@@ -324,11 +293,6 @@ class BotonDuplicador inherits Boton {
 	}
 
 	method potenciador()
-
-	override method desactivar() {
-		game.clear()
-		menuTransicion.init()
-	}
 
 	override method nombre() {
 		return "botonDuplicar" + self.objetoADuplicar().toString() + ".png"
@@ -383,6 +347,21 @@ class BotonSalir inherits Boton {
 	override method nombre() {
 		return "botonSalir.png"
 	}
+}
+	
+class BotonVolver inherits Boton {
 
+	override method ejeY() {
+		return 1
+	}
+
+	override method activar() {
+		game.clear()
+		controladorDeNivel.menu().init()
+	}
+	
+	override method nombre() {
+		return "botonVolver.png"
+	}
 }
 
