@@ -168,10 +168,10 @@ object nivel2 inherits Nivel {
 		return nivel3
 	}
 
-	override method init() {
-		super()
-//		game.addVisual(new Cofre())
-	}
+//	override method init() {
+//		super()
+////		game.addVisual(new Cofre())
+//	}
 
 	override method factoriesDeObjetos() {
 		return super() + [ new CreadorDeRelojes(nivel=self) ]
@@ -199,11 +199,11 @@ object nivel3 inherits Nivel {
 		return nivel1
 	}
 
-	override method init() {
-		super()
+//	override method init() {
+//		super()
 //		game.addVisual(new Cofre())
 //		game.addVisual(new Cofre())
-	}
+//	}
 
 	override method factoriesDeObjetos() {
 		const objetos = super()
