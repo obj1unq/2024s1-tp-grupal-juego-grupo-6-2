@@ -18,6 +18,11 @@ class Nivel {
 	const mazas = new CreadorDeMazas(nivel = self)
 	const venenos = new CreadorDeVenenos(nivel = self)
 
+	
+	method sumarTiempo() {
+		tiempo += 5
+	}
+	
 	method descontarTiempo(cantidad) {
 		return if (self.tieneTiempo()) {
 			tiempo -= cantidad
@@ -87,7 +92,7 @@ class Nivel {
 		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
 		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		game.onTick(1000, "CRONOMETRO", { self.descontarTiempo(1)})
-		game.addVisual(new Cofre())
+		// game.addVisual(new Cofre())
 		game.addVisual(visorVida)
 		game.addVisual(visorMonedas)
 		game.addVisual(visorDeTiempo)
@@ -165,13 +170,13 @@ object nivel2 inherits Nivel {
 		return nivel3
 	}
 
-	override method init() {
-		super()
-		game.addVisual(new Cofre())
-	}
+//	override method init() {
+//		super()
+////		game.addVisual(new Cofre())
+//	}
 
 	override method factoriesDeObjetos() {
-		return super() + [ new CreadorDeCraneos(nivel=self) ]
+		return super() + [ new CreadorDeRelojes(nivel=self) ]
 	}
 
 }
@@ -195,11 +200,11 @@ object nivel3 inherits Nivel {
 		return nivel1
 	}
 
-	override method init() {
-		super()
-		game.addVisual(new Cofre())
-		game.addVisual(new Cofre())
-	}
+//	override method init() {
+//		super()
+//		game.addVisual(new Cofre())
+//		game.addVisual(new Cofre())
+//	}
 
 	override method factoriesDeObjetos() {
 		const objetos = super()
