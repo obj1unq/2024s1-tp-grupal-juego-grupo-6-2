@@ -15,6 +15,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 	var hielo
 	var maza
 	var craneo
+	var reloj
 	
 	method initialize() {
 		game.clear()
@@ -27,7 +28,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		hielo = new CreadorDeHielos(nivel=nivel).nuevoObjeto()
 		maza = new CreadorDeMazas(nivel=nivel).nuevoObjeto()
 		craneo = new CreadorDeCraneos(nivel=nivel).nuevoObjeto()
-
+		reloj = new CreadorDeRelojes(nivel=nivel).nuevoObjeto()
 	}
 
 	test "jugador movimientos" {
@@ -69,6 +70,14 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		maza.colisionarCon(jugador)
 		assert.equals(perdedor, jugador.estadoActual())
 	}
+	
+	test "Jugador colisiona con un reloj y suma 5 segundos mas" { 
+		const tiempoInicial = controladorDeNivel.nivel().tiempo()
+		reloj.colisionarCon(jugador)
+		assert.equals(tiempoInicial + 5, controladorDeNivel.nivel().tiempo())
+	}
+	
+	
 
 	test "Jugador colisiona con un Craneo y pierde" { // este test chequea el funcionamiento de la maza y el perder del jugador
 		jugador.vida(1)
@@ -87,9 +96,9 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 	}
 
 	test "desaparecer objeto y remover de la lista" {
-		assert.equals(4, controladorDeNivel.nivel().objetosCreados().size())
+		assert.equals(5, controladorDeNivel.nivel().objetosCreados().size())
 		nivel1.objetosCreados().get(0).desaparecer()
-		assert.equals(3, controladorDeNivel.nivel().objetosCreados().size())
+		assert.equals(4, controladorDeNivel.nivel().objetosCreados().size())
 		assert.notThat(game.hasVisual(vida))
 	}
 
