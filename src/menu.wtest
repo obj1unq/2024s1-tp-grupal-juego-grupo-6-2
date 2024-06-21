@@ -48,4 +48,4 @@ test "duplicar tiempo"{
 	assert.equals(40, nivel3.tiempoDeJuego())
 	assert.equals(1, jugador.monedas())
 }
-
+//
