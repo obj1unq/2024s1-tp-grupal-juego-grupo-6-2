@@ -159,7 +159,7 @@ object nivel2 inherits Nivel {
 	}
 
 	override method tiempoDeJuego() {
-		return 10
+		return 10 * jugador.potenciadorTiempo()
 	}
 
 	override method image() {
@@ -188,7 +188,7 @@ object nivel3 inherits Nivel {
 	}
 
 	override method tiempoDeJuego() {
-		return 10
+		return 10 * jugador.potenciadorTiempo()
 	}
 
 	override method image() {
