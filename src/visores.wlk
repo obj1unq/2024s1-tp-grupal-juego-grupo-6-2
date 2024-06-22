@@ -97,7 +97,7 @@ object visorDeSeleccion {
 	}
 
 	method moverArriba() {
-		self.position(game.at(position.x(), (position.y() + 1).min(5)))
+		self.position(game.at(position.x(), (position.y() + 1).min(menuActual.limiteSuperiorEjeY())))
 	}
 
 	method image() {

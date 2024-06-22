@@ -13,10 +13,14 @@ class Menu {
 	var posicionBoton = 0
 	const property position = game.at(0, 0)
 
-	method botonesDelMenuActual() 
+	method botonesDelMenuActual()
 
 	method limiteInferiorEjeY() {
 		return 2
+	}
+
+	method limiteSuperiorEjeY() {
+		return 5
 	}
 
 	method limiteIndiceOpciones() {
@@ -30,7 +34,6 @@ class Menu {
 	method objetosMenu() {
 		return objetosMenu
 	}
-
 
 	method salir() {
 		game.stop()
@@ -65,12 +68,13 @@ class Menu {
 	}
 
 	method visuales() {
-		self.botonesDelMenuActual().forEach {boton => game.addVisual(boton)}
+		self.botonesDelMenuActual().forEach{ boton => game.addVisual(boton)}
 	}
+
 }
 
 object menuInicial inherits Menu {
-	
+
 	override method botonesDelMenuActual() {
 		return [ new BotonEmpezar(), new BotonInstrucciones(), new BotonCreditos(), new BotonSalir() ]
 	}
@@ -82,66 +86,78 @@ object menuTransicion inherits Menu {
 	override method botonesDelMenuActual() {
 		return [ new BotonEmpezar(), new BotonInstrucciones(), new BotonCanjear(), new BotonSalir() ]
 	}
-	
+
 	override method image() {
 		return "fondoMenuTransicion.png"
 	}
+
 }
 
 class SubMenu inherits Menu {
+
 	const property menuAnterior = controladorDeNivel.menu()
-	
+
 	override method init() {
-	super()
-	game.addVisual(self.contenidoSubmenu())
+		super()
+		game.addVisual(self.contenidoSubmenu())
 	}
-	
+
 	method contenidoSubmenu()
-	
+
 	override method botonesDelMenuActual() {
-		return [new BotonVolver()]
+		return [ new BotonVolver() ]
 	}
+
+	override method limiteInferiorEjeY() {
+		return 1
+	}
+
+	override method limiteSuperiorEjeY() {
+		return 1
+	}
+
 }
 
 object menuCanjear inherits SubMenu {
-	
+
 	override method botonesDelMenuActual() {
-		return [ new BotonDuplicarMonedas(), new BotonDuplicarTiempo(), new BotonVolver()]
+		return [ new BotonDuplicarMonedas(), new BotonDuplicarTiempo(), new BotonVolver() ]
 	}
 
 	override method limiteInferiorEjeY() {
 		return 2
 	}
-	
-	override method contenidoSubmenu(){}
+
+	override method contenidoSubmenu() {
+	}
+
 }
-	
-object menuInstrucciones inherits SubMenu{
-	
-	override method contenidoSubmenu(){
+
+object menuInstrucciones inherits SubMenu {
+
+	override method contenidoSubmenu() {
 		return controladorDeNivel.nivel().instrucciones()
 	}
-	
 
-	
 }
 
-object menuCreditos inherits SubMenu{
-	
-	override method contenidoSubmenu(){
+object menuCreditos inherits SubMenu {
+
+	override method contenidoSubmenu() {
 		return creditos
 	}
-}
 
+}
 
 //INSTRUCCIONES 
 class Instrucciones {
 
 	method position() {
-		return game.at(7,2)
+		return game.at(7, 2)
 	}
 
 	method image()
+
 }
 
 object instruccionesMenuInicial inherits Instrucciones {
@@ -167,8 +183,6 @@ object instruccionesNivel2 inherits Instrucciones {
 	}
 
 }
-
-
 
 object creditos inherits Instrucciones {
 
@@ -212,8 +226,8 @@ class BotonEmpezar inherits Boton {
 	override method nombre() {
 		return "botonEmpezar.png"
 	}
-	
-	override method activar() { 
+
+	override method activar() {
 		game.clear()
 		controladorDeNivel.nivel().iniciar()
 	}
@@ -255,12 +269,13 @@ class BotonCreditos inherits Boton {
 }
 
 class BotonCanjear inherits Boton {
+
 	var property activado = false
 
 	override method ejeY() {
 		return 3
 	}
-	
+
 	method estado() {
 		if (jugador.monedas() >= 1) activado = true else activado = false
 	}
@@ -271,7 +286,6 @@ class BotonCanjear inherits Boton {
 		menuCanjear.init()
 	}
 
-	
 	method validarEstado() {
 		if (not activado) {
 			self.error("No tiene suficientes monedas para Canjear")
@@ -313,7 +327,7 @@ class BotonDuplicarMonedas inherits BotonDuplicador {
 	}
 
 	override method potenciador() {
-		return jugador.potenciadorMonedas()*2
+		return jugador.potenciadorMonedas() * 2
 	}
 
 }
@@ -347,8 +361,9 @@ class BotonSalir inherits Boton {
 	override method nombre() {
 		return "botonSalir.png"
 	}
+
 }
-	
+
 class BotonVolver inherits Boton {
 
 	override method ejeY() {
@@ -359,9 +374,10 @@ class BotonVolver inherits Boton {
 		game.clear()
 		controladorDeNivel.menu().init()
 	}
-	
+
 	override method nombre() {
 		return "botonVolver.png"
 	}
+
 }
 
