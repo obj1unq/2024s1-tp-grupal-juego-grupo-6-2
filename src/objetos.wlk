@@ -182,9 +182,8 @@ class Reloj inherits ObjetoQueCae {
 	}
 
 	method descontarTiempo() {
-		const tiempoADescontar = 0.max(controladorDeNivel.nivel().tiempo() - 5)
-		controladorDeNivel.nivel().descontarTiempo(tiempoADescontar)
-		game.say(jugador, "¡Uy! Perdí 5 segundos")
+		controladorDeNivel.nivel().sumarTiempo()
+		game.say(jugador, "¡Vamos! Tengo 5 segundos más.")
 	}
 
 }

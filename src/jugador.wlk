@@ -19,6 +19,14 @@ object jugador {
 	method sumarMoneda(valorMoneda) {
 		monedas += valorMoneda*potenciadorMonedas
 	}
+	
+	method duplicarMonedas(){
+		potenciadorMonedas = potenciadorMonedas * 2
+	}
+	
+	method duplicarTiempo(){
+		potenciadorTiempo = potenciadorTiempo * 2
+	}
 
 	method sumarVida() {
 		vida += 1
@@ -41,10 +49,6 @@ object jugador {
 		if (vida == 0) {
 			self.perder()
 		}
-	}
-
-	method ganar() {
-		self.cambiarEstado(ganador)
 	}
 
 	method perder() {
@@ -205,17 +209,6 @@ object agachando inherits EstadosDeMovimiento{
 }
 
 // ESTADOS DEL JUGADOR JUGABILIDAD
-object ganador inherits EstadoJugador {
-
-	override method activar() {
-		game.say(jugador, "Gané!")
-		jugador.cambiarEstado(jugandoDerecha)
-		controladorDeNivel.pasarNivel()
-		game.clear()
-		game.schedule(3000, { controladorDeNivel.nivel().init()})
-	}
-
-}
 
 object congelado inherits EstadoJugador {
 
@@ -229,8 +222,11 @@ object congelado inherits EstadoJugador {
 object perdedor inherits EstadoJugador {
 
 	override method activar() {
+		game.removeTickEvent("CRONOMETRO")
+		game.removeTickEvent("CREAR OBJETOS")
+		game.removeTickEvent("GRAVEDAD")
 		game.say(jugador, "Perdí!")
-		game.schedule(3000, { game.stop()})
+		game.schedule(3000, { controladorDeNivel.reiniciarJuego()})
 	}
 
 }

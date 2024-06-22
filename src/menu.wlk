@@ -284,6 +284,8 @@ class BotonCanjear inherits Boton {
 		self.validarEstado()
 		game.clear()
 		menuCanjear.init()
+//		game.addVisual(duplicadorMonedas)
+//		game.addVisual(duplicadorDeTiempo)
 	}
 
 	method validarEstado() {
@@ -303,7 +305,6 @@ class BotonDuplicador inherits Boton {
 	override method activar() {
 		jugador.monedas(jugador.monedas() - 1)
 		self.potenciador()
-		super()
 	}
 
 	method potenciador()
@@ -327,7 +328,7 @@ class BotonDuplicarMonedas inherits BotonDuplicador {
 	}
 
 	override method potenciador() {
-		return jugador.potenciadorMonedas() * 2
+		jugador.duplicarMonedas()
 	}
 
 }
@@ -343,7 +344,7 @@ class BotonDuplicarTiempo inherits BotonDuplicador {
 	}
 
 	override method potenciador() {
-		return jugador.potenciadorTiempo()
+		jugador.duplicarTiempo()
 	}
 
 }
