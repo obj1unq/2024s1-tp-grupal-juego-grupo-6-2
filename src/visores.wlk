@@ -6,15 +6,17 @@ import posiciones.*
 import randomizer.*
 import ranking.*
 
-class VisorDeAtributos {
+class ElementoDeEncabezado {
 
 	method position() {
 		return game.at(self.posicionX(), game.height() - 1)
 	}
 
-	method posicionX() {
-		return 0
-	}
+	method posicionX()
+
+}
+
+class VisorDeAtributos inherits ElementoDeEncabezado {
 
 	method text()
 
@@ -22,10 +24,24 @@ class VisorDeAtributos {
 
 }
 
+object iconoVida inherits ElementoDeEncabezado {
+
+	const property image = "vida.png"
+
+	override method posicionX() {
+		return 0
+	}
+
+}
+
 object visorVida inherits VisorDeAtributos {
 
+	override method posicionX() {
+		return 1
+	}
+
 	override method text() {
-		return "Vidas: " + jugador.vida()
+		return jugador.vida().toString()
 	}
 
 }
@@ -33,11 +49,21 @@ object visorVida inherits VisorDeAtributos {
 object visorMonedas inherits VisorDeAtributos {
 
 	override method posicionX() {
-		return 2
+		return 5
 	}
 
 	override method text() {
-		return "Monedas: " + jugador.monedas().toString()
+		return jugador.monedas().toString()
+	}
+
+}
+
+object iconoMoneda inherits ElementoDeEncabezado {
+
+	const property image = "moneda.png"
+
+	override method posicionX() {
+		return 4
 	}
 
 }
@@ -45,25 +71,36 @@ object visorMonedas inherits VisorDeAtributos {
 object visorDeTiempo inherits VisorDeAtributos {
 
 	override method posicionX() {
-		return 10
+		return 9
 	}
 
 	override method text() {
-		return "Tiempo: " + controladorDeNivel.nivel().tiempo().toString()
+		return controladorDeNivel.nivel().tiempo().toString()
+	}
+
+}
+
+object iconoReloj inherits ElementoDeEncabezado {
+
+	const property image = "reloj.png"
+
+	override method posicionX() {
+		return 8
 	}
 
 }
 
 object visorFinDeTiempo inherits VisorDeAtributos {
 
-	var property text = "FIN DE TIEMPO!"
+	override method posicionX() {
+	}
 
 	override method position() {
 		return game.center()
 	}
 
 	override method text() {
-		return text
+		return "FIN DE TIEMPO!"
 	}
 
 	override method textColor() = paleta.negro()
@@ -72,14 +109,15 @@ object visorFinDeTiempo inherits VisorDeAtributos {
 
 object visorFinDeJuego inherits VisorDeAtributos {
 
-	var property text = "FIN DE JUEGO!!!\nJUNTASTE " + jugador.monedas() + " MONEDAS!!!"
+	override method posicionX() {
+	}
 
 	override method position() {
 		return game.center()
 	}
 
 	override method text() {
-		return text
+		return "FIN DE JUEGO!!!\nJUNTASTE " + jugador.monedas().toString() + " MONEDAS!!!"
 	}
 
 	override method textColor() = paleta.negro()
@@ -88,8 +126,8 @@ object visorFinDeJuego inherits VisorDeAtributos {
 
 object visorDeNivel inherits VisorDeAtributos {
 
-	override method position() {
-		return game.at(14, game.height() - 1)
+	override method posicionX() {
+		return 14
 	}
 
 	override method text() {
@@ -102,6 +140,7 @@ object visorDeSeleccion {
 
 	var property menuActual = null
 	var property position = game.at(7, 5)
+	const property image = "moneda.png"
 
 	method irAPosicionInicial() {
 		self.position(game.at(self.posicionPrimerBoton().x() - 1, self.posicionPrimerBoton().y()))
@@ -112,7 +151,6 @@ object visorDeSeleccion {
 	}
 
 	method moverAbajo() {
-		// self.position(game.at(position.x(), (position.y() - 1).max(2)))
 		self.position(game.at(position.x(), (position.y() - 1).max(menuActual.limiteInferiorEjeY())))
 	}
 
@@ -120,20 +158,16 @@ object visorDeSeleccion {
 		self.position(game.at(position.x(), (position.y() + 1).min(menuActual.limiteSuperiorEjeY())))
 	}
 
-	method image() {
-		return "moneda.png"
-	}
-
 }
 
 object visorDeRanking inherits VisorDeAtributos {
 
-	override method position() {
-		return game.at(16, game.height() - 1)
+	override method posicionX() {
+		return 17
 	}
 
 	override method text() {
-		return "High-Score: " + ranking.top().toString()
+		return "HIGH-SCORE: " + ranking.top().toString()
 	}
 
 }
@@ -145,5 +179,6 @@ object paleta {
 	const property blanco = "FAFAFA"
 	const property negro = "000000"
 	const property naranja = "FF8000"
+
 }
 
