@@ -27,7 +27,7 @@ class Menu {
 		return objetosMenu.size() - 1
 	}
 
-	method objetosDelMenu() {
+	method agregarBotonoesAlMenu() {
 		self.botonesDelMenuActual().forEach({ boton => objetosMenu.add(boton)})
 	}
 
@@ -53,7 +53,7 @@ class Menu {
 		game.cellSize(64)
 		game.width(20)
 		game.height(10)
-		self.objetosDelMenu()
+		self.agregarBotonoesAlMenu()
 		game.addVisual(self)
 		self.visuales()
 		self.inicializarVisorDeSeleccion()
