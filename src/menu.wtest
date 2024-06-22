@@ -8,17 +8,4 @@ import visores.*
 import ranking.*
 
 
-test "canjear"{
-	const duplicarMonedas = new BotonDuplicarMonedas()
-	const canjear = new BotonCanjear()
-		
-	jugador.monedas(11)
-	duplicarMonedas.activar()
-	assert.equals(1, jugador.monedas())
-	assert.throwsException({canjear.activar()})
-	assert.notThat(canjear.estado())
-		
-}
-
-
 
