@@ -34,7 +34,7 @@ class Nivel {
 	}
 
 	method tiempoDeJuego() {
-		return 10 * jugador.potenciadorTiempo()
+		return juego.tiempoDelNivel() * jugador.potenciadorTiempo()
 	}
 
 	method objetosCreados()
@@ -43,7 +43,9 @@ class Nivel {
 		objetosCreados.remove(objeto)
 	}
 
-	method gravedadJugador()
+	method gravedadJugador() {
+		return 1000
+	}
 
 	method factoriesDeObjetos() {
 		return [ vidas, monedas, hielos, mazas, monedas, monedas ]
@@ -140,10 +142,6 @@ object controladorDeNivel {
 
 object nivel1 inherits Nivel {
 
-	override method gravedadJugador() {
-		return 1000
-	}
-
 	override method image() {
 		return "fondoNivel1.png"
 	}
@@ -163,10 +161,6 @@ object nivel1 inherits Nivel {
 }
 
 object nivel2 inherits Nivel {
-
-	override method gravedadJugador() {
-		return 1000
-	}
 
 	override method tiempoDeJuego() {
 		return 10 * jugador.potenciadorTiempo()
@@ -195,10 +189,6 @@ object nivel2 inherits Nivel {
 }
 
 object nivel3 inherits Nivel {
-
-	override method gravedadJugador() {
-		return 1000
-	}
 
 	override method tiempoDeJuego() {
 		return 10 * jugador.potenciadorTiempo()
@@ -240,5 +230,8 @@ object juego {
 		jugador.reiniciar()
 	}
 
+	method tiempoDelNivel() {
+		return 10
+	}
 }
 
