@@ -16,13 +16,11 @@ class Nivel {
 	const monedas = new CreadorDeMonedas(nivel = self)
 	const hielos = new CreadorDeHielos(nivel = self)
 	const mazas = new CreadorDeMazas(nivel = self)
-	const venenos = new CreadorDeVenenos(nivel = self)
 
-	
 	method sumarTiempo() {
 		tiempo += 5
 	}
-	
+
 	method descontarTiempo(cantidad) {
 		return if (self.tieneTiempo()) {
 			tiempo -= cantidad
@@ -37,10 +35,6 @@ class Nivel {
 
 	method tiempoDeJuego() {
 		return 10 * jugador.potenciadorTiempo()
-	}
-
-	method descripcionDeObjetivos() {
-		return "Reuní la mayor cantidad de monedas antes de que finalice el tiempo. (Pulsa Esc para volver)"
 	}
 
 	method objetosCreados()
@@ -62,6 +56,8 @@ class Nivel {
 	}
 
 	method siguiente()
+
+	method siguienteMenu()
 
 	method pasarDeNivel() {
 		game.clear()
@@ -88,11 +84,9 @@ class Nivel {
 		creadorDeBaldosas.crearBaldosas()
 		creadorDeEncabezado.crearEncabezado()
 		game.onTick(self.gravedadJugador(), "GRAVEDAD_JUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
-			// los objetos se crean en altura - 2 porque en altura -1 esta el encabezado
 		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
 		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		game.onTick(1000, "CRONOMETRO", { self.descontarTiempo(1)})
-		// game.addVisual(new Cofre())
 		game.addVisual(visorVida)
 		game.addVisual(visorMonedas)
 		game.addVisual(visorDeTiempo)
@@ -113,18 +107,26 @@ class Nivel {
 		tiempo = self.tiempoDeJuego()
 	}
 
+	method instrucciones()
+
 }
 
 object controladorDeNivel {
 
 	var nivel = nivel1
+	var menu = menuInicial
 
 	method pasarNivel() {
 		nivel = nivel.siguiente()
+		menu = nivel.siguienteMenu()
 	}
 
 	method nivel() {
 		return nivel
+	}
+
+	method menu() {
+		return menu
 	}
 
 	method reiniciarJuego() {
@@ -150,6 +152,14 @@ object nivel1 inherits Nivel {
 		return nivel2
 	}
 
+	override method siguienteMenu() {
+		return menuTransicion
+	}
+
+	override method instrucciones() {
+		return instruccionesMenuInicial
+	}
+
 }
 
 object nivel2 inherits Nivel {
@@ -170,13 +180,16 @@ object nivel2 inherits Nivel {
 		return nivel3
 	}
 
-//	override method init() {
-//		super()
-////		game.addVisual(new Cofre())
-//	}
+	override method siguienteMenu() {
+		return menuTransicion
+	}
 
 	override method factoriesDeObjetos() {
 		return super() + [ new CreadorDeRelojes(nivel=self) ]
+	}
+
+	override method instrucciones() {
+		return instruccionesNivel1
 	}
 
 }
@@ -200,11 +213,9 @@ object nivel3 inherits Nivel {
 		return nivel1
 	}
 
-//	override method init() {
-//		super()
-//		game.addVisual(new Cofre())
-//		game.addVisual(new Cofre())
-//	}
+	override method siguienteMenu() {
+		return menuInicial
+	}
 
 	override method factoriesDeObjetos() {
 		const objetos = super()
@@ -216,11 +227,18 @@ object nivel3 inherits Nivel {
 		game.schedule(1000, { menuInicial.init()})
 	}
 
+	override method instrucciones() {
+		return instruccionesNivel2
+	}
+
 }
 
 object juego {
+
 	method reiniciar() {
 		ranking.guardar(jugador.monedas())
 		jugador.reiniciar()
 	}
+
 }
+

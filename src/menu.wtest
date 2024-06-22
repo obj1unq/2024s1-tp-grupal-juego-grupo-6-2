@@ -7,45 +7,53 @@ import posiciones.*
 import visores.*
 import ranking.*
 
+describe "Duplicadores" {
 
-test "canjear"{
-	const duplicarMonedas = new BotonDuplicarMonedas()
-	const canjear = new BotonCanjear()
+	var duplicarMonedas
+	var duplicarTiempo
+	var canjear
+
+	method initialize() {
+		game.clear()
+		game.width(20)
+		game.height(10)
+		game.addVisual(jugador)
+		duplicarMonedas = new BotonDuplicarMonedas()
+		duplicarTiempo = new BotonDuplicarTiempo()
+		canjear = new BotonCanjear()
 		
-	jugador.monedas(11)
-	duplicarMonedas.activar()
-	assert.equals(10, jugador.monedas())
-	jugador.monedas(0)
-	assert.throwsException({canjear.activar()})
-	assert.notThat(canjear.estado())
-		
+	}
+
+	test "canjear" {
+		jugador.monedas(11)
+		duplicarMonedas.activar()
+		assert.equals(10, jugador.monedas())
+		jugador.monedas(0)
+		assert.throwsException({ canjear.activar()})
+		assert.notThat(canjear.activado())
+	}
+
+	test "duplicar monedas" {
+		jugador.monedas(1)
+		duplicarMonedas.activar()
+		assert.equals(0, jugador.monedas())
+		jugador.sumarMoneda(1)
+		assert.equals(2, jugador.monedas())
+		duplicarMonedas.activar()
+		assert.equals(1, jugador.monedas())
+		jugador.sumarMoneda(1)
+		assert.equals(5, jugador.monedas())
+	}
+
+	test "duplicar tiempo" {
+		jugador.sumarMoneda(3)
+		duplicarTiempo.activar()
+		assert.equals(20, nivel2.tiempoDeJuego())
+		assert.equals(2, jugador.monedas())
+		duplicarTiempo.activar()
+		assert.equals(40, nivel3.tiempoDeJuego())
+		assert.equals(1, jugador.monedas())
+	}
+
 }
 
-
-test "duplicar monedas"{
-	const duplicarMonedas = new BotonDuplicarMonedas()
-	
-	jugador.monedas(1)
-	duplicarMonedas.activar()
-	assert.equals(0, jugador.monedas())
-	jugador.sumarMoneda(1)
-	assert.equals(2, jugador.monedas())
-	duplicarMonedas.activar()
-	assert.equals(1, jugador.monedas())
-	jugador.sumarMoneda(1)
-	assert.equals(5, jugador.monedas())
-}
-
-
-test "duplicar tiempo"{
-	const duplicarTiempo = new BotonDuplicarTiempo()
-	
-	jugador.sumarMoneda(3)
-	duplicarTiempo.activar()
-	assert.equals(20, nivel2.tiempoDeJuego())
-	assert.equals(2, jugador.monedas())
-	duplicarTiempo.activar()
-	assert.equals(40, nivel3.tiempoDeJuego())
-	assert.equals(1, jugador.monedas())
-}
-//
