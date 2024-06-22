@@ -80,7 +80,7 @@ object menuInicial inherits Menu {
 object menuTransicion inherits Menu {
 
 	override method botonesDelMenuActual() {
-		return [ new BotonEmpezar(), new BotonInstrucciones(), new BotonCreditos(), new BotonSalir() ]
+		return [ new BotonEmpezar(), new BotonInstrucciones(), new BotonCanjear(), new BotonSalir() ]
 	}
 	
 	override method image() {
