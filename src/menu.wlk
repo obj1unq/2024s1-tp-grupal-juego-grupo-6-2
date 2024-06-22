@@ -53,6 +53,7 @@ class Menu {
 		game.cellSize(64)
 		game.width(20)
 		game.height(10)
+		
 		self.agregarBotonoesAlMenu()
 		game.addVisual(self)
 		self.visuales()
@@ -65,6 +66,7 @@ class Menu {
 		keyboard.up().onPressDo{ posicionBoton = (posicionBoton - 1).max(0)
 			visorDeSeleccion.moverArriba()
 		}
+		game.addVisual(visorDeRanking)
 	}
 
 	method visuales() {

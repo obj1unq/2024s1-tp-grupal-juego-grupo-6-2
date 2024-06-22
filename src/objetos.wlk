@@ -6,13 +6,13 @@ import randomizer.*
 import visores.*
 
 class ObjetoQueCae {
+
 	var property position
 	const property nivel
 	const property velocidadDeCaida = null
-	
 
 	method limiteInferior() = 0
-	
+
 	method puedeCaer() {
 		return true
 	}
@@ -29,9 +29,8 @@ class ObjetoQueCae {
 
 	// Metodo abstracto
 	method accionAlColisionarCon(objeto) {
-		
 	}
-	
+
 	method esAtravesable() {
 		return true
 	}
@@ -40,14 +39,14 @@ class ObjetoQueCae {
 
 class Moneda inherits ObjetoQueCae {
 
-	method valor(){
+	method valor() {
 		return 1
-	} 
+	}
 
 	method image() {
 		return "moneda.png"
 	}
-	
+
 	override method accionAlColisionarCon(personaje) {
 		personaje.sumarMoneda(self.valor())
 	}
@@ -55,24 +54,26 @@ class Moneda inherits ObjetoQueCae {
 }
 
 class ObjetoQueCaeFactory {
-	const nivel 
-	
+
+	const nivel
+
 	method nuevoObjeto() {
-		const objeto = self.crear( randomizer.emptyPosition() )
+		const objeto = self.crear(randomizer.emptyPosition())
 		game.addVisual(objeto)
-		nivel.objetosCreados().add(objeto) 
+		nivel.objetosCreados().add(objeto)
 		return objeto
 	}
-	
+
 	method crear(position)
+
 }
 
+class CreadorDeMonedas inherits ObjetoQueCaeFactory {
 
-class CreadorDeMonedas inherits ObjetoQueCaeFactory { 
-	
 	override method crear(position) {
-		return  new Moneda(nivel = nivel,  position = position)
+		return new Moneda(nivel = nivel, position = position)
 	}
+
 }
 
 class Hielo inherits ObjetoQueCae {
@@ -90,8 +91,9 @@ class Hielo inherits ObjetoQueCae {
 class CreadorDeHielos inherits ObjetoQueCaeFactory {
 
 	override method crear(position) {
-		return  new Hielo (nivel=nivel, position = position)
+		return new Hielo(nivel = nivel, position = position)
 	}
+
 }
 
 class Vida inherits ObjetoQueCae {
@@ -107,10 +109,11 @@ class Vida inherits ObjetoQueCae {
 }
 
 class CreadorDeVidas inherits ObjetoQueCaeFactory {
-	
+
 	override method crear(position) {
-		return  new Vida (nivel=nivel, position = position)
+		return new Vida(nivel = nivel, position = position)
 	}
+
 }
 
 class Maza inherits ObjetoQueCae {
@@ -127,10 +130,10 @@ class Maza inherits ObjetoQueCae {
 
 }
 
-class CreadorDeMazas inherits ObjetoQueCaeFactory{
-	
+class CreadorDeMazas inherits ObjetoQueCaeFactory {
+
 	override method crear(position) {
-		return  new Maza (nivel=nivel, position = position)
+		return new Maza(nivel = nivel, position = position)
 	}
 
 }
@@ -138,7 +141,6 @@ class CreadorDeMazas inherits ObjetoQueCaeFactory{
 class Veneno inherits ObjetoQueCae {
 
 	const property image = "veneno.png"
-	
 
 	override method accionAlColisionarCon(objeto) {
 		objeto.tomarVeneno()
@@ -149,7 +151,7 @@ class Veneno inherits ObjetoQueCae {
 class CreadorDeVenenos inherits ObjetoQueCaeFactory {
 
 	override method crear(position) {
-		return new Veneno(nivel=nivel, position = position)
+		return new Veneno(nivel = nivel, position = position)
 	}
 
 }
@@ -167,7 +169,7 @@ class Craneo inherits ObjetoQueCae {
 class CreadorDeCraneos inherits ObjetoQueCaeFactory {
 
 	override method crear(position) {
-		return new Craneo(nivel=nivel, position = position)
+		return new Craneo(nivel = nivel, position = position)
 	}
 
 }
@@ -175,7 +177,6 @@ class CreadorDeCraneos inherits ObjetoQueCaeFactory {
 class Reloj inherits ObjetoQueCae {
 
 	const property image = "reloj.png"
-	
 
 	override method accionAlColisionarCon(objeto) {
 		self.descontarTiempo()
@@ -183,7 +184,7 @@ class Reloj inherits ObjetoQueCae {
 
 	method descontarTiempo() {
 		controladorDeNivel.nivel().sumarTiempo()
-		game.say(jugador, "¡Vamos! Tengo 5 segundos más.")
+		game.say(jugador, "¡Vamos! Tengo " + juego.tiempoAdicional() + " segundos más.")
 	}
 
 }
@@ -195,7 +196,6 @@ class CreadorDeRelojes inherits ObjetoQueCaeFactory {
 	}
 
 }
-
 
 class Cofre {
 
@@ -217,12 +217,4 @@ class Cofre {
 	}
 
 }
-
-
-
-
-
-
-
-
 

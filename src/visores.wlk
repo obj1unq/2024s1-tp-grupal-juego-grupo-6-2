@@ -18,14 +18,14 @@ class VisorDeAtributos {
 
 	method text()
 
-	method textColor() = paleta.blanco()
+	method textColor() = paleta.naranja()
 
 }
 
 object visorVida inherits VisorDeAtributos {
 
 	override method text() {
-		return "Vida: " + jugador.vida()
+		return "Vidas: " + jugador.vida()
 	}
 
 }
@@ -56,7 +56,7 @@ object visorDeTiempo inherits VisorDeAtributos {
 
 object visorFinDeTiempo inherits VisorDeAtributos {
 
-	var property text = "Fin de tiempo!"
+	var property text = "FIN DE TIEMPO!"
 
 	override method position() {
 		return game.center()
@@ -65,6 +65,24 @@ object visorFinDeTiempo inherits VisorDeAtributos {
 	override method text() {
 		return text
 	}
+
+	override method textColor() = paleta.negro()
+
+}
+
+object visorFinDeJuego inherits VisorDeAtributos {
+
+	var property text = "FIN DE JUEGO!!!\nJUNTASTE " + jugador.monedas() + " MONEDAS!!!"
+
+	override method position() {
+		return game.center()
+	}
+
+	override method text() {
+		return text
+	}
+
+	override method textColor() = paleta.negro()
 
 }
 
@@ -86,13 +104,15 @@ object visorDeSeleccion {
 	var property position = game.at(7, 5)
 
 	method irAPosicionInicial() {
-		self.position(game.at(self.posicionPrimerBoton().x()-1, self.posicionPrimerBoton().y()))
+		self.position(game.at(self.posicionPrimerBoton().x() - 1, self.posicionPrimerBoton().y()))
 	}
-	method posicionPrimerBoton(){
+
+	method posicionPrimerBoton() {
 		return menuActual.botonesDelMenuActual().first().position()
 	}
+
 	method moverAbajo() {
-		//self.position(game.at(position.x(), (position.y() - 1).max(2)))
+		// self.position(game.at(position.x(), (position.y() - 1).max(2)))
 		self.position(game.at(position.x(), (position.y() - 1).max(menuActual.limiteInferiorEjeY())))
 	}
 
@@ -123,6 +143,7 @@ object paleta {
 	const property verde = "00FF00FF"
 	const property rojo = "FF0000FF"
 	const property blanco = "FAFAFA"
-
+	const property negro = "000000"
+	const property naranja = "FF8000"
 }
 

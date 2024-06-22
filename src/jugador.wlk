@@ -13,18 +13,18 @@ object jugador {
 	var property vida = 3
 	var property potenciadorMonedas = 1
 	var property potenciadorTiempo = 1
-	
+
 	method limiteInferior() = 1
 
 	method sumarMoneda(valorMoneda) {
-		monedas += valorMoneda*potenciadorMonedas
+		monedas += valorMoneda * potenciadorMonedas
 	}
-	
-	method duplicarMonedas(){
+
+	method duplicarMonedas() {
 		potenciadorMonedas = potenciadorMonedas * 2
 	}
-	
-	method duplicarTiempo(){
+
+	method duplicarTiempo() {
 		potenciadorTiempo = potenciadorTiempo * 2
 	}
 
@@ -88,18 +88,11 @@ object jugador {
 		self.vida(3)
 	}
 
-
 	method tomarVeneno() {
 		game.say(self, "Tomé veneno y ahora estoy mareado")
 		estadoActual.marearse()
-			
-//		estadoActual.alternarMareo()
-//		if (estadoActual.mareado()) {
-//			game.say(self, "Tomé veneno y ahora estoy mareado")
-//		} else {
-//			game.say(self, "Tomé veneno y ya no estoy mareado")
-//		}
 	}
+
 }
 
 class EstadoJugador {
@@ -109,16 +102,11 @@ class EstadoJugador {
 	method mareado() {
 		return mareado
 	}
-	
-	method marearse(){
+
+	method marearse() {
 		mareado = true
 		game.schedule(4000, { mareado = false})
 	}
-	
-//	method alternarMareo() {
-//		mareado = not mareado
-//	}
-
 
 	method puedeMover() = false
 
@@ -134,10 +122,10 @@ class EstadosDeMovimiento inherits EstadoJugador {
 
 	method direccion()
 
-	method siguienteDireccion(){
+	method siguienteDireccion() {
 		return self.direccion().siguiente((jugador.position() ))
 	}
-	
+
 	override method puedeMover() = true
 
 	override method activar() {
@@ -171,8 +159,7 @@ object jugandoIzquierda inherits EstadosDeMovimiento {
 
 }
 
-
-object saltando inherits EstadosDeMovimiento{
+object saltando inherits EstadosDeMovimiento {
 
 	var estadoImagen = self
 
@@ -202,14 +189,15 @@ object saltando inherits EstadosDeMovimiento{
 
 }
 
-object agachando inherits EstadosDeMovimiento{
+object agachando inherits EstadosDeMovimiento {
+
 	override method direccion() {
 		return abajo
 	}
+
 }
 
 // ESTADOS DEL JUGADOR JUGABILIDAD
-
 object congelado inherits EstadoJugador {
 
 	override method activar() {

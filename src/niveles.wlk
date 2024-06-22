@@ -18,7 +18,7 @@ class Nivel {
 	const mazas = new CreadorDeMazas(nivel = self)
 
 	method sumarTiempo() {
-		tiempo += 5
+		tiempo += juego.tiempoAdicional()
 	}
 
 	method descontarTiempo(cantidad) {
@@ -63,14 +63,18 @@ class Nivel {
 
 	method pasarDeNivel() {
 		game.clear()
-		game.addVisual(visorFinDeTiempo)
-		visorFinDeTiempo.text()
+		game.addVisual(self.visorFinDeNivel())
+		self.visorFinDeNivel().text()
 		controladorDeNivel.pasarNivel()
 		self.cargarMenu()
 	}
 
+	method visorFinDeNivel() {
+		return visorFinDeTiempo
+	}
+
 	method cargarMenu() {
-		game.schedule(1000, { menuTransicion.init()})
+		game.schedule(2500, { menuTransicion.init()})
 	}
 
 	method init() {
@@ -162,10 +166,6 @@ object nivel1 inherits Nivel {
 
 object nivel2 inherits Nivel {
 
-	override method tiempoDeJuego() {
-		return 10 * jugador.potenciadorTiempo()
-	}
-
 	override method image() {
 		return "fondoNivel2.png"
 	}
@@ -190,10 +190,6 @@ object nivel2 inherits Nivel {
 
 object nivel3 inherits Nivel {
 
-	override method tiempoDeJuego() {
-		return 10 * jugador.potenciadorTiempo()
-	}
-
 	override method image() {
 		return "fondoNivel3.png"
 	}
@@ -214,11 +210,15 @@ object nivel3 inherits Nivel {
 	}
 
 	override method cargarMenu() {
-		game.schedule(1000, { menuInicial.init()})
+		game.schedule(5000, { menuInicial.init()})
 	}
 
 	override method instrucciones() {
 		return instruccionesNivel2
+	}
+
+	override method visorFinDeNivel() {
+		return visorFinDeJuego
 	}
 
 }
@@ -233,5 +233,10 @@ object juego {
 	method tiempoDelNivel() {
 		return 10
 	}
+
+	method tiempoAdicional() {
+		return 10
+	}
+
 }
 

@@ -80,7 +80,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 	test "Jugador colisiona con un reloj y suma 5 segundos mas" {
 		const tiempoInicial = controladorDeNivel.nivel().tiempo()
 		reloj.colisionarCon(jugador)
-		assert.equals(tiempoInicial + 5, controladorDeNivel.nivel().tiempo())
+		assert.equals(tiempoInicial + juego.tiempoAdicional(), controladorDeNivel.nivel().tiempo())
 	}
 
 	test "Jugador colisiona con un Craneo y pierde" { // este test chequea el funcionamiento de la maza y el perder del jugador
