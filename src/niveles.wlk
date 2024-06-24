@@ -65,7 +65,7 @@ class Nivel {
 		game.clear()
 		game.addVisual(self.visorFinDeNivel())
 		self.visorFinDeNivel().text()
-		controladorDeNivel.pasarNivel()
+		game.schedule(2500, {controladorDeNivel.pasarNivel()})
 		self.cargarMenu()
 	}
 
@@ -98,6 +98,13 @@ class Nivel {
 		game.addVisual(visorDeTiempo)
 		game.addVisual(visorDeNivel)
 		game.addVisual(visorDeRanking)
+		self.agregarIconos()
+	}
+
+	method agregarIconos() {
+		game.addVisual(iconoVida)
+		game.addVisual(iconoMoneda)
+		game.addVisual(iconoReloj)
 	}
 
 	method desaparecer() {
@@ -210,7 +217,7 @@ object nivel3 inherits Nivel {
 	}
 
 	override method cargarMenu() {
-		game.schedule(5000, { menuInicial.init()})
+		game.schedule(2500, { menuInicial.init()})
 	}
 
 	override method instrucciones() {
