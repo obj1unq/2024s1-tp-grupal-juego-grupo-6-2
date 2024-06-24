@@ -17,12 +17,11 @@
 
 - Cada nivel tiene un límite de tiempo específico. ¡Apúrate para juntar tantas monedas como puedas antes de que se acabe el tiempo!
 
-- 
 
 ### Como Jugar 
 
 #### 1. Inicio
-    - Comienza el juego 
+- Comienza el juego 
 
 #### 2. Recolecta Monedas:
 - Desplázate por el nivel y recoge todas las monedas que encuentres.
@@ -40,6 +39,11 @@
 - Relojes: Agarra relojes para tener 10 segundos más de tiempo y así poder juntar aún más monedas. 
 
 ### Canjea Beneficios Entre Nivel y Nivel
+- Con tus monedas recaudadas, podrás comprar un beneficio entre cada nivel que te ayude a superar tu high score.
+
+##### Beneficios:
+- Monedas x2: Cada moneda valdrá el doble.
+- Tiempo x2: Tendrás el doble de tiempo para recaudar tus monedas.
  
 ### Puntaje y High Score
 
