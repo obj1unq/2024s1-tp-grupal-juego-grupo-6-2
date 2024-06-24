@@ -9,7 +9,9 @@
 
 ## Capturas
 
-(agregar)
+![alt text](image.png)
+
+![alt text](image-1.png)
 
 ## Reglas de Juego / Instrucciones
 
