@@ -53,7 +53,6 @@ class Menu {
 		game.cellSize(64)
 		game.width(20)
 		game.height(10)
-		
 		self.agregarBotonoesAlMenu()
 		game.addVisual(self)
 		self.visuales()
@@ -120,7 +119,7 @@ class SubMenu inherits Menu {
 
 }
 
-object menuCanjear inherits SubMenu {
+object menuCanjear inherits Menu {
 
 	override method botonesDelMenuActual() {
 		return [ new BotonDuplicarMonedas(), new BotonDuplicarTiempo(), new BotonVolver() ]
@@ -130,8 +129,8 @@ object menuCanjear inherits SubMenu {
 		return 2
 	}
 
-	override method contenidoSubmenu() {
-	}
+//	override method contenidoSubmenu() {
+//	}
 
 }
 
@@ -283,6 +282,7 @@ class BotonCanjear inherits Boton {
 	}
 
 	override method activar() {
+		self.estado()
 		self.validarEstado()
 		game.clear()
 		menuCanjear.init()
@@ -297,6 +297,7 @@ class BotonCanjear inherits Boton {
 	}
 
 	override method nombre() {
+		self.estado()
 		return "botonCanjear" + self.activado().toString() + ".png"
 	}
 
@@ -305,8 +306,10 @@ class BotonCanjear inherits Boton {
 class BotonDuplicador inherits Boton {
 
 	override method activar() {
+		game.clear()
 		jugador.monedas(jugador.monedas() - 1)
 		self.potenciador()
+		controladorDeNivel.nivel().iniciar()
 	}
 
 	method potenciador()
