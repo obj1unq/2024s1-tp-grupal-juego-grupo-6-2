@@ -7,6 +7,7 @@ import randomizer.*
 import visores.*
 import menu.*
 
+
 program juego {
 	
 	menuInicial.init()
