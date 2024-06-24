@@ -59,6 +59,6 @@
 ## Otros
 
 - Universidad Nacional de Quilmes.
-- Programacion Orientada a Objetos, Comision ?.
-- Versión de Wollok: (agregar versión)
+- Curso: Programacion Orientada a Objetos, Comision 2.
+- Versión de Wollok: Version 3.0.0
 - Una vez terminado, no tenemos problemas en que el repositorio sea público.
