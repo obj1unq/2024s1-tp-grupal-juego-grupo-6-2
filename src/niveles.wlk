@@ -99,6 +99,8 @@ class Nivel {
 		game.addVisual(visorDeTiempo)
 		game.addVisual(visorDeNivel)
 		game.addVisual(visorDeRanking)
+		game.addVisual(new Cofre())
+		
 		self.agregarIconos()
 	}
 
