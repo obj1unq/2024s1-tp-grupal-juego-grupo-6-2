@@ -122,15 +122,12 @@ class SubMenu inherits Menu {
 object menuCanjear inherits Menu {
 
 	override method botonesDelMenuActual() {
-		return [ new BotonDuplicarMonedas(), new BotonDuplicarTiempo(), new BotonVolver() ]
+		return [ new BotonDuplicarMonedas(), new BotonDuplicarTiempo() ]
 	}
 
 	override method limiteInferiorEjeY() {
 		return 2
 	}
-
-//	override method contenidoSubmenu() {
-//	}
 
 }
 
