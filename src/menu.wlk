@@ -126,7 +126,7 @@ object menuCanjear inherits Menu {
 	}
 
 	override method limiteInferiorEjeY() {
-		return 2
+		return 4
 	}
 
 }

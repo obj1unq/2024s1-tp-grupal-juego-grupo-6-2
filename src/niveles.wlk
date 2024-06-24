@@ -65,7 +65,7 @@ class Nivel {
 		game.clear()
 		game.addVisual(self.visorFinDeNivel())
 		self.visorFinDeNivel().text()
-		game.schedule(2500, {controladorDeNivel.pasarNivel()})
+		game.schedule(2500, { controladorDeNivel.pasarNivel()})
 		self.cargarMenu()
 	}
 
@@ -74,7 +74,7 @@ class Nivel {
 	}
 
 	method cargarMenu() {
-		game.schedule(2500, { menuTransicion.init()})
+		game.schedule(2500, { self.siguienteMenu().init()})
 	}
 
 	method init() {
@@ -214,10 +214,6 @@ object nivel3 inherits Nivel {
 		const objetos = super()
 		objetos.remove(vidas)
 		return objetos + [ new CreadorDeCraneos(nivel=self), new CreadorDeRelojes(nivel=self) ]
-	}
-
-	override method cargarMenu() {
-		game.schedule(2500, { menuInicial.init()})
 	}
 
 	override method instrucciones() {
