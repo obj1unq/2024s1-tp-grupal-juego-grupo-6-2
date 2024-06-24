@@ -74,7 +74,8 @@ class Nivel {
 	}
 
 	method cargarMenu() {
-		game.schedule(2500, { self.siguienteMenu().init()})
+		//game.schedule(2500, { self.siguienteMenu().init()})
+		game.schedule(2500, { controladorDeNivel.menu().init()})
 	}
 
 	method init() {
@@ -130,8 +131,8 @@ object controladorDeNivel {
 	var menu = menuInicial
 
 	method pasarNivel() {
-		nivel = nivel.siguiente()
 		menu = nivel.siguienteMenu()
+		nivel = nivel.siguiente()
 	}
 
 	method nivel() {
@@ -145,8 +146,9 @@ object controladorDeNivel {
 	method reiniciarJuego() {
 		juego.reiniciar()
 		nivel = nivel1
+		menu = menuInicial
 		game.clear()
-		menuInicial.init()
+		menu.init()
 	}
 
 }
