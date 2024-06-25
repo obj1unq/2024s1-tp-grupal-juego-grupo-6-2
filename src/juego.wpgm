@@ -10,6 +10,8 @@ import menu.*
 
 program juego {
 	
+	musica.sonar()
 	menuInicial.init()
+	
 	game.start()
 }
