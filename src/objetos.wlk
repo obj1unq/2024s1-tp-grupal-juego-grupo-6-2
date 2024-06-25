@@ -47,7 +47,6 @@ class ObjetoQueCae {
 		nivel.remove(self)
 	}
 
-	// Metodo abstracto
 	method accionAlColisionarCon(objeto) {
 		if (sonido) {
 			self.sonido().play()

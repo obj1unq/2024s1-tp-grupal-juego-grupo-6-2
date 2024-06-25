@@ -283,8 +283,6 @@ class BotonCanjear inherits Boton {
 		self.validarEstado()
 		game.clear()
 		menuCanjear.init()
-//		game.addVisual(duplicadorMonedas)
-//		game.addVisual(duplicadorDeTiempo)
 	}
 
 	method validarEstado() {
