@@ -21,7 +21,6 @@ describe "Duplicadores" {
 		duplicarMonedas = new BotonDuplicarMonedas()
 		duplicarTiempo = new BotonDuplicarTiempo()
 		canjear = new BotonCanjear()
-		
 	}
 
 	test "canjear" {

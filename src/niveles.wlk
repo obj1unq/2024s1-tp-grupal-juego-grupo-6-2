@@ -74,7 +74,7 @@ class Nivel {
 	}
 
 	method cargarMenu() {
-		//game.schedule(2500, { self.siguienteMenu().init()})
+		// game.schedule(2500, { self.siguienteMenu().init()})
 		game.schedule(2500, { controladorDeNivel.menu().init()})
 	}
 
@@ -100,7 +100,6 @@ class Nivel {
 		game.addVisual(visorDeNivel)
 		game.addVisual(visorDeRanking)
 		game.addVisual(new Cofre())
-		
 		self.agregarIconos()
 	}
 
