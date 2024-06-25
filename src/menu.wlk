@@ -197,9 +197,7 @@ class Boton {
 		return 8
 	}
 
-	method ejeY() {
-		return 0
-	}
+	method ejeY()
 
 	method position() {
 		return game.at(self.ejeX(), self.ejeY())
