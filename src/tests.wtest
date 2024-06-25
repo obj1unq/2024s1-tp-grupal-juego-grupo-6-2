@@ -6,7 +6,6 @@ import posiciones.*
 import visores.*
 import ranking.*
 
-
 describe "Tests de colision del personaje jugador con los objetos del juego" {
 
 	var nivel
@@ -57,7 +56,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		moneda2.sonido(false)
 		moneda1.colisionarCon(jugador)
 		moneda2.colisionarCon(jugador)
-		assert.equals(2, jugador.monedas()) // el jugador colisiono con una vida y ahora sumo a 200 de vida
+		assert.equals(2, jugador.monedas())
 	}
 
 	test "Jugador atrapa un hielo, se congela y no se puede mover" {
@@ -89,7 +88,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.equals(tiempoInicial + juego.tiempoAdicional(), controladorDeNivel.nivel().tiempo())
 	}
 
-	test "Jugador colisiona con un Craneo y pierde" { // este test chequea el funcionamiento de la maza y el perder del jugador
+	test "Jugador colisiona con un Craneo y pierde" {
 		game.onTick(600, "CREAR OBJETOS", {
 		})
 		game.onTick(300, "GRAVEDAD", {

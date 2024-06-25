@@ -74,7 +74,6 @@ class Nivel {
 	}
 
 	method cargarMenu() {
-		//game.schedule(2500, { self.siguienteMenu().init()})
 		game.schedule(2500, { controladorDeNivel.menu().init()})
 	}
 
@@ -82,26 +81,41 @@ class Nivel {
 		game.cellSize(64)
 		game.width(20)
 		game.height(10)
+		self.agregarComportamientoTeclas()
+		self.agregarObjetosAlTablero()
+		game.onCollideDo(jugador, { objeto => objeto.colisionarCon(jugador)})
+		self.agregarEventosOnTick()
+		self.agregarVisores()
+		self.agregarIconos()
+	}
+
+	method agregarObjetosAlTablero() {
 		game.addVisual(self)
 		game.addVisual(jugador)
-		game.onCollideDo(jugador, { objeto => objeto.colisionarCon(jugador)})
+		creadorDeBaldosas.crearBaldosas()
+		game.addVisual(new Cofre())
+	}
+
+	method agregarComportamientoTeclas() {
 		keyboard.right().onPressDo{ jugador.mover(jugandoDerecha)}
 		keyboard.left().onPressDo{ jugador.mover(jugandoIzquierda)}
 		keyboard.up().onPressDo{ jugador.mover(saltando)}
-		creadorDeBaldosas.crearBaldosas()
-		creadorDeEncabezado.crearEncabezado()
+	}
+
+	method agregarEventosOnTick() {
 		game.onTick(self.gravedadJugador(), "GRAVEDAD_JUGADOR", { gravedad.aplicarEfectoCaida(jugador)})
 		game.onTick(600, "CREAR OBJETOS", { self.factoriesDeObjetos().anyOne().nuevoObjeto()})
 		game.onTick(300, "GRAVEDAD", { self.objetosCreados().forEach{ objeto => gravedad.aplicarEfectoCaida(objeto)}})
 		game.onTick(1000, "CRONOMETRO", { self.descontarTiempo(1)})
+	}
+
+	method agregarVisores() {
+		creadorDeEncabezado.crearEncabezado()
 		game.addVisual(visorVida)
 		game.addVisual(visorMonedas)
 		game.addVisual(visorDeTiempo)
 		game.addVisual(visorDeNivel)
 		game.addVisual(visorDeRanking)
-		game.addVisual(new Cofre())
-		
-		self.agregarIconos()
 	}
 
 	method agregarIconos() {
@@ -243,6 +257,10 @@ object juego {
 
 	method tiempoAdicional() {
 		return 10
+	}
+
+	method monedasNecesariasParaCanjear() {
+		return 1
 	}
 
 }

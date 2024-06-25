@@ -6,21 +6,22 @@ import randomizer.*
 import visores.*
 
 object musica {
+
 	var property activada = true
-	
-	method sonar(){
-		if (activada){
-		const musicaAmbiente = self.sonido()
-		musicaAmbiente.shouldLoop(true)
-		musicaAmbiente.volume(0.3)
-		game.schedule(500, {musicaAmbiente.play()})
-			
+
+	method sonar() {
+		if (activada) {
+			const musicaAmbiente = self.sonido()
+			musicaAmbiente.shouldLoop(true)
+			musicaAmbiente.volume(0.3)
+			game.schedule(500, { musicaAmbiente.play()})
 		}
 	}
-	
-	method sonido(){
+
+	method sonido() {
 		return game.sound("musicaFondo.mp3")
 	}
+
 }
 
 class ObjetoQueCae {
@@ -46,15 +47,16 @@ class ObjetoQueCae {
 		nivel.remove(self)
 	}
 
-	// Metodo abstracto
 	method accionAlColisionarCon(objeto) {
-		if (sonido) {self.sonido().play()}
+		if (sonido) {
+			self.sonido().play()
+		}
 	}
 
 	method esAtravesable() {
 		return true
 	}
-	
+
 	method sonido()
 
 }
@@ -72,10 +74,9 @@ class Moneda inherits ObjetoQueCae {
 	override method accionAlColisionarCon(personaje) {
 		super(personaje)
 		personaje.sumarMoneda(self.valor())
-
 	}
-	
-	override method sonido(){
+
+	override method sonido() {
 		return game.sound("coin.wav")
 	}
 
@@ -114,8 +115,8 @@ class Hielo inherits ObjetoQueCae {
 		super(objeto)
 		objeto.congelarse()
 	}
-	
-	override method sonido(){
+
+	override method sonido() {
 		return game.sound("hielo.ogg")
 	}
 
@@ -139,10 +140,11 @@ class Vida inherits ObjetoQueCae {
 		super(objeto)
 		objeto.sumarVida()
 	}
-	
-	override method sonido(){
+
+	override method sonido() {
 		return game.sound("vida.mp3")
 	}
+
 }
 
 class CreadorDeVidas inherits ObjetoQueCaeFactory {
@@ -165,10 +167,11 @@ class Maza inherits ObjetoQueCae {
 		super(objeto)
 		objeto.restarVida()
 	}
-	
-	override method sonido(){
+
+	override method sonido() {
 		return game.sound("maza.wav")
 	}
+
 }
 
 class CreadorDeMazas inherits ObjetoQueCaeFactory {
@@ -179,7 +182,6 @@ class CreadorDeMazas inherits ObjetoQueCaeFactory {
 
 }
 
-
 class Craneo inherits ObjetoQueCae {
 
 	const property image = "craneo.png"
@@ -188,10 +190,11 @@ class Craneo inherits ObjetoQueCae {
 		super(objeto)
 		objeto.perder()
 	}
-	
-	override method sonido(){
+
+	override method sonido() {
 		return game.sound("calavera.mp3")
 	}
+
 }
 
 class CreadorDeCraneos inherits ObjetoQueCaeFactory {
@@ -215,10 +218,11 @@ class Reloj inherits ObjetoQueCae {
 		controladorDeNivel.nivel().sumarTiempo()
 		game.say(jugador, "¡Vamos! Tengo " + juego.tiempoAdicional() + " segundos más.")
 	}
-	
-	override method sonido(){
+
+	override method sonido() {
 		return game.sound("coin.wav")
 	}
+
 }
 
 class CreadorDeRelojes inherits ObjetoQueCaeFactory {

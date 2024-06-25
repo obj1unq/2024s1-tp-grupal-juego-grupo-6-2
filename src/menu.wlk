@@ -197,9 +197,7 @@ class Boton {
 		return 8
 	}
 
-	method ejeY() {
-		return 0
-	}
+	method ejeY()
 
 	method position() {
 		return game.at(self.ejeX(), self.ejeY())
@@ -275,16 +273,15 @@ class BotonCanjear inherits Boton {
 	}
 
 	method estado() {
-		if (jugador.monedas() >= 1) activado = true else activado = false
+		if (jugador.monedas() >= juego.monedasNecesariasParaCanjear()) activado = true else activado = false
 	}
 
 	override method activar() {
 		self.estado()
-		self.validarEstado()
-		game.clear()
-		menuCanjear.init()
-//		game.addVisual(duplicadorMonedas)
-//		game.addVisual(duplicadorDeTiempo)
+		if (activado) {
+			game.clear()
+			menuCanjear.init()
+		}
 	}
 
 	method validarEstado() {
