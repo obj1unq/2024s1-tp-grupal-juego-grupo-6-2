@@ -280,9 +280,10 @@ class BotonCanjear inherits Boton {
 
 	override method activar() {
 		self.estado()
-		self.validarEstado()
-		game.clear()
-		menuCanjear.init()
+		if (activado) {
+			game.clear()
+			menuCanjear.init()
+		}
 	}
 
 	method validarEstado() {
