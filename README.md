@@ -26,15 +26,16 @@
 - Comienza el juego 
 
 #### 2. Recolecta Monedas:
-- Desplázate por el nivel y recoge todas las monedas que encuentres.
+- Desplázate por el nivel y agarra todas las monedas que encuentres.
 
 #### 3. Evita obstaculos
-- Hay obstáculos que pueden hacer que pierdas el juego. ¡Ten cuidado de no morir en el intento!
+- Hay obstáculos que pueden hacer que pierdas el juego. ¡Tene cuidado de no morir en el intento!
 
 ##### Obstáculos:
-- Hielo: ¡Ojo! El hielo te conjela 5 segundos.
+- Hielo: El hielo te conjela 5 segundos.
 - Maza: Te quita una vida.
 - Cráneo: Te mata instantáneamente.
+- Cofre: No es atravesable, tendras que saltarlo para poder continuar moviendote por el tablero.
 
 #### 3. Suma Vidas y Tiempo:
 - Corazones: Agarra los corazones para sumar más vidas y así tener menos chances de perder.
@@ -53,7 +54,7 @@
 
 ### Juega Cuantas Veces Quieras
     
-- Rejugabilidad: Puedes jugar todas las veces que desees. ¡La clave es mejorar tu puntaje y superar tu récord!
+- Rejugabilidad: Podes jugar todas las veces que desees. ¡La clave es mejorar tu puntaje y superar tu récord!
 
 
 ## Otros

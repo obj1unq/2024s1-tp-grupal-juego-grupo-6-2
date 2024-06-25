@@ -231,7 +231,7 @@ class CreadorDeRelojes inherits ObjetoQueCaeFactory {
 
 class Cofre {
 
-	const x = (0 .. 10).anyOne()
+	const x = (3 .. 18).anyOne()
 
 	method position() {
 		return game.at(x, 1)
