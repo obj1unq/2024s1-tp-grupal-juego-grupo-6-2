@@ -275,7 +275,7 @@ class BotonCanjear inherits Boton {
 	}
 
 	method estado() {
-		if (jugador.monedas() >= 1) activado = true else activado = false
+		if (jugador.monedas() >= juego.monedasNecesariasParaCanjear()) activado = true else activado = false
 	}
 
 	override method activar() {

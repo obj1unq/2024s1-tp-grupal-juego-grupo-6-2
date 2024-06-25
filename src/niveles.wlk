@@ -259,5 +259,9 @@ object juego {
 		return 10
 	}
 
+	method monedasNecesariasParaCanjear() {
+		return 1
+	}
+
 }
 
