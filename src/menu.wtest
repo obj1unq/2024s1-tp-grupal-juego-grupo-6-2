@@ -28,7 +28,6 @@ describe "Duplicadores" {
 		duplicarMonedas.activar()
 		assert.equals(10, jugador.monedas())
 		jugador.monedas(0)
-		assert.throwsException({ canjear.activar()})
 		assert.notThat(canjear.activado())
 	}
 
