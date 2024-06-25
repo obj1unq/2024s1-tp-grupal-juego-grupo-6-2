@@ -44,6 +44,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 
 	test "Jugador suma vidas" {
 		assert.equals(3, jugador.vida()) // cantidad de vida con la que arranca el jugador
+		vida.sonido(false)
 		vida.colisionarCon(jugador)
 		assert.equals(4, jugador.vida()) // el jugador colisiono con una vida y ahora sumo a 4 vidas
 	}
@@ -52,6 +53,8 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		assert.that(jugador.monedas() == 0) // cantidad de valor por monedas con la que arranca el jugador
 		const moneda1 = new CreadorDeMonedas(nivel=nivel).nuevoObjeto()
 		const moneda2 = new CreadorDeMonedas(nivel=nivel).nuevoObjeto()
+		moneda1.sonido(false)
+		moneda2.sonido(false)
 		moneda1.colisionarCon(jugador)
 		moneda2.colisionarCon(jugador)
 		assert.equals(2, jugador.monedas()) // el jugador colisiono con una vida y ahora sumo a 200 de vida
@@ -59,6 +62,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 
 	test "Jugador atrapa un hielo, se congela y no se puede mover" {
 		jugador.position(game.at(3, 3))
+		hielo.sonido(false)
 		hielo.colisionarCon(jugador)
 		assert.equals(congelado, jugador.estadoActual())
 		jugador.mover(jugandoDerecha)
@@ -73,12 +77,14 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		game.onTick(1000, "CRONOMETRO", {
 		})
 		jugador.vida(1)
+		maza.sonido(false)
 		maza.colisionarCon(jugador)
 		assert.equals(perdedor, jugador.estadoActual())
 	}
 
 	test "Jugador colisiona con un reloj y suma 5 segundos mas" {
 		const tiempoInicial = controladorDeNivel.nivel().tiempo()
+		reloj.sonido(false)
 		reloj.colisionarCon(jugador)
 		assert.equals(tiempoInicial + juego.tiempoAdicional(), controladorDeNivel.nivel().tiempo())
 	}
@@ -91,6 +97,7 @@ describe "Tests de colision del personaje jugador con los objetos del juego" {
 		game.onTick(1000, "CRONOMETRO", {
 		})
 		jugador.vida(1)
+		craneo.sonido(false)
 		craneo.colisionarCon(jugador)
 		assert.equals(perdedor, jugador.estadoActual())
 	}
