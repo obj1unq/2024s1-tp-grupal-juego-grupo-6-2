@@ -1,8 +1,14 @@
 import wollok.game.*
-import pepita.*
+import jugador.*
+import niveles.*
+import objetos.*
+import posiciones.*
+import randomizer.*
+import visores.*
+import menu.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+	musica.sonar()
+	menuInicial.init()
 	game.start()
 }
