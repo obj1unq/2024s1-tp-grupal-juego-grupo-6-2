@@ -87,26 +87,10 @@ object jugador {
 		self.potenciadorTiempo(1)
 		self.vida(3)
 	}
-
-	method tomarVeneno() {
-		game.say(self, "Tomé veneno y ahora estoy mareado")
-		estadoActual.marearse()
-	}
-
 }
 
 class EstadoJugador {
 
-	var mareado = false
-
-	method mareado() {
-		return mareado
-	}
-
-	method marearse() {
-		mareado = true
-		game.schedule(4000, { mareado = false})
-	}
 
 	method puedeMover() = false
 
@@ -138,23 +122,20 @@ class EstadosDeMovimiento inherits EstadoJugador {
 object jugandoDerecha inherits EstadosDeMovimiento {
 
 	override method direccion() {
-		return if (not self.mareado()) derecha else izquierda
+		return derecha
 	}
 
-	override method imagenEstado() {
-		return if (not self.mareado()) self else jugandoIzquierda
-	}
 
 }
 
 object jugandoIzquierda inherits EstadosDeMovimiento {
 
 	override method direccion() {
-		return if (not self.mareado()) izquierda else derecha
+		return izquierda 
 	}
 
 	override method imagenEstado() {
-		return if (not self.mareado()) self else jugandoDerecha
+		return self
 	}
 
 }
@@ -181,10 +162,6 @@ object saltando inherits EstadosDeMovimiento {
 
 	method aterrizar() {
 		estadoImagen = jugandoDerecha
-	}
-
-	override method imagenEstado() {
-		return estadoImagen
 	}
 
 }
